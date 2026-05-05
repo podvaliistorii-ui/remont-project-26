@@ -33,20 +33,23 @@
   </div>
 </section>
 
-
-<section class="home-showcase fx-page">
-  <div class="home-showcase__inner fx-page__container">
-    @for (project of showcaseProjects; track project.title) {
-      <article class="home-showcase__card">
-        <div class="home-showcase__image-wrap">
-          <img [src]="project.image" [alt]="project.title | translate" loading="lazy" />
-        </div>
-        <div class="home-showcase__meta">
-          <p>{{ project.title | translate }}</p>
-          <span>{{ project.area }}</span>
-        </div>
-        <p class="home-showcase__description">{{ project.description | translate }}</p>
-      </article>
-    }
-  </div>
-</section>
+@defer (on viewport) {
+  <section class="home-showcase fx-page">
+    <div class="home-showcase__inner fx-page__container">
+      @for (project of showcaseProjects; track project.title) {
+        <article class="home-showcase__card">
+          <div class="home-showcase__image-wrap">
+            <img [src]="project.image" [alt]="project.title | translate" loading="eager" fetchpriority="low" />
+          </div>
+          <div class="home-showcase__meta">
+            <p>{{ project.title | translate }}</p>
+            <span>{{ project.area }}</span>
+          </div>
+          <p class="home-showcase__description">{{ project.description | translate }}</p>
+        </article>
+      }
+    </div>
+  </section>
+} @placeholder {
+  <div style="height: 400px; background: var(--fx-bg);"></div>
+}
