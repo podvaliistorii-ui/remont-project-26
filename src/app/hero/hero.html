@@ -1,0 +1,23 @@
+<section class="hero">
+  <div class="hero__content">
+    <p class="hero__subtitle" style="font-size: clamp(14px, 1.2vw, 18px); opacity: 0.8; margin-bottom: 40px; margin-top: 0px; max-width: 600px;">
+      {{ 'HERO.SUBTITLE' | translate }}
+    </p>
+
+    <div class="hero__actions">
+      <button class="btn-one" routerLink="/portfolio">
+        {{ 'HERO.CTA_SECONDARY' | translate }}
+      </button>
+      <button class="btn-one" routerLink="/calculator">
+        {{ 'HERO.CTA_PRIMARY' | translate }}
+      </button>
+    </div>
+
+    <div class="hero__scroll">
+      <span class="hero__scroll-text">
+        {{ 'HERO.SCROLL' | translate }}
+      </span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </div>
+</section>

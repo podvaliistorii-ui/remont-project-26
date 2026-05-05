@@ -1,0 +1,76 @@
+<div class="footer-marquee">
+  <div class="footer-marquee__content">
+    <div class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg><span>KNAUF</span></div>
+    <div class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg><span>CAPAROL</span></div>
+    <div class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg><span>REHAU</span></div>
+    <div class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" y1="8" x2="20.05" y2="17.94"></line><line x1="9.69" y1="8" x2="21.17" y2="8"></line><line x1="7.38" y1="12" x2="13.12" y2="2.06"></line><line x1="9.69" y1="16" x2="3.95" y2="6.06"></line><line x1="14.31" y1="16" x2="2.83" y2="16"></line><line x1="16.62" y1="12" x2="10.88" y2="21.94"></line></svg><span>CERESIT</span></div>
+    <!-- Duplicate for loop -->
+    <div class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg><span>KNAUF</span></div>
+    <div class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg><span>CAPAROL</span></div>
+    <div class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg><span>REHAU</span></div>
+    <div class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" y1="8" x2="20.05" y2="17.94"></line><line x1="9.69" y1="8" x2="21.17" y2="8"></line><line x1="7.38" y1="12" x2="13.12" y2="2.06"></line><line x1="9.69" y1="16" x2="3.95" y2="6.06"></line><line x1="14.31" y1="16" x2="2.83" y2="16"></line><line x1="16.62" y1="12" x2="10.88" y2="21.94"></line></svg><span>CERESIT</span></div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer__inner fx-page__container">
+    
+    <div class="footer-grid">
+      <!-- Col 1: Brand -->
+      <div class="footer-grid__item brand-col">
+        <h2 class="footer-logo">FIXENTRO</h2>
+        <p class="footer-tagline">{{ 'HERO.TAGLINE' | translate }}</p>
+        <p class="footer-address">{{ 'FOOTER.ADDRESS' | translate }}</p>
+      </div>
+
+      <!-- Col 2: Navigation -->
+      <div class="footer-grid__item">
+        <h4 class="footer-heading">{{ 'FOOTER.LINKS_TITLE' | translate }}</h4>
+        <nav class="footer-nav">
+          <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{ 'NAV.HOME' | translate }}</a>
+          <a routerLink="/about" routerLinkActive="active">{{ 'NAV.ABOUT' | translate }}</a>
+          <a routerLink="/portfolio" routerLinkActive="active">{{ 'NAV.PORTFOLIO' | translate }}</a>
+          <a routerLink="/calculator" routerLinkActive="active">{{ 'NAV.CALCULATOR' | translate }}</a>
+          <a routerLink="/contact" routerLinkActive="active">{{ 'NAV.CONTACT' | translate }}</a>
+        </nav>
+      </div>
+
+      <!-- Col 3: Contact & Social -->
+      <div class="footer-grid__item socials-col">
+        <h4 class="footer-heading">{{ 'FOOTER.SOCIAL_TITLE' | translate }}</h4>
+        <div class="footer-social">
+          <a class="social-link social-link--instagram" href="https://www.instagram.com/fixentro" target="_blank" rel="noopener noreferrer" aria-label="FixEntro Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+              <circle cx="12" cy="12" r="4"></circle>
+              <circle cx="17.5" cy="6.5" r="1.2"></circle>
+            </svg>
+          </a>
+          <a class="social-link social-link--facebook" href="https://www.facebook.com/fixentro" target="_blank" rel="noopener noreferrer" aria-label="FixEntro Facebook">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 8.5h2.2V5h-2.9C10.6 5 9 6.7 9 9.4V12H6.8v3.6H9V21h4.1v-5.4h2.8l.5-3.6h-3.3V9.8c0-.8.4-1.3.9-1.3Z"></path>
+            </svg>
+          </a>
+          <a class="social-link social-link--tiktok" href="https://www.tiktok.com/@fixentro" target="_blank" rel="noopener noreferrer" aria-label="FixEntro TikTok">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14.5 3c.4 2.9 2 4.7 4.5 5v3.4c-1.5 0-3-.5-4.4-1.5v5.6c0 3.4-2.2 5.5-5.3 5.5C6.4 21 4 18.8 4 16s2.2-5 5-5c.4 0 .8 0 1.1.1v3.7c-.3-.1-.6-.2-1-.2-1 0-1.8.6-1.8 1.5 0 .8.7 1.4 1.7 1.4 1.2 0 1.8-.8 1.8-2.2V3h3.7Z"></path>
+            </svg>
+          </a>
+          <a class="social-link social-link--telegram" href="https://t.me/fixentro" target="_blank" rel="noopener noreferrer" aria-label="FixEntro Telegram">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21.8 4.6 18.5 20c-.2.9-.9 1.1-1.6.7l-4.8-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.4 13.6 1.6 12c-.9-.3-.9-.9.2-1.3L20.5 3.5c.8-.3 1.5.2 1.3 1.1Z"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-credits">
+        &copy; 2026 FIXENTRO &mdash; {{ 'FOOTER.RIGHTS' | translate }} &nbsp; | &nbsp; 
+        <span class="studio-link">{{ 'FOOTER.COPY' | translate }}</span>
+      </p>
+    </div>
+
+  </div>
+</footer>

@@ -1,1 +1,247 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'sass:meta';
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Noto+Serif+Georgian:wght@300;400;500;600;700&family=Outfit:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono&display=swap');
+
+:root {
+  /* THE OBSIDIAN & CHAMPAGNE PALETTE (The Pinnacle of Luxury) */
+  --fx-bg-light: #FBFBFA;    /* Alabaster Silk */
+  --fx-surface-light: #F0F0EE;
+  --fx-text-light: #0A0A0B;  /* Deep Carbon */
+  --fx-accent-light: #C5A059; /* Burnished Champagne */
+  --fx-tech-light: #7D8491;   /* Brushed Silver */
+  
+  /* REACTIVE SHADOW OFFSETS */
+  --fx-shadow-offset-x: 0px;
+  --fx-shadow-offset-y: 0px;
+
+  --fx-shadow-stone: calc(20px + var(--fx-shadow-offset-x)) calc(20px + var(--fx-shadow-offset-y)) 60px rgba(0, 0, 0, 0.05), 
+                     calc(-20px + var(--fx-shadow-offset-x)) calc(-20px + var(--fx-shadow-offset-y)) 60px #ffffff;
+  
+  --fx-shadow-obsidian: calc(25px + var(--fx-shadow-offset-x)) calc(25px + var(--fx-shadow-offset-y)) 60px #030304, 
+                        calc(-10px + var(--fx-shadow-offset-x)) calc(-10px + var(--fx-shadow-offset-y)) 50px #121214;
+  
+  --fx-shadow-light: var(--fx-shadow-stone);
+  --fx-shadow-dark: var(--fx-shadow-obsidian);
+  
+  --fx-bg-dark: #0A0A0A;
+  --fx-surface-dark: #121212;
+  --fx-text-dark: #E0E0E0; /* Platinum */
+  --fx-accent-dark: #D4AF37; /* Metallic Gold */
+  --fx-tech-dark: #888888;
+  
+  --fx-bg: var(--fx-bg-dark); 
+  --fx-surface: var(--fx-surface-dark);
+  --fx-text: var(--fx-text-dark);
+  --fx-accent: var(--fx-accent-dark);
+  --fx-tech: var(--fx-tech-dark);
+  --fx-shadow: var(--fx-shadow-dark);
+  
+  --fx-line: rgba(255, 255, 255, 0.1);
+  --fx-line-strong: rgba(255, 255, 255, 0.15);
+  
+  --fx-font-serif: 'Cormorant Garamond', 'Noto Serif Georgian', Georgia, serif;
+  --fx-font-sans: 'Outfit', 'Inter', sans-serif;
+
+  --fx-header-height: 100px;
+  --fx-transition: 1200ms cubic-bezier(0.16, 1, 0.3, 1);
+  
+  --fx-bg-rgb: 10, 10, 10;
+  --fx-glass: rgba(18, 18, 18, 0.8);
+}
+
+[data-theme='light'] {
+  --fx-bg: var(--fx-bg-light);
+  --fx-surface: var(--fx-surface-light);
+  --fx-text: var(--fx-text-light);
+  --fx-accent: var(--fx-accent-light);
+  --fx-tech: var(--fx-tech-light);
+  --fx-shadow: var(--fx-shadow-light);
+  
+  --fx-line: rgba(10, 10, 11, 0.05);
+  --fx-line-strong: rgba(10, 10, 11, 0.1);
+  --fx-bg-rgb: 251, 251, 250;
+  --fx-glass: rgba(255, 255, 255, 0.85);
+}
+
+html, body {
+  cursor: none !important;
+  * { cursor: none !important; }
+}
+
+body {
+  background: var(--fx-bg);
+  color: var(--fx-text);
+  font-family: var(--fx-font-sans);
+  font-weight: 200; /* Ultra light weight */
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── THE MONOLITH TYPOGRAPHY ── */
+h1, h2, h3, .fx-serif, .project-title, .fx-title {
+  font-family: var(--fx-font-serif);
+  line-height: 0.85; /* Tight, aggressive line height */
+  font-weight: 300;
+  letter-spacing: -0.05em; /* Extreme negative tracking for headers */
+  text-transform: none;
+}
+
+h1, .fx-title { font-size: clamp(2.5rem, 5vw, 4rem); }
+h2 { font-size: clamp(2rem, 4vw, 3rem); }
+
+@include meta.load-css('./styles.responsive.scss');
+
+/* ── GEORGIAN TYPOGRAPHY ADJUSTMENTS ── */
+html[lang="ka"] body,
+body.lang-ka {
+  h1, h2, h3, .fx-serif, .project-title, .fx-title {
+    line-height: 1.25; 
+    letter-spacing: 0;
+    font-weight: 400; 
+  }
+  
+  h1, .fx-title {
+    font-size: clamp(2rem, 6vw, 3.5rem) !important;
+  }
+}
+
+/* ── PRECISION UI ELEMENTS ── */
+.btn-one {
+  font-family: 'Outfit', var(--fx-font-sans);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #2C2C2C; /* Deep Slate */
+  background: rgba(255, 255, 255, 0.8);
+  border: 0.5px solid var(--fx-line-strong);
+  padding: 24px 64px;
+  font-size: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 0;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  
+  &:hover {
+    background: #111111; /* Obsidian */
+    color: #D4AF37; /* Champagne Gold */
+    border-color: #111111;
+    letter-spacing: 0.18em;
+  }
+}
+
+.custom-cursor {
+  width: 6px;
+  height: 6px;
+  background: var(--fx-accent);
+  mix-blend-mode: difference;
+  
+  &.cursor-hover {
+    width: 80px;
+    height: 80px;
+    background: transparent;
+    border: 0.5px solid var(--fx-accent);
+  }
+}
+
+.fx-section {
+  padding: 25vh 0; /* Massively increased negative space */
+}
+
+.fx-page__container {
+  width: min(100%, 1600px); /* Slightly wider for modern screens */
+  margin: 0 auto;
+  padding: 0 clamp(32px, 8vw, 120px);
+}
+
+.fx-section {
+  padding: 20vh 0; /* More air */
+}
+
+/* ── NOISE TEXTURE REFINEMENT ── */
+body::after {
+  content: "";
+  position: fixed;
+  inset: -200%;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.04; /* Premium paper texture */
+  pointer-events: none;
+  animation: noise 8s steps(10) infinite;
+}
+
+@keyframes noise {
+  0% { transform: translate(0,0) }
+  10% { transform: translate(-5%,-5%) }
+  100% { transform: translate(5%,0) }
+}
+
+/* ── CUSTOM CURSOR: VISIBLE GOLD DOT ── */
+#fx-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  background: var(--fx-accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%); 
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              height 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              background 0.3s ease,
+              border 0.3s ease,
+              opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  opacity: 1;
+  mix-blend-mode: normal;
+  border: 0px solid var(--fx-accent);
+  
+  &.cursor-hover, &.cursor-explore {
+    width: 60px;
+    height: 60px;
+    background: transparent;
+    border: 1px solid var(--fx-accent);
+    backdrop-filter: blur(4px);
+    
+    .cursor-text {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+.cursor-text {
+  font-family: var(--fx-font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--fx-bg);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+/* ── SAFETY FALLBACK: DO NOT HIDE NATIVE CURSOR ── */
+html {
+  cursor: auto !important;
+  * { cursor: auto !important; }
+}
+
+.custom-cursor-active #fx-cursor { opacity: 1; }
+
+@media (hover: none), (pointer: coarse) {
+  #fx-cursor {
+    display: none;
+  }
+}
+
+
+

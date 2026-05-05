@@ -1,0 +1,52 @@
+<section class="home-hero fx-page" id="top">
+  <video
+    class="home-hero__video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    poster="https://images.unsplash.com/photo-1596110413196-2f0d46247713?auto=format&fit=crop&w=2000&q=80">
+    <source src="assets/hero-bg.mp4" type="video/mp4" />
+  </video>
+  <div class="home-hero__overlay"></div>
+
+  <div class="home-hero__content fx-page__container">
+    <div class="home-hero__main">
+      <h1 class="branding-title" fetchpriority="high">FIXENTRO</h1>
+      <div class="authority-badges">
+        @for (badge of authorityBadges; track badge.labelKey) {
+          <div class="authority-badge">
+            <span class="badge-val">{{ badge.value }}</span>
+            <span class="badge-label">{{ badge.labelKey | translate }}</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <p class="home-hero__subtitle">{{ 'HERO.SUBTITLE' | translate }}</p>
+    
+    <div class="home-hero__actions">
+      <a class="btn-one" routerLink="/portfolio">{{ 'HERO.CTA_SECONDARY' | translate }}</a>
+      <a class="btn-one" routerLink="/calculator">{{ 'HERO.CTA_PRIMARY' | translate }}</a>
+    </div>
+  </div>
+</section>
+
+
+<section class="home-showcase fx-page">
+  <div class="home-showcase__inner fx-page__container">
+    @for (project of showcaseProjects; track project.title) {
+      <article class="home-showcase__card">
+        <div class="home-showcase__image-wrap">
+          <img [src]="project.image" [alt]="project.title | translate" loading="lazy" />
+        </div>
+        <div class="home-showcase__meta">
+          <p>{{ project.title | translate }}</p>
+          <span>{{ project.area }}</span>
+        </div>
+        <p class="home-showcase__description">{{ project.description | translate }}</p>
+      </article>
+    }
+  </div>
+</section>

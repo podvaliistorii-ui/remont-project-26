@@ -10,6 +10,8 @@
 /node_modules
 npm-debug.log
 yarn-error.log
+*.log
+*.utf8.log
 
 # IDEs and editors
 .idea/
@@ -38,6 +40,10 @@ yarn-error.log
 testem.log
 /typings
 __screenshots__/
+src/*.utf8.html
+src/styles.css
+tailwind_config_copy.txt
+tailwind.config.utf8.js
 
 # System files
 .DS_Store

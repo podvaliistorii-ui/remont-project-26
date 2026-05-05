@@ -1,0 +1,107 @@
+@if (project; as p) {
+  <section class="project-detail">
+    <!-- CINEMATIC HEADER -->
+    <div class="project-hero">
+      <div class="project-hero__visual" [style.view-transition-name]="'project-image-' + p.id">
+        @if (p.mainMedia.type === 'video') {
+          <video class="project-hero__media" autoplay muted loop playsinline preload="metadata" [poster]="p.mainMedia.poster || ''">
+            <source [src]="p.mainMedia.url" type="video/mp4">
+          </video>
+        } @else {
+          <img [src]="p.mainMedia.url" [alt]="p.titleKey | translate" class="project-hero__media" fetchpriority="high" />
+        }
+      </div>
+
+      <div class="project-hero__content">
+        <div class="fx-page__container">
+          <nav class="project-nav">
+            <a routerLink="/portfolio" class="back-link">
+              <span class="arrow">&larr;</span> {{ 'PROJECTS.BACK_TO_PORTFOLIO' | translate }}
+            </a>
+          </nav>
+
+          <span class="fx-kicker">{{ p.year }} {{ 'PROJECTS.ARCHIVE_LABEL' | translate }}</span>
+          <h1 class="project-title">{{ p.titleKey | translate }}</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-body">
+      <div class="fx-page__container">
+        
+        <!-- DESCRIPTION SECTION: WHAT WAS DONE -->
+        <div class="project-info-grid">
+          <aside class="technical-passport">
+            <p class="technical-passport__eyebrow">{{ 'PROJECTS.ENGINEERING_SPEC' | translate }}</p>
+            <div class="spec-item">
+              <span class="spec-label">{{ 'PROJECTS.AREA' | translate }}</span>
+              <span class="spec-value">{{ p.area }} m²</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">{{ 'PROJECTS.DISTRICT' | translate }}</span>
+              <span class="spec-value">{{ p.districtKey | translate }}</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">{{ 'PROJECTS.TYPE' | translate }}</span>
+              <span class="spec-value">{{ p.technicalPassport.typeKey | translate }}</span>
+            </div>
+          </aside>
+
+          <div class="project-description">
+            <div class="editorial-block">
+              <h3 class="editorial-title reveal-text" data-delay="0">{{ 'PROJECTS.TASK' | translate }}</h3>
+              <p class="fx-text reveal-text" data-delay="400">{{ p.taskKey | translate }}</p>
+            </div>
+            <div class="editorial-block">
+              <h3 class="editorial-title reveal-text" data-delay="0">{{ 'PROJECTS.SOLUTION' | translate }}</h3>
+              <p class="fx-text reveal-text" data-delay="400">{{ p.solutionKey | translate }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHOTO GRID: EXACTLY 4 IMAGES WITH MAGNIFICATION -->
+        <section class="media-grid-asymmetric">
+          @for (img of p.galleryImages; track img; let i = $index) {
+            <div class="media-item" (click)="openLightbox(img)" [style.--index]="i">
+              <div class="media-wrap">
+                <img [src]="img" alt="Project detail" class="gallery-media-img" loading="lazy" />
+              </div>
+              <div class="media-zoom-hint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                </svg>
+              </div>
+            </div>
+          }
+        </section>
+
+        <!-- FINAL VIDEO SECTION: THE ATMOSPHERE -->
+        <section class="project-finale-video">
+          <header class="finale-header">
+            <span class="finale-kicker">{{ 'PROJECTS.CINEMATIC_FLOW' | translate }}</span>
+            <h2 class="finale-title">{{ 'PROJECTS.LIVING_SPACE' | translate }}</h2>
+          </header>
+          <div class="finale-video-container">
+            <video class="full-width-video" autoplay muted loop playsinline preload="metadata">
+              <source [src]="p.finalVideoUrl" type="video/mp4">
+            </video>
+          </div>
+        </section>
+
+        <div class="project-footer">
+          <a routerLink="/portfolio" class="fx-button fx-button--outline">
+            <span class="arrow">&larr;</span> {{ 'PROJECTS.BACK_TO_PORTFOLIO' | translate }}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIGHTBOX OVERLAY -->
+    @if (selectedImage()) {
+      <div class="lightbox-overlay" (click)="closeLightbox()">
+        <button class="lightbox-close" (click)="closeLightbox()">&times;</button>
+        <img [src]="selectedImage()" alt="Enlarged view" class="lightbox-img" (click)="$event.stopPropagation()" />
+      </div>
+    }
+  </section>
+}

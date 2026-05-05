@@ -1,0 +1,352 @@
+:host {
+  display: block;
+}
+
+.contact-page {
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--fx-accent) 16%, transparent), transparent 34rem),
+    var(--fx-bg);
+  min-height: 100vh;
+  padding: clamp(110px, 15vh, 170px) 0 clamp(80px, 12vh, 150px);
+}
+
+.contact-hero {
+  max-width: 900px;
+  margin-bottom: clamp(44px, 7vw, 84px);
+
+  .fx-title {
+    font-size: 96px;
+    line-height: 1;
+    margin: 18px 0 0;
+  }
+}
+
+.contact-subtitle {
+  font-size: 18px;
+  max-width: 680px;
+  opacity: 0.72;
+  margin-top: 28px;
+  font-weight: 300;
+}
+
+.contact-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+  gap: 28px;
+  align-items: stretch;
+}
+
+.contact-panel {
+  border: 1px solid var(--fx-line-strong);
+  background: color-mix(in srgb, var(--fx-surface) 88%, transparent);
+  box-shadow: var(--fx-shadow-stone);
+}
+
+[data-theme='dark'] .contact-panel {
+  box-shadow: var(--fx-shadow-obsidian);
+}
+
+.contact-panel--form {
+  padding: clamp(28px, 4vw, 56px);
+}
+
+.panel-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 24px;
+  margin-bottom: 34px;
+  border-bottom: 1px solid var(--fx-line);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+
+  span {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--fx-accent);
+  }
+
+  strong {
+    font-size: 11px;
+    font-weight: 700;
+    opacity: 0.55;
+    text-align: right;
+  }
+}
+
+.fx-form {
+  display: grid;
+  gap: 22px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.fx-field {
+  display: grid;
+  gap: 9px;
+
+  span {
+    order: -1;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fx-text);
+    opacity: 0.7;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid var(--fx-line-strong);
+    background: var(--fx-bg);
+    color: var(--fx-text);
+    font: inherit;
+    font-size: 15px;
+    line-height: 1.5;
+    padding: 16px 18px;
+    outline: none;
+    transition: border-color 0.25s ease, background-color 0.25s ease;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 150px;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--fx-accent);
+    background: color-mix(in srgb, var(--fx-surface) 42%, var(--fx-bg));
+  }
+}
+
+.contact-submit {
+  width: 100%;
+  margin-top: 10px;
+  background: var(--fx-accent) !important;
+  color: var(--fx-bg) !important;
+
+  &:disabled {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+}
+
+.contact-panel--info {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: min-content;
+  gap: 1px;
+  padding: 1px;
+  background: var(--fx-line-strong);
+}
+
+.contact-card {
+  min-height: 142px;
+  padding: 28px;
+  background: var(--fx-surface);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+
+  a,
+  span:last-child {
+    color: var(--fx-text);
+    text-decoration: none;
+    font-size: 22px;
+    line-height: 1.25;
+  }
+
+  a:hover {
+    color: var(--fx-accent);
+  }
+}
+
+.contact-card--primary {
+  grid-column: span 2;
+  min-height: 164px;
+  background: var(--fx-accent);
+  color: var(--fx-bg);
+
+  .contact-card__label,
+  a {
+    color: var(--fx-bg);
+  }
+}
+
+.contact-card__label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fx-accent);
+}
+
+.contact-map {
+  grid-column: span 2;
+  min-height: 300px;
+  position: relative;
+  overflow: hidden;
+  background: var(--fx-bg);
+}
+
+.contact-map__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--fx-accent) 16%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--fx-accent) 16%, transparent) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.55;
+}
+
+.contact-map svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 28px;
+  box-sizing: border-box;
+}
+
+.map-river,
+.map-street {
+  fill: none;
+  stroke: var(--fx-accent);
+  stroke-width: 2;
+  opacity: 0.55;
+}
+
+.map-street {
+  stroke: var(--fx-text);
+  stroke-width: 1;
+  opacity: 0.26;
+}
+
+.map-street--thin {
+  opacity: 0.18;
+}
+
+.map-point {
+  fill: var(--fx-accent);
+}
+
+.map-pulse {
+  fill: none;
+  stroke: var(--fx-accent);
+  stroke-width: 1;
+  animation: mapPulse 2.4s ease-out infinite;
+  transform-origin: center;
+}
+
+.contact-map__caption {
+  position: absolute;
+  left: 28px;
+  bottom: 24px;
+  display: grid;
+  gap: 4px;
+
+  strong {
+    font-family: var(--fx-font-serif);
+    font-size: 34px;
+    font-weight: 400;
+  }
+
+  span {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--fx-accent);
+  }
+}
+
+@keyframes mapPulse {
+  from {
+    transform: scale(0.75);
+    opacity: 0.9;
+  }
+
+  to {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s var(--fx-transition), transform 0.8s var(--fx-transition);
+
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1100px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-hero .fx-title {
+    font-size: 72px;
+  }
+}
+
+@media (max-width: 720px) {
+  .contact-page {
+    padding-top: 104px;
+  }
+
+  .contact-hero .fx-title {
+    font-size: 48px;
+  }
+
+  .contact-subtitle {
+    font-size: 16px;
+  }
+
+  .panel-heading,
+  .form-grid,
+  .contact-panel--info {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-heading {
+    display: grid;
+  }
+
+  .panel-heading strong {
+    text-align: left;
+  }
+
+  .contact-card,
+  .contact-card--primary,
+  .contact-map {
+    grid-column: span 1;
+  }
+
+  .contact-card {
+    min-height: auto;
+    padding: 24px;
+
+    a,
+    span:last-child {
+      font-size: 18px;
+    }
+  }
+
+  .contact-map {
+    min-height: 260px;
+  }
+}

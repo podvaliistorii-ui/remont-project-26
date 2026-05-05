@@ -1,0 +1,169 @@
+<section class="calculator-page">
+  <div class="dashboard-container">
+    
+    <!-- LEFT: ENGINEERING INPUTS -->
+    <div class="dashboard-panel input-panel">
+      <header class="panel-header">
+        <span class="panel-kicker">{{ 'CALCULATOR.DASHBOARD.KICKER' | translate }}</span>
+        <h2 class="panel-title">{{ 'CALCULATOR.DASHBOARD.TITLE' | translate }}</h2>
+      </header>
+
+      <!-- BUILDING TYPE -->
+      <div class="input-group">
+        <label class="input-label">{{ 'CALCULATOR.DASHBOARD.ARCHETYPE' | translate }}</label>
+        <div class="toggle-group">
+          <button class="toggle-btn" [class.active]="buildingType() === 'new'" (click)="buildingType.set('new')">{{ 'CALCULATOR.DASHBOARD.NEW_BODY' | translate }}</button>
+          <button class="toggle-btn" [class.active]="buildingType() === 'old'" (click)="buildingType.set('old')">{{ 'CALCULATOR.DASHBOARD.OLD_FUND' | translate }}</button>
+          <button class="toggle-btn" [class.active]="buildingType() === 'historic'" (click)="buildingType.set('historic')">{{ 'CALCULATOR.DASHBOARD.HISTORIC' | translate }}</button>
+        </div>
+        <p class="input-hint" *ngIf="buildingType() !== 'new'">{{ 'CALCULATOR.DASHBOARD.OLD_FUND_HINT' | translate }}</p>
+      </div>
+
+      <!-- AREA & DISTRICT -->
+      <div class="input-row">
+        <div class="input-group flex-1">
+          <label class="input-label">{{ 'CALCULATOR.AREA_LABEL' | translate }}</label>
+          <input type="number" [ngModel]="area()" (ngModelChange)="area.set($event)" class="fx-dashboard-input">
+        </div>
+        <div class="input-group flex-1">
+          <label class="input-label">{{ 'CALCULATOR.DASHBOARD.DISTRICT_LABEL' | translate }}</label>
+          <select [ngModel]="district()" (ngModelChange)="district.set($event)" class="fx-dashboard-select">
+            @for (d of districts; track d) {
+              <option [value]="d">{{ 'CALCULATOR.DISTRICTS.' + d | translate }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">{{ 'CALCULATOR.DASHBOARD.ENVIRONMENTAL_LAYERS' | translate }}</label>
+        <div class="toggle-group layer-toggles">
+          <button class="toggle-btn" [class.active]="noiseMapEnabled()" (click)="noiseMapEnabled.set(!noiseMapEnabled())">{{ 'CALCULATOR.DASHBOARD.NOISE_MAP' | translate }}</button>
+          <button class="toggle-btn" [class.active]="sunlightMapEnabled()" (click)="sunlightMapEnabled.set(!sunlightMapEnabled())">{{ 'CALCULATOR.DASHBOARD.SUNLIGHT_EXPOSURE' | translate }}</button>
+        </div>
+        <div class="district-map-grid">
+          @for (d of districts; track d) {
+            <button
+              type="button"
+              class="district-map-chip"
+              [class.active]="district() === d"
+              [style.background]="getDistrictHeatmapStyle(d)"
+              (click)="setDistrict(d)">
+              <span>{{ 'CALCULATOR.DISTRICTS.' + d | translate }}</span>
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- SPEC TIERS -->
+      <div class="input-group">
+        <label class="input-label">{{ 'CALCULATOR.DASHBOARD.TIER_LABEL' | translate }}</label>
+        <div class="tier-cards">
+          <div class="tier-card" [class.active]="specTier() === 1" (click)="specTier.set(1)">
+            <span class="tier-num">01</span>
+            <strong>{{ 'CALCULATOR.DASHBOARD.TIER1_TITLE' | translate }}</strong>
+            <p>{{ 'CALCULATOR.DASHBOARD.TIER1_DESC' | translate }}</p>
+          </div>
+          <div class="tier-card" [class.active]="specTier() === 2" (click)="specTier.set(2)">
+            <span class="tier-num">02</span>
+            <strong>{{ 'CALCULATOR.DASHBOARD.TIER2_TITLE' | translate }}</strong>
+            <p>{{ 'CALCULATOR.DASHBOARD.TIER2_DESC' | translate }}</p>
+          </div>
+          <div class="tier-card" [class.active]="specTier() === 3" (click)="specTier.set(3)">
+            <span class="tier-num">03</span>
+            <strong>{{ 'CALCULATOR.DASHBOARD.TIER3_TITLE' | translate }}</strong>
+            <p>{{ 'CALCULATOR.DASHBOARD.TIER3_DESC' | translate }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADD-ONS -->
+      <div class="input-group">
+        <label class="checkbox-container">
+          <input type="checkbox" [ngModel]="hasFreightElevator()" (ngModelChange)="hasFreightElevator.set($event)">
+          <span class="checkmark"></span>
+          <span class="check-label">{{ 'CALCULATOR.DASHBOARD.ELEVATOR_LABEL' | translate }}</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- RIGHT: AUDIT PANEL -->
+    <div class="dashboard-panel audit-panel">
+      <header class="panel-header">
+        <span class="panel-kicker">{{ 'CALCULATOR.TREND' | translate }}</span>
+        <div class="market-mini-chart">
+          <svg viewBox="0 0 300 60">
+            <path [attr.d]="chartPath()" fill="none" stroke="var(--fx-accent)" stroke-width="2" />
+          </svg>
+          <div class="chart-info">
+            <span class="chart-label">{{ 'CALCULATOR.LIVE' | translate }}: {{ market.currentMarketIndex() | number:'1.3-3' }}x</span>
+            <span class="chart-trend">{{ 'CALCULATOR.DASHBOARD.SYNC_LABEL' | translate }}</span>
+            <div class="chart-disclaimer">{{ 'CALCULATOR.FLUCTUATE' | translate }}</div>
+          </div>
+        </div>
+      </header>
+
+      <div class="bill-of-quantities">
+        <h3 class="boq-title">{{ 'CALCULATOR.DASHBOARD.BOQ_TITLE' | translate }}</h3>
+        
+        <div class="boq-lines">
+          <div class="boq-line">
+            <span>{{ 'CALCULATOR.DASHBOARD.BOQ_BASE' | translate }}</span>
+            <span>GEL {{ billOfQuantities().baseEngineering | number }}</span>
+          </div>
+          <div class="boq-line" *ngIf="billOfQuantities().archetypeAdjustment > 0">
+            <span>{{ 'CALCULATOR.DASHBOARD.BOQ_ARCHETYPE' | translate }}</span>
+            <span>+GEL {{ billOfQuantities().archetypeAdjustment | number }}</span>
+          </div>
+          <div class="boq-line">
+            <span>{{ 'CALCULATOR.DASHBOARD.BOQ_LOGISTICS' | translate }}</span>
+            <span>+GEL {{ billOfQuantities().logisticsFee | number }}</span>
+          </div>
+          <div class="boq-line boq-line--included">
+            <span>{{ 'CALCULATOR.DASHBOARD.BOQ_INCLUDED' | translate }}</span>
+            <span>{{ 'CALCULATOR.DASHBOARD.BOQ_INCLUDED_VAL' | translate }}</span>
+          </div>
+          <div class="boq-line" *ngIf="billOfQuantities().environmentalUpgrade > 0">
+            <span>{{ 'CALCULATOR.DASHBOARD.ENVIRONMENTAL_UPGRADE' | translate }}</span>
+            <span>+GEL {{ billOfQuantities().environmentalUpgrade | number }}</span>
+          </div>
+        </div>
+
+        <div class="boq-suggestions">
+          <div class="boq-suggestions__title">{{ 'CALCULATOR.DASHBOARD.DISTRICT_NOTES' | translate }}</div>
+          @for (suggestion of boqEngineeringSuggestions(); track suggestion) {
+            <p>{{ suggestion }}</p>
+          }
+        </div>
+
+        <div class="boq-total">
+          <div class="total-label">{{ 'CALCULATOR.DASHBOARD.TOTAL_LABEL' | translate }}</div>
+          <div class="total-val">GEL {{ formattedTotal() }}</div>
+          <div class="total-disclaimer">{{ 'CALCULATOR.DASHBOARD.TOTAL_DISCLAIMER' | translate }}</div>
+        </div>
+
+        <div class="dashboard-badges">
+          <div class="badge-item">
+            <div class="badge-icon">8y</div>
+            <div class="badge-text">{{ 'CALCULATOR.DASHBOARD.BADGE_EXP' | translate }}</div>
+          </div>
+          <div class="badge-item">
+            <div class="badge-icon">30+</div>
+            <div class="badge-text">{{ 'CALCULATOR.DASHBOARD.BADGE_PROJECTS' | translate }}</div>
+          </div>
+        </div>
+
+        <!-- Project Audit Form -->
+        <div class="dashboard-cta">
+          <div class="cta-inputs">
+            <input type="text" [ngModel]="name()" (ngModelChange)="name.set($event)" [placeholder]="'CALCULATOR.DASHBOARD.CTA_NAME' | translate" class="fx-dashboard-input-small">
+            <input type="text" [ngModel]="phone()" (ngModelChange)="phone.set($event)" [placeholder]="'CALCULATOR.DASHBOARD.CTA_PHONE' | translate" class="fx-dashboard-input-small">
+          </div>
+          <button class="btn-lock" (click)="submitConsultation()">
+            {{ primaryCtaText() }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,125 @@
+﻿<section class="estimator-section">
+  <div class="fx-page__container">
+    <div class="editorial-form">
+
+      <!-- Form Title -->
+      <h2 class="estimator-title">
+        {{ i18n.t('SECTIONS.ESTIMATOR_TITLE') || 'Intelligent Estimation' }}
+      </h2>
+      <p class="estimator-subtitle">
+        {{ i18n.t('ESTIMATOR.SUBTITLE') }}
+      </p>
+
+      <!-- Input Field -->
+      <div class="mb-12">
+        <label class="form-label">
+          {{ i18n.t('ESTIMATOR.LABEL') || 'Project Scope' }}
+        </label>
+        <input
+          #q
+          type="text"
+          [placeholder]="i18n.t('ESTIMATOR.PLACEHOLDER') || 'e.g. 120 m² Vake Penthouse'"
+          (keydown.enter)="processEstimate(q.value)"
+          [disabled]="inputDisabled()"
+          (input)="status() === 'idle' && query.set(($any($event.target).value))"
+          [value]="query()"
+          maxlength="100"
+          autofocus
+        />
+        <p class="fx-text mt-4" style="font-size: 12px; opacity: 0.4;">
+          {{ i18n.t('ESTIMATOR.HINT') || 'Define your space and district for a precise valuation.' }}
+        </p>
+      </div>
+
+      <!-- Status Bar -->
+      @if (status() !== 'idle') {
+        <div class="progress-container">
+          <div class="progress-bar" [style.width.%]="progress()"></div>
+        </div>
+      }
+
+      <!-- Logs Display -->
+      <div class="mb-12 logs-display-container">
+        <div class="space-y-4">
+          @if (status() === 'idle') {
+            <p class="fx-text" style="font-size: 13px; font-family: var(--fx-font-sans); letter-spacing: 0.05em;">
+              {{ i18n.t('ESTIMATOR.READY') || 'Awaiting parameters...' }}
+            </p>
+          } @else {
+            @for (log of logs(); track $index) {
+              <p class="fx-text animate-fade-in" style="font-size: 13px; margin-bottom: 0;">
+                {{ log }}
+              </p>
+            }
+            @if (status() === 'complete') {
+              <p class="fx-text" style="color: var(--fx-accent); font-weight: 600; margin-top: 16px;">
+                ✓ {{ i18n.t('ESTIMATOR.COMPLETE') || 'Valuation Finalized' }}
+              </p>
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Result Display -->
+      @if (status() === 'complete' && estimate()) {
+        <div class="result-card">
+          <div class="space-y-8">
+            <!-- Price Range -->
+            <div>
+              <p class="form-label mb-4">
+                {{ i18n.t('ESTIMATOR.ESTIMATE_RANGE') || 'Project Valuation' }}
+              </p>
+              <p class="result-title">
+                {{ formatGel(estimate()!.lowGel) }} – {{ formatGel(estimate()!.highGel) }}
+              </p>
+            </div>
+
+            <!-- Project Details -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 py-8 border-t border-b border-var(--fx-line)">
+              <div>
+                <p class="form-label mb-2">{{ i18n.t('ESTIMATOR.AREA') || 'Net Area' }}</p>
+                <p class="fx-text" style="opacity: 1; font-weight: 500;">{{ estimate()!.areaM2 }} m²</p>
+              </div>
+              <div>
+                <p class="form-label mb-2">{{ i18n.t('ESTIMATOR.DISTRICT') || 'Location' }}</p>
+                <p class="fx-text" style="opacity: 1; font-weight: 500;">{{ estimate()!.district }}</p>
+              </div>
+              <div>
+                <p class="form-label mb-2">{{ i18n.t('ESTIMATOR.CONFIDENCE') }}</p>
+                <p class="fx-text" style="opacity: 1; font-weight: 500;">{{ i18n.t('ESTIMATOR.RELIABLE') }}</p>
+              </div>
+            </div>
+
+            <!-- LEAD MAGNET: PROJECT AUDIT -->
+            <div class="audit-section py-8 bg-color-mix(in srgb, var(--fx-accent) 5%, transparent) p-8">
+              <h3 class="fx-serif" style="font-size: 24px; margin-bottom: 16px; letter-spacing: 0.05em;">
+                {{ i18n.t('AUDIT.TITLE') }}
+              </h3>
+              <p class="fx-text" style="font-size: 14px; margin-bottom: 32px; max-width: 600px;">
+                {{ i18n.t('AUDIT.DESC') }}
+              </p>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <label class="form-label">{{ i18n.t('AUDIT.FIELD_ADDRESS') }}</label>
+                  <input type="text" placeholder="e.g. 62 Chavchavadze Ave, Vake" />
+                </div>
+                <div>
+                  <label class="form-label">{{ i18n.t('CONTACT.PHONE') }}</label>
+                  <input type="tel" placeholder="+995 5__ ___ ___" />
+                </div>
+              </div>
+
+              <div class="pt-8">
+                <button class="btn-one" style="background: var(--fx-accent); color: #000; border: none;">
+                  {{ i18n.t('AUDIT.CTA') }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+
+    </div>
+  </div>
+</section>

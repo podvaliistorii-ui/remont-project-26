@@ -1,0 +1,64 @@
+<section class="portfolio-page">
+  <div class="gallery-scroll-wrapper" #scrollWrapper>
+    <div class="gallery-sticky-container" #stickyContainer>
+
+      <div class="editorial-label editorial-label--left">{{ labelLeft() }}</div>
+      <div class="editorial-label editorial-label--right">{{ labelRight() }}</div>
+
+      <div class="gallery-track" #track>
+        
+        @for (item of items(); track item.id; let i = $index) {
+          <a class="project-card" 
+             [routerLink]="['/portfolio', item.id]"
+             (click)="navigateToProject($event, item.id)"
+             [attr.data-media-type]="item.mainMedia.type">
+
+            <!-- 3D WRAPPER (Target for GSAP) -->
+            <div class="project-card__inner">
+              <div class="project-card__visual" [style.view-transition-name]="'project-image-' + item.id">
+                <div class="parallax-wrap">
+                  @if (item.mainMedia.type === 'video') {
+                    <video class="project-card__media parallax-img" 
+                           autoplay muted loop playsinline 
+                           preload="auto"
+                           [poster]="item.mainMedia.poster || ''">
+                      <source [src]="item.mainMedia.url" type="video/mp4">
+                    </video>
+                  } @else {
+                    <img [src]="item.mainMedia.url" 
+                         [alt]="item.titleKey | translate" 
+                         class="project-card__media parallax-img" 
+                         [attr.fetchpriority]="i === 0 ? 'high' : null" 
+                         loading="lazy" />
+                  }
+                </div>
+
+                <!-- BLUEPRINT OVERLAY -->
+                <div class="project-blueprint-svg">
+                  <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 10H90V110H10V10Z" stroke="currentColor" stroke-width="0.5"/>
+                    <path d="M10 45H35V10" stroke="currentColor" stroke-width="0.5"/>
+                    <path d="M65 10V45H90" stroke="currentColor" stroke-width="0.5"/>
+                    <path d="M35 110V75H10" stroke="currentColor" stroke-width="0.5"/>
+                    <path d="M90 75H65V110" stroke="currentColor" stroke-width="0.5"/>
+                    <path d="M35 45H65V75H35V45Z" stroke="currentColor" stroke-width="0.5"/>
+                    <circle cx="50" cy="60" r="2" fill="currentColor"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Dynamic vertical labels per project -->
+              <div class="project-card__side-labels">
+                <span class="side-label side-label--left">{{ item.area }} m²</span>
+                <span class="side-label side-label--right">{{ item.districtKey | translate }}</span>
+              </div>
+            </div>
+
+          </a>
+        }
+
+        
+      </div>
+    </div>
+  </div>
+</section>

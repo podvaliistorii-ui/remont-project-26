@@ -1,0 +1,124 @@
+<section class="contact-page">
+  <div class="contact-page__inner fx-page__container">
+    <header class="contact-hero" data-reveal>
+      <span class="fx-kicker">{{ 'CONTACT.KICKER' | translate }}</span>
+      <h1 class="fx-title">{{ 'CONTACT.TITLE' | translate }}</h1>
+      <p class="contact-subtitle">{{ 'CONTACT.SUBTITLE' | translate }}</p>
+    </header>
+
+    <div class="contact-layout">
+      <article class="contact-panel contact-panel--form" data-reveal>
+        <div class="panel-heading">
+          <span>{{ 'CONTACT.FORM_LABEL' | translate }}</span>
+          <strong>{{ 'CONTACT.RESPONSE_TIME' | translate }}</strong>
+        </div>
+
+        <form class="fx-form" #contactForm="ngForm" (ngSubmit)="submit(contactForm)">
+          <div class="form-grid">
+            <label class="fx-field">
+              <input
+                type="text"
+                name="name"
+                required
+                minlength="2"
+                maxlength="80"
+                autocomplete="name"
+                [(ngModel)]="name"
+                [placeholder]="'CONTACT.NAME_PLACEHOLDER' | translate"
+              />
+              <span>{{ 'CONTACT.LABEL_NAME' | translate }}</span>
+            </label>
+
+            <label class="fx-field">
+              <input
+                type="tel"
+                name="phone"
+                required
+                maxlength="30"
+                autocomplete="tel"
+                inputmode="tel"
+                [(ngModel)]="phone"
+                [placeholder]="'CONTACT.PHONE_PLACEHOLDER' | translate"
+              />
+              <span>{{ 'CONTACT.LABEL_PHONE' | translate }}</span>
+            </label>
+          </div>
+
+          <label class="fx-field">
+            <select name="district" required [(ngModel)]="district">
+              <option value="" disabled>{{ 'CONTACT.DISTRICT_PLACEHOLDER' | translate }}</option>
+              <option value="vake">{{ 'CALCULATOR.DISTRICTS.vake' | translate }}</option>
+              <option value="mtatsminda">{{ 'CALCULATOR.DISTRICTS.mtatsminda' | translate }}</option>
+              <option value="saburtalo">{{ 'CALCULATOR.DISTRICTS.saburtalo' | translate }}</option>
+              <option value="vera">{{ 'CALCULATOR.DISTRICTS.vera' | translate }}</option>
+              <option value="gldani">{{ 'CALCULATOR.DISTRICTS.gldani' | translate }}</option>
+              <option value="isani">{{ 'CALCULATOR.DISTRICTS.isani' | translate }}</option>
+              <option value="other">{{ 'CALCULATOR.DISTRICTS.other' | translate }}</option>
+            </select>
+            <span>{{ 'CONTACT.LABEL_DISTRICT' | translate }}</span>
+          </label>
+
+          <label class="fx-field">
+            <textarea
+              name="brief"
+              rows="6"
+              required
+              minlength="10"
+              maxlength="900"
+              [(ngModel)]="brief"
+              [placeholder]="'CONTACT.BRIEF_PLACEHOLDER' | translate"
+            ></textarea>
+            <span>{{ 'CONTACT.LABEL_BRIEF' | translate }}</span>
+          </label>
+
+          <button class="btn-one contact-submit" type="submit" [disabled]="contactForm.invalid || isSubmitting()">
+            @if (isSubmitting()) {
+              <span>{{ 'CONTACT.SENDING' | translate }}</span>
+            } @else if (sent()) {
+              <span>{{ 'CONTACT.SUCCESS' | translate }}</span>
+            } @else {
+              <span>{{ 'CONTACT.SUBMIT' | translate }}</span>
+            }
+          </button>
+        </form>
+      </article>
+
+      <aside class="contact-panel contact-panel--info" data-reveal>
+        <div class="contact-card contact-card--primary">
+          <span class="contact-card__label">{{ 'CONTACT.PHONE_DIRECT' | translate }}</span>
+          <a href="https://wa.me/995558105574" target="_blank" rel="noopener noreferrer">+995 558 10 55 74</a>
+        </div>
+
+        <div class="contact-card">
+          <span class="contact-card__label">{{ 'CONTACT.TELEGRAM_DIRECT' | translate }}</span>
+          <a href="https://t.me/fixentro" target="_blank" rel="noopener noreferrer">@fixentro</a>
+        </div>
+
+        <div class="contact-card">
+          <span class="contact-card__label">{{ 'CONTACT.ADDRESS_TITLE' | translate }}</span>
+          <span>{{ 'FOOTER.ADDRESS' | translate }}</span>
+        </div>
+
+        <div class="contact-card">
+          <span class="contact-card__label">{{ 'CONTACT.HOURS_TITLE' | translate }}</span>
+          <span>{{ 'CONTACT.HOURS_VALUE' | translate }}</span>
+        </div>
+
+        <div class="contact-map" aria-label="FixEntro Tbilisi map">
+          <div class="contact-map__grid"></div>
+          <svg viewBox="0 0 420 280" aria-hidden="true">
+            <path class="map-river" d="M0 145 C80 118 132 170 205 145 S335 112 420 136"></path>
+            <path class="map-street" d="M58 214 C128 170 180 166 260 186 S352 205 395 168"></path>
+            <path class="map-street map-street--thin" d="M90 78 C154 100 194 92 248 70 S338 52 382 78"></path>
+            <circle class="map-point" cx="228" cy="148" r="7"></circle>
+            <circle class="map-pulse" cx="228" cy="148" r="18"></circle>
+          </svg>
+          <div class="contact-map__caption">
+            <strong>FIXENTRO</strong>
+            <span>{{ 'CONTACT.MAP_LABEL' | translate }}</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>

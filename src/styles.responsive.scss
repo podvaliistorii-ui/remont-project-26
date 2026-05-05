@@ -1,0 +1,136 @@
+/* ── GLOBAL RESPONSIVENESS REFINEMENTS ── */
+
+/* 1. Prevent Horizontal Overflow & Standardize Containers */
+html, body {
+  width: 100%;
+  overflow-x: hidden; /* Hard stop for side scrolling on mobile */
+  position: relative;
+}
+
+.fx-page__container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 80px); /* Tighter padding for mobile */
+  box-sizing: border-box;
+}
+
+/* 2. Universal Typography Scaling (Prevents overlaps) */
+h1, .fx-title {
+  font-size: clamp(2.5rem, 8vw, 5.5rem); /* Responsive scaling */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Georgian Specific Adjustments (Lower tracking, more line height) */
+html[lang="ka"] {
+  --fx-font-serif: 'Noto Serif Georgian', serif;
+  h1, h2, h3, .fx-serif {
+    letter-spacing: 0;
+    line-height: 1.25;
+  }
+}
+
+/* 3. Global Theme Polish (Contrast Audit) */
+
+/* Platinum Dark Mode Refinements */
+[data-theme='dark'] {
+  --fx-text: #E0E0E0; /* Platinum Text */
+  --fx-line: rgba(255, 255, 255, 0.08); /* Soft white lines */
+  --fx-surface: #121212;
+  
+  .fx-text { opacity: 0.85; } /* Better readability */
+  
+  /* Buttons should stand out */
+  .btn-one {
+    background: #D4AF37; /* Gold by default in dark mode for visibility */
+    color: #0A0A0A;
+    &:hover {
+      background: #FFFFFF;
+      color: #0A0A0A;
+    }
+  }
+}
+
+/* 4. Mobile Layout Transformations (max-width: 768px) */
+@media (max-width: 768px) {
+  .fx-section {
+    padding: 60px 0; /* Standardized spacing */
+  }
+
+  /* Header mobile density */
+  .header__inner {
+    padding: 0 20px;
+    height: 70px;
+  }
+  
+  .header__logo {
+    font-size: 20px;
+  }
+
+  /* Grid Collapse (Universal) */
+  .contact-terminal,
+  .about-grid,
+  .process-timeline,
+  .pillars-grid,
+  .metrics-row,
+  .editorial-grid,
+  .dashboard-container {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+}
+
+/* 5. Fix for Oversized Content Blocks */
+.project-card__side-labels,
+.editorial-label {
+  display: none !important; /* Hide vertical labels on small screens to save space */
+}
+
+@media (min-width: 1025px) {
+  .project-card__side-labels,
+  .editorial-label {
+    display: flex !important;
+  }
+}
+
+/* 6. Extreme Mobile Safety Net (max-width: 640px) */
+@media (max-width: 640px) {
+  /* Prevent side-by-side buttons from squishing */
+  .home-hero__actions {
+    flex-direction: column !important;
+    gap: 15px !important;
+    width: 100%;
+  }
+
+  .home-hero__actions .btn-one {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Wrap badges to prevent overflow */
+  .authority-badges {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  /* Force remaining structural grids to 1 column on small phones */
+  .district-map-grid,
+  .cta-inputs,
+  .lead-modal__actions,
+  .dashboard-badges,
+  .renovation-tiers {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Adjust typography to fit */
+  .branding-title {
+    font-size: clamp(3rem, 12vw, 6rem) !important;
+  }
+
+  /* Modal scaling */
+  .lead-modal {
+    padding: 20px !important;
+  }
+}
