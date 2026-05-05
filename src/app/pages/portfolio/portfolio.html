@@ -1,64 +1,45 @@
 <section class="portfolio-page">
-  <div class="gallery-scroll-wrapper" #scrollWrapper>
-    <div class="gallery-sticky-container" #stickyContainer>
+  <div class="fx-page__container">
+    
+    <header class="portfolio-header">
+      <span class="fx-kicker">8Y_PRECISION_ENGINEERING</span>
+      <h1 class="fx-title">{{ 'NAV.PORTFOLIO' | translate }}</h1>
+    </header>
 
-      <div class="editorial-label editorial-label--left">{{ labelLeft() }}</div>
-      <div class="editorial-label editorial-label--right">{{ labelRight() }}</div>
-
-      <div class="gallery-track" #track>
-        
-        @for (item of items(); track item.id; let i = $index) {
-          <a class="project-card" 
-             [routerLink]="['/portfolio', item.id]"
-             (click)="navigateToProject($event, item.id)"
-             [attr.data-media-type]="item.mainMedia.type">
-
-            <!-- 3D WRAPPER (Target for GSAP) -->
-            <div class="project-card__inner">
-              <div class="project-card__visual" [style.view-transition-name]="'project-image-' + item.id">
-                <div class="parallax-wrap">
-                  @if (item.mainMedia.type === 'video') {
-                    <video class="project-card__media parallax-img" 
-                           autoplay muted loop playsinline 
-                           preload="auto"
-                           [poster]="item.mainMedia.poster || ''">
-                      <source [src]="item.mainMedia.url" type="video/mp4">
-                    </video>
-                  } @else {
-                    <img [src]="item.mainMedia.url" 
-                         [alt]="item.titleKey | translate" 
-                         class="project-card__media parallax-img" 
-                         [attr.fetchpriority]="i < 2 ? 'high' : null" 
-                         loading="eager" />
-                  }
-                </div>
-
-                <!-- BLUEPRINT OVERLAY -->
-                <div class="project-blueprint-svg">
-                  <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 10H90V110H10V10Z" stroke="currentColor" stroke-width="0.5"/>
-                    <path d="M10 45H35V10" stroke="currentColor" stroke-width="0.5"/>
-                    <path d="M65 10V45H90" stroke="currentColor" stroke-width="0.5"/>
-                    <path d="M35 110V75H10" stroke="currentColor" stroke-width="0.5"/>
-                    <path d="M90 75H65V110" stroke="currentColor" stroke-width="0.5"/>
-                    <path d="M35 45H65V75H35V45Z" stroke="currentColor" stroke-width="0.5"/>
-                    <circle cx="50" cy="60" r="2" fill="currentColor"/>
-                  </svg>
-                </div>
-              </div>
-
-              <!-- Dynamic vertical labels per project -->
-              <div class="project-card__side-labels">
-                <span class="side-label side-label--left">{{ item.area }} m²</span>
-                <span class="side-label side-label--right">{{ item.districtKey | translate }}</span>
-              </div>
+    <div class="projects-list">
+      @for (item of items(); track item.id; let i = $index) {
+        <a class="project-entry" 
+           [routerLink]="['/portfolio', item.id]"
+           (click)="navigateToProject($event, item.id)">
+          
+          <div class="project-entry__visual">
+            @if (item.mainMedia.type === 'video') {
+              <video class="project-entry__media" autoplay muted loop playsinline preload="auto" [poster]="item.mainMedia.poster || ''">
+                <source [src]="item.mainMedia.url" type="video/mp4">
+              </video>
+            } @else {
+              <img [src]="item.mainMedia.url" 
+                   [alt]="item.titleKey | translate" 
+                   class="project-entry__media" 
+                   [attr.fetchpriority]="i < 2 ? 'high' : null" 
+                   loading="eager" />
+            }
+            <div class="project-entry__overlay">
+              <span class="view-btn">{{ 'CURSOR.VIEW' | translate }}</span>
             </div>
+          </div>
 
-          </a>
-        }
-
-        
-      </div>
+          <div class="project-entry__info">
+            <div class="info-top">
+              <span class="project-area">{{ item.area }} m²</span>
+              <span class="project-year">{{ item.year }}</span>
+            </div>
+            <h2 class="project-name">{{ item.titleKey | translate }}</h2>
+            <p class="project-location">{{ item.districtKey | translate }}</p>
+          </div>
+        </a>
+      }
     </div>
+
   </div>
 </section>
