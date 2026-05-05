@@ -63,8 +63,7 @@
 }
 
 html, body {
-  cursor: none !important;
-  * { cursor: none !important; }
+  cursor: auto;
 }
 
 body {
@@ -231,15 +230,14 @@ body::after {
 
 /* ── SAFETY FALLBACK: DO NOT HIDE NATIVE CURSOR ── */
 html {
-  cursor: auto !important;
-  * { cursor: auto !important; }
+  cursor: auto;
 }
 
 .custom-cursor-active #fx-cursor { opacity: 1; }
 
 @media (hover: none), (pointer: coarse) {
   #fx-cursor {
-    display: none;
+    display: none !important;
   }
 }
 

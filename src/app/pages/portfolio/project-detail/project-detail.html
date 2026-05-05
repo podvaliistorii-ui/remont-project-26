@@ -64,7 +64,9 @@
           @for (img of p.galleryImages; track img; let i = $index) {
             <div class="media-item" (click)="openLightbox(img)" [style.--index]="i">
               <div class="media-wrap">
-                <img [src]="img" alt="Project detail" class="gallery-media-img" loading="lazy" />
+                <img [src]="img" alt="Project detail" class="gallery-media-img" 
+                     [attr.fetchpriority]="i < 2 ? 'high' : null" 
+                     loading="eager" />
               </div>
               <div class="media-zoom-hint">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">

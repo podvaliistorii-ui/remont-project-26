@@ -277,6 +277,11 @@ video.project-card__media {
     aspect-ratio: 4 / 5;
     opacity: 1 !important;
     transform: none !important;
+
+    .project-card__inner {
+      opacity: 1 !important;
+      transform: none !important;
+    }
   }
 
   .editorial-label, .side-label { display: none; }

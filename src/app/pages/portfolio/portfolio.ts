@@ -44,6 +44,13 @@ export class PortfolioComponent implements AfterViewInit, OnDestroy {
   }
 
   private initHorizontalGallery(): void {
+    if (window.innerWidth <= 768) {
+      // For mobile, just make sure inner cards are visible since SCAP/SCSS handles layout
+      const inners = gsap.utils.toArray('.project-card__inner') as HTMLElement[];
+      gsap.set(inners, { opacity: 1, scale: 1, rotateY: 0, z: 0 });
+      return;
+    }
+
     const trackEl = this.track.nativeElement as HTMLElement;
     const scrollWrapperEl = this.scrollWrapper.nativeElement as HTMLElement;
     const cards = gsap.utils.toArray('.project-card') as HTMLElement[];
