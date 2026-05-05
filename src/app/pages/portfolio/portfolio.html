@@ -1,45 +1,49 @@
 <section class="portfolio-page">
-  <div class="fx-page__container">
-    
-    <header class="portfolio-header">
-      <span class="fx-kicker">8Y_PRECISION_ENGINEERING</span>
-      <h1 class="fx-title">{{ 'NAV.PORTFOLIO' | translate }}</h1>
-    </header>
+  <div class="gallery-scroll-wrapper" #scrollWrapper>
+    <div class="gallery-sticky-container">
+      
+      <div class="fx-page__container portfolio-intro">
+        <header class="portfolio-header">
+          <span class="fx-kicker">8Y_PRECISION_ENGINEERING</span>
+          <h1 class="fx-title">{{ 'NAV.PORTFOLIO' | translate }}</h1>
+        </header>
+      </div>
 
-    <div class="projects-list">
-      @for (item of items(); track item.id; let i = $index) {
-        <a class="project-entry" 
-           [routerLink]="['/portfolio', item.id]"
-           (click)="navigateToProject($event, item.id)">
-          
-          <div class="project-entry__visual">
-            @if (item.mainMedia.type === 'video') {
-              <video class="project-entry__media" autoplay muted loop playsinline preload="auto" [poster]="item.mainMedia.poster || ''">
-                <source [src]="item.mainMedia.url" type="video/mp4">
-              </video>
-            } @else {
-              <img [src]="item.mainMedia.url" 
-                   [alt]="item.titleKey | translate" 
-                   class="project-entry__media" 
-                   [attr.fetchpriority]="i < 2 ? 'high' : null" 
-                   loading="eager" />
-            }
-            <div class="project-entry__overlay">
-              <span class="view-btn">{{ 'CURSOR.VIEW' | translate }}</span>
+      <div class="projects-track" #track>
+        @for (item of items(); track item.id; let i = $index) {
+          <a class="project-entry" 
+             [routerLink]="['/portfolio', item.id]"
+             (click)="navigateToProject($event, item.id)">
+            
+            <div class="project-entry__visual">
+              @if (item.mainMedia.type === 'video') {
+                <video class="project-entry__media" autoplay muted loop playsinline preload="auto" [poster]="item.mainMedia.poster || ''">
+                  <source [src]="item.mainMedia.url" type="video/mp4">
+                </video>
+              } @else {
+                <img [src]="item.mainMedia.url" 
+                     [alt]="item.titleKey | translate" 
+                     class="project-entry__media" 
+                     [attr.fetchpriority]="i < 2 ? 'high' : null" 
+                     loading="eager" />
+              }
+              <div class="project-entry__overlay">
+                <span class="view-btn">{{ 'CURSOR.VIEW' | translate }}</span>
+              </div>
             </div>
-          </div>
 
-          <div class="project-entry__info">
-            <div class="info-top">
-              <span class="project-area">{{ item.area }} m²</span>
-              <span class="project-year">{{ item.year }}</span>
+            <div class="project-entry__info">
+              <div class="info-top">
+                <span class="project-area">{{ item.area }} m²</span>
+                <span class="project-year">{{ item.year }}</span>
+              </div>
+              <h2 class="project-name">{{ item.titleKey | translate }}</h2>
+              <p class="project-location">{{ item.districtKey | translate }}</p>
             </div>
-            <h2 class="project-name">{{ item.titleKey | translate }}</h2>
-            <p class="project-location">{{ item.districtKey | translate }}</p>
-          </div>
-        </a>
-      }
+          </a>
+        }
+      </div>
+
     </div>
-
   </div>
 </section>
