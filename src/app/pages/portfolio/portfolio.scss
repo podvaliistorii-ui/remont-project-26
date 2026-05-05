@@ -78,7 +78,9 @@
   aspect-ratio: 3 / 4;
   display: block; /* Robust anchor behavior */
   will-change: transform;
-  opacity: 1; /* Parent is visible, child inner is controlled by GSAP */
+  opacity: 1 !important; /* FORCED VISIBILITY */
+  visibility: visible !important;
+  border: 1px solid red; /* DEBUG BORDER */
   text-decoration: none;
   cursor: pointer !important;
   user-select: none;
@@ -98,7 +100,8 @@
   height: 100%;
   transform-style: preserve-3d;
   will-change: transform, opacity;
-  opacity: 0; /* Managed by GSAP */
+  opacity: 1 !important; /* FORCED VISIBILITY */
+  visibility: visible !important;
 }
 
 .project-card__visual {

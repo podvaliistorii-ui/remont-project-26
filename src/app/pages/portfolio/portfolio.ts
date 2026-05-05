@@ -1,4 +1,4 @@
-import { Component, inject, AfterViewInit, PLATFORM_ID, ElementRef, ViewChild, OnDestroy, signal } from '@angular/core';
+import { Component, inject, AfterViewInit, PLATFORM_ID, ElementRef, ViewChild, OnDestroy, signal, OnInit } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -19,7 +19,7 @@ if (typeof window !== 'undefined') {
   templateUrl: './portfolio.html',
   styleUrl: './portfolio.scss',
 })
-export class PortfolioComponent implements AfterViewInit, OnDestroy {
+export class PortfolioComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly router = inject(Router);
   protected readonly i18n = inject(LanguageService);
@@ -34,6 +34,14 @@ export class PortfolioComponent implements AfterViewInit, OnDestroy {
 
   private st?: ScrollTrigger;
 
+  ngOnInit(): void {
+    console.log('PortfolioComponent initialized');
+    console.log('Portfolio items from service:', this.items());
+    if (this.items().length === 0) {
+      console.error('CRITICAL: Portfolio items array is empty!');
+    }
+  }
+
   ngAfterViewInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
     
@@ -44,10 +52,12 @@ export class PortfolioComponent implements AfterViewInit, OnDestroy {
   }
 
   private initHorizontalGallery(): void {
+    // Force immediate visibility of all card elements to prevent "hidden by GSAP" issues
+    const inners = gsap.utils.toArray('.project-card__inner') as HTMLElement[];
+    gsap.set(inners, { opacity: 1, scale: 1, rotateY: 0, z: 0, visibility: 'visible' });
+
     if (window.innerWidth <= 768) {
-      // For mobile, just make sure inner cards are visible since SCAP/SCSS handles layout
-      const inners = gsap.utils.toArray('.project-card__inner') as HTMLElement[];
-      gsap.set(inners, { opacity: 1, scale: 1, rotateY: 0, z: 0 });
+      console.log('Mobile view detected, disabling horizontal scroll');
       return;
     }
 
