@@ -147,17 +147,17 @@ export class App implements AfterViewInit {
     let keywords = '';
 
     if (lang === 'ru') {
-      title = 'FixEntro | Ремонт квартир в Тбилиси и Батуми';
-      description = 'Премиальный ремонт квартир в Тбилиси под ключ. Дизайн и инженерия в Ваке, Сабуртало, Батуми. FixEntro — стандарты качества в Грузии.';
-      keywords = 'Ремонт квартир Тбилиси, ремонт Ваке, Сабуртало, ремонт Батуми, отделка под ключ Грузия, дизайн интерьера Тбилиси';
+      title = 'FixEntro | Ремонт квартир в Тбилиси';
+      description = 'Премиальный ремонт квартир в Тбилиси под ключ. Дизайн и инженерия в Ваке, Сабуртало, Мтацминда. FixEntro — стандарты качества в Грузии.';
+      keywords = 'Ремонт квартир Тбилиси, ремонт Ваке, Сабуртало, ремонт Мтацминда, отделка под ключ Грузия, дизайн интерьера Тбилиси';
     } else if (lang === 'ka') {
-      title = 'FixEntro | ბინის რემონტი თბილისსა და ბათუმში';
-      description = 'პრემიუმ კლასის ბინის რემონტი თბილისში. დიზაინი და ინჟინერია ვაკეში, საბურთალოზე, ბათუმში. FixEntro — ხარისხის სტანდარტი საქართველოში.';
-      keywords = 'ბინის რემონტი თბილისი, რემონტი ვაკეში, საბურთალოზე, რემონტი ბათუმში, რემონტი საქართველო, ინტერიერის დიზაინი';
+      title = 'FixEntro | ბინის რემონტი თბილისში';
+      description = 'პრემიუმ კლასის ბინის რემონტი თბილისში. დიზაინი და ინჟინერია ვაკეში, საბურთალოზე, მთაწმინდაზე. FixEntro — ხარისხის სტანდარტი საქართველოში.';
+      keywords = 'ბინის რემონტი თბილისი, რემონტი ვაკეში, საბურთალოზე, რემონტი მთაწმინდაზე, რემონტი საქართველო, ინტერიერის დიზაინი';
     } else {
-      title = 'FixEntro | Apartment Renovation in Tbilisi & Batumi';
-      description = 'Premium turnkey apartment renovation in Tbilisi. Design and engineering in Vake, Saburtalo, Batumi. FixEntro — excellence in Georgia.';
-      keywords = 'Apartment renovation Tbilisi, renovation Vake, Saburtalo, renovation Batumi, turnkey renovation Georgia, interior design Tbilisi';
+      title = 'FixEntro | Apartment Renovation in Tbilisi';
+      description = 'Premium turnkey apartment renovation in Tbilisi. Design and engineering in Vake, Saburtalo, Mtatsminda. FixEntro — excellence in Georgia.';
+      keywords = 'Apartment renovation Tbilisi, renovation Vake, Saburtalo, renovation Mtatsminda, turnkey renovation Georgia, interior design Tbilisi';
     }
 
     if (path.includes('portfolio')) {
