@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
+
 Sitemap: https://fixentro.netlify.app/sitemap.xml
