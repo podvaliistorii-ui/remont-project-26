@@ -141,22 +141,33 @@ export class App implements AfterViewInit {
   }
 
   private updateMetaTags(path: string): void {
-    let title = 'FixEntro | Premium Renovation in Tbilisi';
-    let description = 'FixEntro offers luxury turnkey interior renovations and architecture design in Georgia. ბინის რემონტი თბილისი.';
-    let keywords = 'Renovation in Tbilisi, Architecture design Georgia, ბინის რემონტი თბილისი, Premium renovation';
+    const lang = this.i18n.lang();
+    let title = '';
+    let description = '';
+    let keywords = '';
+
+    if (lang === 'ru') {
+      title = 'FixEntro | Ремонт квартир в Тбилиси и Батуми';
+      description = 'Премиальный ремонт квартир в Тбилиси под ключ. Дизайн и инженерия в Ваке, Сабуртало, Батуми. FixEntro — стандарты качества в Грузии.';
+      keywords = 'Ремонт квартир Тбилиси, ремонт Ваке, Сабуртало, ремонт Батуми, отделка под ключ Грузия, дизайн интерьера Тбилиси';
+    } else if (lang === 'ka') {
+      title = 'FixEntro | ბინის რემონტი თბილისსა და ბათუმში';
+      description = 'პრემიუმ კლასის ბინის რემონტი თბილისში. დიზაინი და ინჟინერია ვაკეში, საბურთალოზე, ბათუმში. FixEntro — ხარისხის სტანდარტი საქართველოში.';
+      keywords = 'ბინის რემონტი თბილისი, რემონტი ვაკეში, საბურთალოზე, რემონტი ბათუმში, რემონტი საქართველო, ინტერიერის დიზაინი';
+    } else {
+      title = 'FixEntro | Apartment Renovation in Tbilisi & Batumi';
+      description = 'Premium turnkey apartment renovation in Tbilisi. Design and engineering in Vake, Saburtalo, Batumi. FixEntro — excellence in Georgia.';
+      keywords = 'Apartment renovation Tbilisi, renovation Vake, Saburtalo, renovation Batumi, turnkey renovation Georgia, interior design Tbilisi';
+    }
 
     if (path.includes('portfolio')) {
-      title = 'Our Works | FixEntro Renovation in Tbilisi';
-      description = 'Explore our luxury architecture design and premium renovation projects across Tbilisi, Georgia.';
+      if (lang === 'ru') title = 'Наши работы | Ремонт в Ваке, Сабуртало, Тбилиси';
+      else if (lang === 'ka') title = 'ჩვენი ნამუშევრები | რემონტი ვაკეში, საბურთალოზე, თბილისში';
+      else title = 'Our Works | Renovation in Vake, Saburtalo, Tbilisi';
     } else if (path.includes('calculator')) {
-      title = 'Cost Estimate | FixEntro Renovation';
-      description = 'Calculate the estimate for your next renovation project in Tbilisi. Live market index pricing.';
-    } else if (path.includes('about')) {
-      title = 'About Us | FixEntro Architecture';
-      description = 'Learn more about FixEntro, the leading architecture design and renovation firm in Georgia.';
-    } else if (path.includes('contact')) {
-      title = 'Contact | FixEntro in Tbilisi';
-      description = 'Get in touch with FixEntro for your premium renovation needs in Georgia.';
+      if (lang === 'ru') title = 'Калькулятор ремонта в Тбилиси | FixEntro';
+      else if (lang === 'ka') title = 'რემონტის კალკულატორი თბილისი | FixEntro';
+      else title = 'Renovation Calculator Tbilisi | FixEntro';
     }
 
     this.titleService.setTitle(title);
