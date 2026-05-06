@@ -155,6 +155,44 @@
 .home-showcase__description { margin: 0; padding: 0 40px 30px; font-size: 16px; max-width: 700px; opacity: 0.8; }
 
 @media (max-width: 768px) {
+  .home-hero__content {
+    padding: 60px 20px;
+  }
+
+  .home-hero__main {
+    gap: 30px;
+    margin-bottom: 40px;
+  }
+
+  .authority-badges {
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .authority-badge {
+    padding: 8px 15px;
+    gap: 10px;
+  }
+
+  .badge-val {
+    font-size: 18px;
+    padding-right: 10px;
+  }
+
+  .home-hero__actions {
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 320px; /* Limits the width of buttons on mobile */
+  }
+
+  .home-hero__actions .btn-one {
+    width: 100%;
+    padding: 20px 30px;
+    font-size: 9px;
+  }
+
   .home-showcase__image-wrap { aspect-ratio: 16 / 9; }
   .home-showcase__meta { padding: 20px; flex-direction: column; }
   .home-showcase__description { padding: 0 20px 20px; }
