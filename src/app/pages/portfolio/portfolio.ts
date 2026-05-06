@@ -34,35 +34,48 @@ export class PortfolioComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.initLayout();
+      console.log('Portfolio items on AfterViewInit:', this.items());
+      // Wait for images and layout to settle
+      setTimeout(() => {
+        this.initLayout();
+      }, 500);
     }
   }
 
   private initLayout(): void {
-    // If desktop, init horizontal scroll
+    const items = this.items();
+    console.log('Initializing portfolio layout. Item count:', items.length);
+    
+    if (items.length === 0) {
+      console.warn('Portfolio is empty! Checking service directly...');
+    }
+
     if (window.innerWidth > 900) {
+      console.log('Desktop detected - initializing GSAP horizontal scroll');
       this.initHorizontalGallery();
     } else {
-      // For mobile, just ensure visible
-      gsap.set('.project-entry', { opacity: 1, y: 0 });
+      console.log('Mobile detected - using standard vertical grid');
     }
   }
 
   private initHorizontalGallery(): void {
+    if (!this.track || !this.scrollWrapper) return;
+
     const trackEl = this.track.nativeElement as HTMLElement;
     const scrollWrapperEl = this.scrollWrapper.nativeElement as HTMLElement;
     
-    const totalWidth = trackEl.scrollWidth - window.innerWidth;
+    console.log('Track scrollWidth:', trackEl.scrollWidth);
+    console.log('Viewport width:', window.innerWidth);
 
     this.st = ScrollTrigger.create({
       trigger: scrollWrapperEl,
       start: 'top top',
-      end: () => `+=${totalWidth}`,
+      end: () => `+=${trackEl.scrollWidth - window.innerWidth}`,
       pin: true,
       scrub: 1,
       invalidateOnRefresh: true,
       animation: gsap.to(trackEl, {
-        x: () => -totalWidth,
+        x: () => -(trackEl.scrollWidth - window.innerWidth),
         ease: 'none'
       })
     });

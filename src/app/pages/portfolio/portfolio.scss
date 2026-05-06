@@ -15,9 +15,11 @@
 .project-entry {
   text-decoration: none;
   color: var(--fx-text);
-  display: flex;
+  display: flex !important; /* Ensure it's never hidden */
   flex-direction: column;
   gap: 24px;
+  opacity: 1 !important; /* Force visibility */
+  visibility: visible !important;
   transition: transform 0.6s var(--fx-transition);
 
   &:hover {
