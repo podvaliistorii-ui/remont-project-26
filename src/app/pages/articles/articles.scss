@@ -1,160 +1,50 @@
-:host {
-  display: block;
-}
+.articles-page { padding: 150px 0 100px; }
+.articles-header { text-align: center; margin-bottom: 80px; }
 
-.articles-page {
-  background: var(--fx-bg);
-  min-height: 100vh;
-  padding-top: 15vh;
-  padding-bottom: 20vh;
-  position: relative;
-}
-
-/* ── HOVER REVEAL BG ── */
-.articles-reveal-bg {
-  position: fixed;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  z-index: 0;
-  opacity: 0;
-  filter: brightness(0.2) blur(20px);
-  transition: opacity 0.8s ease, transform 1.2s var(--fx-transition);
-  transform: scale(1.1);
-  pointer-events: none;
-
-  &.active {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.articles-hero {
-  margin-bottom: 100px;
-  position: relative;
-  z-index: 1;
-  .fx-title { font-size: clamp(3rem, 10vw, 8rem); line-height: 0.85; }
-}
-
-/* ── JOURNAL GRID ── */
-.editorial-grid {
+.articles-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 80px 60px;
-  position: relative;
-  z-index: 1;
+  gap: 60px;
 }
 
-.journal-card {
+.article-card {
   cursor: pointer;
-  
-  &__visual {
-    position: relative;
-    aspect-ratio: 16 / 10;
-    overflow: hidden;
-    background: var(--fx-surface);
-    margin-bottom: 30px;
-    box-shadow: var(--fx-shadow-stone);
-
-    img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform 1.2s var(--fx-transition);
-    }
-
-    .card-overlay {
-      position: absolute; inset: 0;
-      background: rgba(var(--fx-bg-rgb), 0.4);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; transition: opacity 0.6s ease;
-    }
-
-    .read-more {
-      font-family: var(--fx-font-sans); font-size: 10px; font-weight: 800;
-      color: var(--fx-bg); background: var(--fx-accent);
-      padding: 12px 24px; letter-spacing: 0.2em;
-      transform: translateY(20px); transition: transform 0.6s var(--fx-transition);
-    }
-  }
-
+  background: var(--fx-surface);
+  transition: transform 0.6s var(--fx-transition);
   &:hover {
-    .journal-card__visual img { transform: scale(1.1); }
-    .card-overlay { opacity: 1; }
-    .read-more { transform: translateY(0); }
-    .card-title { color: var(--fx-accent); }
-  }
-
-  &__content {
-    .card-meta {
-      display: flex; align-items: center; gap: 15px;
-      font-family: var(--fx-font-sans); font-size: 10px; font-weight: 700;
-      color: var(--fx-tech); margin-bottom: 15px; letter-spacing: 0.1em;
-    }
-    .card-title {
-      font-family: var(--fx-font-serif); font-size: clamp(24px, 2.5vw, 36px);
-      line-height: 1.1; transition: color 0.4s ease;
-    }
+    transform: translateY(-10px);
+    .article-card__visual img { transform: scale(1.05); }
   }
 }
 
-/* ── JOURNAL READER ── */
-.journal-reader {
-  max-width: 900px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 10;
+.article-card__visual {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--fx-transition); }
 }
 
-.btn-back {
-  background: none; border: none; color: var(--fx-accent);
-  font-family: var(--fx-font-sans); font-size: 10px; font-weight: 800;
-  letter-spacing: 0.2em; cursor: pointer; padding: 0; margin-bottom: 60px;
-  display: flex; align-items: center; gap: 10px;
-  transition: transform 0.3s ease;
-  &:hover { transform: translateX(-10px); }
+.article-card__content {
+  padding: 40px;
+  .article-date { font-size: 10px; font-weight: 800; letter-spacing: 0.2em; opacity: 0.5; text-transform: uppercase; }
+  .article-title { font-family: var(--fx-font-serif); font-size: 32px; margin: 20px 0; line-height: 1.1; }
+  .article-summary { font-size: 15px; opacity: 0.7; margin-bottom: 30px; line-height: 1.6; }
+  .btn-text { background: none; border: none; color: var(--fx-accent); font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 0.1em; cursor: pointer; padding: 0; }
 }
 
-.reader-header {
-  margin-bottom: 60px;
-  .header-meta {
-    display: flex; gap: 20px; font-family: var(--fx-font-sans);
-    font-size: 10px; font-weight: 800; color: var(--fx-tech);
-    margin-bottom: 25px; letter-spacing: 0.2em;
-    .tag { color: var(--fx-accent); }
-  }
-  .reader-title {
-    font-family: var(--fx-font-serif); font-size: clamp(2.5rem, 6vw, 5rem);
-    line-height: 0.95;
-  }
+/* ── SINGLE ARTICLE VIEW ── */
+.article-view {
+  max-width: 900px; margin: 0 auto;
+  .back-btn { background: none; border: none; color: var(--fx-text); opacity: 0.5; margin-bottom: 40px; cursor: pointer; font-size: 14px; }
+  .article-full-title { font-family: var(--fx-font-serif); font-size: 64px; margin: 20px 0 60px; line-height: 0.9; }
+  .article-view__image { aspect-ratio: 21 / 9; overflow: hidden; margin-bottom: 60px; img { width: 100%; height: 100%; object-fit: cover; } }
+  .article-lead { font-size: 24px; font-family: var(--fx-font-serif); line-height: 1.4; margin-bottom: 60px; border-left: 2px solid var(--fx-accent); padding-left: 40px; }
+  .article-text { line-height: 1.8; font-size: 18px; opacity: 0.9; }
+  .article-view__footer { margin-top: 100px; text-align: center; }
 }
 
-.reader-hero {
-  width: 100%; aspect-ratio: 16 / 9; margin-bottom: 80px;
-  box-shadow: var(--fx-shadow-stone);
-  img { width: 100%; height: 100%; object-fit: cover; }
-}
-
-.reader-body {
-  font-size: clamp(18px, 1.2vw, 22px);
-  line-height: 1.8; opacity: 0.9; font-weight: 300;
-  ::ng-deep p { margin-bottom: 40px; }
-  ::ng-deep h2 { font-family: var(--fx-font-serif); font-size: 32px; margin: 60px 0 30px; color: var(--fx-accent); }
-}
-
-.reader-footer {
-  margin-top: 120px; border-top: 1px solid var(--fx-line); padding-top: 80px;
-  .cta-banner {
-    text-align: center;
-    .cta-kicker { font-size: 10px; font-weight: 800; color: var(--fx-accent); display: block; margin-bottom: 15px; }
-    .cta-title { font-family: var(--fx-font-serif); font-size: 38px; margin-bottom: 40px; }
-  }
-}
-
-/* ── REVEAL ── */
-[data-reveal] {
-  opacity: 0; transform: translateY(30px); transition: all 1.2s var(--fx-transition);
-  &.is-visible { opacity: 1; transform: translateY(0); }
-}
-
-@media (max-width: 768px) {
-  .editorial-grid { grid-template-columns: 1fr; gap: 60px; }
+@media (max-width: 900px) {
+  .articles-grid { grid-template-columns: 1fr; gap: 40px; }
+  .article-full-title { font-size: 40px; }
+  .article-view__image { aspect-ratio: 16 / 9; }
+  .article-lead { padding-left: 20px; font-size: 20px; }
 }

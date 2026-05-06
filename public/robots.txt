@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
 Sitemap: https://fixentro.com/sitemap.xml

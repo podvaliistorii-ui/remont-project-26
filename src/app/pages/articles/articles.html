@@ -1,78 +1,52 @@
-<section class="articles-page" [class.article-view]="selectedArticle()">
-  
-  <div class="articles-reveal-bg" [style.background-image]="hoveredImage() ? 'url(' + hoveredImage() + ')' : ''" [class.active]="hoveredImage() && !selectedArticle()"></div>
-
+<section class="articles-page fx-page">
   <div class="fx-page__container">
     
-    <!-- EDITORIAL GRID VIEW -->
-    <ng-container *ngIf="!selectedArticle()">
-      <header class="articles-hero">
-        <span class="fx-kicker" data-reveal>{{ 'ARTICLES.KICKER' | translate }}</span>
-        <h1 class="fx-title" data-reveal>{{ 'ARTICLES.TITLE' | translate }}</h1>
+    @if (!selectedArticle()) {
+      <header class="articles-header">
+        <span class="fx-kicker">ENGINEERING_INSIGHTS</span>
+        <h1 class="fx-title">Archive & Articles</h1>
       </header>
 
-      <div class="editorial-grid">
-        @for (a of localizedArticles(); track a.id; let i = $index) {
-          <article class="journal-card" 
-                   (click)="selectArticle(a)" 
-                   (mouseenter)="setHoveredImage(a.image)" 
-                   (mouseleave)="setHoveredImage(null)"
-                   data-reveal
-                   [style.transition-delay]="i * 100 + 'ms'">
-            
-            <div class="journal-card__visual">
-              <img [src]="a.image" [alt]="a.title" loading="lazy" />
-              <div class="card-overlay">
-                <span class="read-more">{{ 'ARTICLES.READ_BTN' | translate }}</span>
-              </div>
+      <div class="articles-grid">
+        @for (article of localizedArticles(); track article.id; let i = $index) {
+          <article class="article-card" (click)="selectArticle(article)">
+            <div class="article-card__visual">
+              <img [src]="article.image" [alt]="article.title" 
+                   [attr.fetchpriority]="i < 2 ? 'high' : 'low'" 
+                   loading="eager" />
             </div>
-
-            <div class="journal-card__content">
-              <div class="card-meta">
-                <span class="meta-tag">{{ a.tag | translate }}</span>
-                <span class="meta-sep">/</span>
-                <span class="meta-date">{{ a.date }}</span>
-              </div>
-              <h2 class="card-title">{{ a.title }}</h2>
+            <div class="article-card__content">
+              <span class="article-date">{{ article.date }}</span>
+              <h2 class="article-title">{{ article.title }}</h2>
+              <p class="article-summary">{{ article.summary }}</p>
+              <button class="btn-text">Read Analysis &rarr;</button>
             </div>
           </article>
         }
       </div>
-    </ng-container>
-
-    <!-- SINGLE JOURNAL VIEW -->
-    <ng-container *ngIf="selectedArticle() as article">
-      <div class="journal-reader">
-        <nav class="reader-nav">
-          <button class="btn-back" (click)="closeArticle()">
-            <span class="arrow">&larr;</span> {{ 'ARTICLES.BACK_BTN' | translate }}
-          </button>
-        </nav>
+    } @else {
+      <div class="article-view">
+        <button class="back-btn" (click)="closeArticle()">&larr; Back to Archive</button>
         
-        <header class="reader-header">
-          <div class="header-meta" data-reveal>
-            <span class="tag">{{ article.tag | translate }}</span>
-            <span class="date">{{ article.date }}</span>
-            <span class="time">{{ article.readTime }}</span>
-          </div>
-          <h1 class="reader-title" data-reveal>{{ article.title }}</h1>
+        <header class="article-view__header">
+          <span class="fx-kicker">{{ selectedArticle()?.date }}</span>
+          <h1 class="article-full-title">{{ selectedArticle()?.title }}</h1>
         </header>
 
-        <div class="reader-hero" data-reveal>
-          <img [src]="article.image" [alt]="article.title">
+        <div class="article-view__image">
+          <img [src]="selectedArticle()?.image" [alt]="selectedArticle()?.title" fetchpriority="high" />
         </div>
 
-        <div class="reader-body fx-text" [innerHTML]="article.content" data-reveal></div>
+        <div class="article-view__body">
+          <p class="article-lead">{{ selectedArticle()?.summary }}</p>
+          <div class="article-text" [innerHTML]="selectedArticle()?.content"></div>
+        </div>
 
-        <footer class="reader-footer" data-reveal>
-          <div class="cta-banner">
-            <span class="cta-kicker">{{ 'ARTICLES.CTA.KICKER' | translate }}</span>
-            <h3 class="cta-title">{{ 'ARTICLES.CTA.TITLE' | translate }}</h3>
-            <button class="btn-one" (click)="navigateToCalculator()">{{ 'ARTICLES.CTA.BTN' | translate }}</button>
-          </div>
+        <footer class="article-view__footer">
+          <button class="btn-one" (click)="closeArticle()">Return to Articles</button>
         </footer>
       </div>
-    </ng-container>
+    }
 
   </div>
 </section>

@@ -29,13 +29,10 @@ export class PortfolioComponent implements OnInit, AfterViewInit, OnDestroy {
   private st?: ScrollTrigger;
 
   ngOnInit(): void {
-    console.log('Portfolio initialized');
   }
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      console.log('Portfolio items on AfterViewInit:', this.items());
-      // Wait for images and layout to settle
       setTimeout(() => {
         this.initLayout();
       }, 500);
@@ -43,18 +40,8 @@ export class PortfolioComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private initLayout(): void {
-    const items = this.items();
-    console.log('Initializing portfolio layout. Item count:', items.length);
-    
-    if (items.length === 0) {
-      console.warn('Portfolio is empty! Checking service directly...');
-    }
-
     if (window.innerWidth > 900) {
-      console.log('Desktop detected - initializing GSAP horizontal scroll');
       this.initHorizontalGallery();
-    } else {
-      console.log('Mobile detected - using standard vertical grid');
     }
   }
 
@@ -64,9 +51,6 @@ export class PortfolioComponent implements OnInit, AfterViewInit, OnDestroy {
     const trackEl = this.track.nativeElement as HTMLElement;
     const scrollWrapperEl = this.scrollWrapper.nativeElement as HTMLElement;
     
-    console.log('Track scrollWidth:', trackEl.scrollWidth);
-    console.log('Viewport width:', window.innerWidth);
-
     this.st = ScrollTrigger.create({
       trigger: scrollWrapperEl,
       start: 'top top',
