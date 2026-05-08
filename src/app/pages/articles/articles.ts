@@ -39,7 +39,7 @@ export class ArticlesComponent {
     
     if (localized) {
       this.titleService.setTitle(`${localized.title} | FixEntro Engineering`);
-      this.metaService.updateTag({ name: 'description', content: localized.summary });
+      this.metaService.updateTag({ name: 'description', content: localized.excerpt });
     } else {
       this.titleService.setTitle('Engineering Articles | FixEntro');
     }
