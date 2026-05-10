@@ -1,49 +1,102 @@
 <section class="articles-page fx-page">
+  <!-- Reading Progress -->
+  <div class="reading-progress-bar" [style.transform]="'scaleX(' + readingProgress() / 100 + ')'"></div>
+
   <div class="fx-page__container">
     
     @if (!selectedArticle()) {
-      <header class="articles-header">
-        <span class="fx-kicker">ENGINEERING_INSIGHTS</span>
-        <h1 class="fx-title">Archive & Articles</h1>
+      <header class="articles-header" data-reveal>
+        <span class="fx-kicker">ENGINEERING_INSIGHTS_2026</span>
+        <h1 class="fx-title fx-serif">Archive & Analysis</h1>
+        <div class="header-divider"></div>
       </header>
 
       <div class="articles-grid">
         @for (article of localizedArticles(); track article.id; let i = $index) {
-          <article class="article-card" (click)="selectArticle(article)">
+          <article class="article-card" (click)="selectArticle(article)" [style.--index]="i">
             <div class="article-card__visual">
-              <img [src]="article.image" [alt]="article.title" 
-                   [attr.fetchpriority]="i < 2 ? 'high' : 'low'" 
-                   loading="eager" />
+              <img [src]="article.image" [alt]="article.title" loading="lazy" />
+              <div class="article-card__overlay"></div>
             </div>
             <div class="article-card__content">
-              <span class="article-date">{{ article.date }}</span>
-              <h2 class="article-title">{{ article.title }}</h2>
+              <div class="article-meta">
+                <span class="mono">{{ article.date }}</span>
+                <span class="dot"></span>
+                <span class="mono">{{ article.readTime }}</span>
+              </div>
+              <h2 class="article-title fx-serif">{{ article.title }}</h2>
               <p class="article-summary">{{ article.excerpt }}</p>
-              <button class="btn-text">Read Analysis &rarr;</button>
+              <div class="article-footer">
+                <span class="read-btn">READ_DOC &rarr;</span>
+              </div>
             </div>
           </article>
         }
       </div>
     } @else {
       <div class="article-view">
-        <button class="back-btn" (click)="closeArticle()">&larr; Back to Archive</button>
+        <!-- TechArticle SEO -->
+        <div style="display: none;" itemscope itemtype="https://schema.org/TechArticle">
+          <meta itemprop="headline" [content]="selectedArticle()?.title" />
+          <meta itemprop="description" [content]="selectedArticle()?.excerpt" />
+          <meta itemprop="image" [content]="selectedArticle()?.image" />
+          <div itemprop="author" itemscope itemtype="https://schema.org/Organization">
+            <meta itemprop="name" content="FixEntro Engineering" />
+          </div>
+        </div>
+
+        <nav class="article-nav">
+          <button class="back-link mono" (click)="closeArticle()">&larr; RETURN_TO_INDEX</button>
+        </nav>
         
         <header class="article-view__header">
-          <span class="fx-kicker">{{ selectedArticle()?.date }}</span>
-          <h1 class="article-full-title">{{ selectedArticle()?.title }}</h1>
+          <span class="fx-kicker">{{ selectedArticle()?.date }} // {{ selectedArticle()?.readTime }}</span>
+          <h1 class="article-full-title fx-serif">{{ selectedArticle()?.title }}</h1>
+          <div class="article-view__lead">{{ selectedArticle()?.excerpt }}</div>
         </header>
 
-        <div class="article-view__image">
+        <div class="article-view__hero">
           <img [src]="selectedArticle()?.image" [alt]="selectedArticle()?.title" fetchpriority="high" />
         </div>
 
-        <div class="article-view__body">
-          <p class="article-lead">{{ selectedArticle()?.excerpt }}</p>
-          <div class="article-text" [innerHTML]="selectedArticle()?.content"></div>
+        <div class="article-view__content">
+          <div class="article-text-container" [innerHTML]="selectedArticle()?.content"></div>
+          
+          <blockquote class="architectural-quote">
+            <div class="quote-line"></div>
+            <p>"Precision is not a luxury, it's a structural requirement for any premium renovation in Georgia."</p>
+            <cite class="mono">FixEntro_Technical_Lead</cite>
+          </blockquote>
         </div>
 
+        <!-- Bento Recommendations -->
         <footer class="article-view__footer">
-          <button class="btn-one" (click)="closeArticle()">Return to Articles</button>
+          <div class="recommendations">
+            <h3 class="mono section-label">RECOMMENDED_FOR_YOU</h3>
+            <div class="bento-recommendations">
+              @for (rec of recommendedArticles(); track rec.id) {
+                <div class="rec-card" (click)="selectArticle(rec)">
+                  <div class="rec-visual">
+                    <img [src]="rec.image" [alt]="rec.title" />
+                  </div>
+                  <div class="rec-info">
+                    <h4 class="fx-serif">{{ rec.title }}</h4>
+                    <span class="mono">READ_MORE</span>
+                  </div>
+                </div>
+              }
+              <!-- CTA Card in Bento -->
+              <div class="rec-card rec-card--cta" routerLink="/calculator">
+                <div class="cta-content">
+                  <span class="mono">READY_TO_START?</span>
+                  <h4 class="fx-serif">Calculate your project estimate now.</h4>
+                  <div class="btn-arrow">&rarr;</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-one back-to-list" (click)="closeArticle()">CLOSE_ARTICLE</button>
         </footer>
       </div>
     }

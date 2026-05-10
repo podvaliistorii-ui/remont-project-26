@@ -1,124 +1,100 @@
 <section class="contact-page">
+  <!-- Dynamic Office Coordinates -->
+  <div class="office-coords mono" data-reveal>
+    <span class="label">OFFICE_LOC</span>
+    <span class="value">{{ displayCoords() }}</span>
+  </div>
+
   <div class="contact-page__inner fx-page__container">
     <header class="contact-hero" data-reveal>
-      <span class="fx-kicker">{{ 'CONTACT.KICKER' | translate }}</span>
-      <h1 class="fx-title">{{ 'CONTACT.TITLE' | translate }}</h1>
-      <p class="contact-subtitle">{{ 'CONTACT.SUBTITLE' | translate }}</p>
+      <span class="fx-kicker">COMMUNICATION_PROTOCOL_V1</span>
+      <h1 class="fx-title fx-serif">{{ 'CONTACT.TITLE' | translate }}</h1>
+      <div class="header-line"></div>
     </header>
 
     <div class="contact-layout">
+      <!-- Architectural Form -->
       <article class="contact-panel contact-panel--form" data-reveal>
-        <div class="panel-heading">
-          <span>{{ 'CONTACT.FORM_LABEL' | translate }}</span>
-          <strong>{{ 'CONTACT.RESPONSE_TIME' | translate }}</strong>
-        </div>
-
         <form class="fx-form" #contactForm="ngForm" (ngSubmit)="submit(contactForm)">
-          <div class="form-grid">
-            <label class="fx-field">
-              <input
-                type="text"
-                name="name"
-                required
-                minlength="2"
-                maxlength="80"
-                autocomplete="name"
-                [(ngModel)]="name"
-                [placeholder]="'CONTACT.NAME_PLACEHOLDER' | translate"
-              />
-              <span>{{ 'CONTACT.LABEL_NAME' | translate }}</span>
-            </label>
+          
+          <div class="floating-field-group">
+            <div class="fx-field-wrap">
+              <input type="text" name="name" required [(ngModel)]="name" #nameRef="ngModel" [class.has-value]="name" />
+              <label>{{ 'CONTACT.LABEL_NAME' | translate }}</label>
+              <div class="field-line"></div>
+            </div>
 
-            <label class="fx-field">
-              <input
-                type="tel"
-                name="phone"
-                required
-                maxlength="30"
-                autocomplete="tel"
-                inputmode="tel"
-                [(ngModel)]="phone"
-                [placeholder]="'CONTACT.PHONE_PLACEHOLDER' | translate"
-              />
-              <span>{{ 'CONTACT.LABEL_PHONE' | translate }}</span>
-            </label>
+            <div class="fx-field-wrap">
+              <input type="tel" name="phone" required [(ngModel)]="phone" #phoneRef="ngModel" [class.has-value]="phone" />
+              <label>{{ 'CONTACT.LABEL_PHONE' | translate }}</label>
+              <div class="field-line"></div>
+            </div>
           </div>
 
-          <label class="fx-field">
-            <select name="district" required [(ngModel)]="district">
-              <option value="" disabled>{{ 'CONTACT.DISTRICT_PLACEHOLDER' | translate }}</option>
-              <option value="vake">{{ 'CALCULATOR.DISTRICTS.vake' | translate }}</option>
-              <option value="mtatsminda">{{ 'CALCULATOR.DISTRICTS.mtatsminda' | translate }}</option>
-              <option value="saburtalo">{{ 'CALCULATOR.DISTRICTS.saburtalo' | translate }}</option>
-              <option value="vera">{{ 'CALCULATOR.DISTRICTS.vera' | translate }}</option>
-              <option value="gldani">{{ 'CALCULATOR.DISTRICTS.gldani' | translate }}</option>
-              <option value="isani">{{ 'CALCULATOR.DISTRICTS.isani' | translate }}</option>
-              <option value="other">{{ 'CALCULATOR.DISTRICTS.other' | translate }}</option>
+          <div class="fx-field-wrap">
+            <select name="district" required [(ngModel)]="district" [class.has-value]="district">
+              <option value="" disabled></option>
+              <option value="vake">VAKE_DISTRICT</option>
+              <option value="saburtalo">SABURTALO_DISTRICT</option>
+              <option value="mtatsminda">MTATSMINDA_DISTRICT</option>
+              <option value="vera">VERA_DISTRICT</option>
+              <option value="gldani">GLDANI_DISTRICT</option>
+              <option value="isani">ISANI_DISTRICT</option>
+              <option value="other">OTHER_LOCATION</option>
             </select>
-            <span>{{ 'CONTACT.LABEL_DISTRICT' | translate }}</span>
-          </label>
+            <label>{{ 'CONTACT.LABEL_DISTRICT' | translate }}</label>
+            <div class="field-line"></div>
+          </div>
 
-          <label class="fx-field">
-            <textarea
-              name="brief"
-              rows="6"
-              required
-              minlength="10"
-              maxlength="900"
-              [(ngModel)]="brief"
-              [placeholder]="'CONTACT.BRIEF_PLACEHOLDER' | translate"
-            ></textarea>
-            <span>{{ 'CONTACT.LABEL_BRIEF' | translate }}</span>
-          </label>
+          <div class="fx-field-wrap">
+            <textarea name="brief" rows="4" required [(ngModel)]="brief" [class.has-value]="brief"></textarea>
+            <label>{{ 'CONTACT.LABEL_BRIEF' | translate }}</label>
+            <div class="field-line"></div>
+          </div>
 
-          <button class="btn-one contact-submit" type="submit" [disabled]="contactForm.invalid || isSubmitting()">
-            @if (isSubmitting()) {
-              <span>{{ 'CONTACT.SENDING' | translate }}</span>
-            } @else if (sent()) {
-              <span>{{ 'CONTACT.SUCCESS' | translate }}</span>
-            } @else {
-              <span>{{ 'CONTACT.SUBMIT' | translate }}</span>
-            }
+          <button class="contact-submit-btn" type="submit" [disabled]="contactForm.invalid || isSubmitting()">
+            <span class="btn-text">
+              @if (isSubmitting()) { IN_PROGRESS }
+              @else if (sent()) { SYSTEM_SUCCESS }
+              @else { INITIALIZE_REQUEST }
+            </span>
+            <span class="btn-arrow">&rarr;</span>
           </button>
         </form>
       </article>
 
+      <!-- Interactive Map & Links -->
       <aside class="contact-panel contact-panel--info" data-reveal>
-        <div class="contact-card contact-card--primary">
-          <span class="contact-card__label">{{ 'CONTACT.PHONE_DIRECT' | translate }}</span>
-          <a href="https://wa.me/995558105574" target="_blank" rel="noopener noreferrer">+995 558 10 55 74</a>
-        </div>
-
-        <div class="contact-card">
-          <span class="contact-card__label">{{ 'CONTACT.TELEGRAM_DIRECT' | translate }}</span>
-          <a href="https://t.me/fixentro" target="_blank" rel="noopener noreferrer">@fixentro</a>
-        </div>
-
-        <div class="contact-card">
-          <span class="contact-card__label">{{ 'CONTACT.ADDRESS_TITLE' | translate }}</span>
-          <span>{{ 'FOOTER.ADDRESS' | translate }}</span>
-        </div>
-
-        <div class="contact-card">
-          <span class="contact-card__label">{{ 'CONTACT.HOURS_TITLE' | translate }}</span>
-          <span>{{ 'CONTACT.HOURS_VALUE' | translate }}</span>
-        </div>
-
-        <div class="contact-map" aria-label="FixEntro Tbilisi map">
-          <div class="contact-map__grid"></div>
-          <svg viewBox="0 0 420 280" aria-hidden="true">
-            <path class="map-river" d="M0 145 C80 118 132 170 205 145 S335 112 420 136"></path>
-            <path class="map-street" d="M58 214 C128 170 180 166 260 186 S352 205 395 168"></path>
-            <path class="map-street map-street--thin" d="M90 78 C154 100 194 92 248 70 S338 52 382 78"></path>
-            <circle class="map-point" cx="228" cy="148" r="7"></circle>
-            <circle class="map-pulse" cx="228" cy="148" r="18"></circle>
-          </svg>
-          <div class="contact-map__caption">
-            <strong>FIXENTRO</strong>
-            <span>{{ 'CONTACT.MAP_LABEL' | translate }}</span>
+        
+        <div class="info-links">
+          <div class="info-item" (click)="copyToClipboard('+995 558 10 55 74', 'Phone')">
+            <span class="info-label mono">01_VOICE</span>
+            <span class="info-value">+995 558 10 55 74</span>
+          </div>
+          <div class="info-item" (click)="copyToClipboard('62 Chavchavadze Ave, Tbilisi', 'Address')">
+            <span class="info-label mono">02_LOCATION</span>
+            <span class="info-value">62 Chavchavadze Ave, Tbilisi</span>
           </div>
         </div>
+
+        <div class="interactive-map-wrap">
+          <svg class="tbilisi-svg" viewBox="0 0 400 300">
+            <!-- Simplified Tbilisi Districts -->
+            <path class="district-path" data-name="Vake" d="M150 150 L200 130 L220 160 L180 180 Z" />
+            <path class="district-path" data-name="Saburtalo" d="M120 100 L170 80 L200 120 L150 140 Z" />
+            <path class="district-path" data-name="Mtatsminda" d="M200 130 L250 120 L270 150 L220 160 Z" />
+            <circle class="office-dot" cx="228" cy="148" r="4" />
+            <circle class="office-pulse" cx="228" cy="148" r="10" />
+          </svg>
+          <div class="map-tooltip">WE_WORK_HERE</div>
+        </div>
+
       </aside>
     </div>
+  </div>
+
+  <!-- Copy Toast -->
+  <div class="copy-toast" [class.show]="copyToast().show">
+    <span class="mono">{{ copyToast().text }}</span>
   </div>
 </section>

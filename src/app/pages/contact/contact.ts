@@ -1,8 +1,7 @@
-import { Component, inject, AfterViewInit, PLATFORM_ID, ElementRef, signal } from '@angular/core';
+import { Component, inject, AfterViewInit, PLATFORM_ID, ElementRef, signal, HostListener, computed } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, NgForm } from '@angular/forms';
-
 import { LanguageService } from '../../language.service';
 
 @Component({
@@ -24,6 +23,32 @@ export class ContactComponent implements AfterViewInit {
   
   isSubmitting = signal(false);
   sent = signal(false);
+
+  // Signals for architectural interaction
+  mouseX = signal(0);
+  mouseY = signal(0);
+  copyToast = signal<{ show: boolean, text: string }>({ show: false, text: '' });
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(e: MouseEvent) {
+    this.mouseX.set(e.clientX);
+    this.mouseY.set(e.clientY);
+  }
+
+  readonly displayCoords = computed(() => {
+    const lat = 41.7100 + (this.mouseY() / 100000);
+    const lon = 44.7600 + (this.mouseX() / 100000);
+    return `${lat.toFixed(4)}° N, ${lon.toFixed(4)}° E`;
+  });
+
+  copyToClipboard(text: string, label: string): void {
+    if (isPlatformBrowser(this.platformId)) {
+      navigator.clipboard.writeText(text).then(() => {
+        this.copyToast.set({ show: true, text: `${label} copied` });
+        setTimeout(() => this.copyToast.set({ show: false, text: '' }), 2000);
+      });
+    }
+  }
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -64,7 +89,7 @@ export class ContactComponent implements AfterViewInit {
   }
 
   private buildWhatsAppUrl(): string {
-    const districtLabel = this.i18n.t(`CALCULATOR.DISTRICTS.${this.district}`);
+    const districtLabel = this.district ? this.i18n.t(`CALCULATOR.DISTRICTS.${this.district}`) : 'Other';
     const message = [
       'FixEntro inquiry',
       `Name: ${this.clean(this.name)}`,
