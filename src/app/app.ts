@@ -153,7 +153,76 @@ export class App implements AfterViewInit {
 
     if (isPlatformBrowser(this.platformId)) {
       const saved = localStorage.getItem('fx-theme');
-      this.isDark.set(saved === 'dark');
+      if (saved) {
+        this.isDark.set(saved === 'dark');
+      } else {
+        this.checkNightMode();
+      }
+    }
+  }
+
+  toggleTheme(event?: MouseEvent): void {
+    const targetDark = !this.isDark();
+    
+    if (event && isPlatformBrowser(this.platformId)) {
+      this.playTechClick();
+      this.runThemeTransition(event, targetDark);
+    } else {
+      this.isDark.set(targetDark);
+    }
+  }
+
+  private runThemeTransition(event: MouseEvent, targetDark: boolean): void {
+    const x = event.clientX;
+    const y = event.clientY;
+    const endRadius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
+    );
+
+    const overlay = this.document.createElement('div');
+    overlay.style.cssText = `
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: ${targetDark ? '#0d0d0b' : '#f5f5f3'};
+      clip-path: circle(0% at ${x}px ${y}px);
+      z-index: 999999; pointer-events: none;
+    `;
+    this.document.body.appendChild(overlay);
+
+    gsap.to(overlay, {
+      clipPath: `circle(${endRadius}px at ${x}px ${y}px)`,
+      duration: 0.8,
+      ease: 'expo.inOut',
+      onComplete: () => {
+        this.isDark.set(targetDark);
+        overlay.remove();
+      }
+    });
+  }
+
+  private playTechClick(): void {
+    if (typeof window !== 'undefined') {
+      try {
+        const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(800, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.1);
+        gain.gain.setValueAtTime(0.05, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.1);
+      } catch (e) {}
+    }
+  }
+
+  private checkNightMode(): void {
+    const hour = new Date().getHours();
+    if (hour >= 19 || hour < 7) {
+      this.isDark.set(true);
     }
   }
 
@@ -354,52 +423,6 @@ export class App implements AfterViewInit {
     }
   }
 
-  toggleTheme(): void { this.isDark.update(v => !v); }
-  toggleMenu(): void { this.menuOpen.update((value) => !value); }
-  closeMenu(): void { this.menuOpen.set(false); }
-  switchLang(lang: string): void { this.i18n.setLang(lang as LanguageCode); }
-}
-     } else {
-        gsap.to(target, { x: 0, y: 0, duration: 0.6, ease: 'power3.out', overwrite: 'auto' });
-      }
-    });
-  }
-
-  @HostListener('document:mouseover', ['$event'])
-  onMouseOver(event: MouseEvent): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-    const cursorEl = this.document.getElementById('fx-cursor');
-    if (!cursorEl) return;
-
-    const target = event.target as HTMLElement;
-    const clickable = target.closest('a, button, .nav-btn, .btn-one, .district-map-chip, .tier-card');
-    const projectCard = target.closest('.project-card');
-    const cursorText = cursorEl.querySelector('.cursor-text');
-
-    if (projectCard) {
-      cursorEl.classList.add('cursor-explore');
-      cursorEl.classList.remove('cursor-hover');
-      if (cursorText) cursorText.textContent = this.i18n.t('CURSOR.VIEW');
-    } else if (clickable) {
-      cursorEl.classList.add('cursor-hover');
-      cursorEl.classList.remove('cursor-explore');
-      if (cursorText) cursorText.textContent = this.i18n.t('CURSOR.OPEN');
-    } else {
-      cursorEl.classList.remove('cursor-hover', 'cursor-explore');
-    }
-  }
-
-  @HostListener('document:mouseout', ['$event'])
-  onMouseOut(event: MouseEvent): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-    const cursorEl = this.document.getElementById('fx-cursor');
-    if (!cursorEl) return;
-    if (!event.relatedTarget) {
-      cursorEl.classList.remove('cursor-hover', 'cursor-explore');
-    }
-  }
-
-  toggleTheme(): void { this.isDark.update(v => !v); }
   toggleMenu(): void { this.menuOpen.update((value) => !value); }
   closeMenu(): void { this.menuOpen.set(false); }
   switchLang(lang: string): void { this.i18n.setLang(lang as LanguageCode); }
