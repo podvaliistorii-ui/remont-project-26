@@ -2,6 +2,7 @@ import { Injectable, signal } from '@angular/core';
 
 export interface Project {
   id: string;
+  auditId?: string; // Optional but valid
   titleKey: string;
   taskKey: string;
   solutionKey: string;

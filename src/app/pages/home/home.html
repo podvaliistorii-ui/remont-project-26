@@ -89,14 +89,14 @@
       </header>
       
       <div class="home-showcase__inner">
-        @for (project of featuredProjects; track project.id) {
-          <article class="home-showcase__card" [routerLink]="['/portfolio', project.id]">
+        @for (project of showcaseProjects; track project.title) {
+          <article class="home-showcase__card" [routerLink]="['/portfolio', 'vake-residence']">
             <div class="home-showcase__image-wrap">
-              <img [src]="project.image" [alt]="project.titleKey | translate" />
+              <img [src]="project.image" [alt]="project.title | translate" />
             </div>
             <div class="home-showcase__meta">
-              <p class="fx-serif">{{ project.titleKey | translate }}</p>
-              <span class="mono">{{ project.area }} m²</span>
+              <p class="fx-serif">{{ project.title | translate }}</p>
+              <span class="mono">{{ project.area }}</span>
             </div>
             <p class="home-showcase__description">{{ project.description | translate }}</p>
           </article>
@@ -104,4 +104,6 @@
       </div>
     </div>
   </section>
+} @placeholder {
+  <div style="height: 600px; background: var(--fx-bg);"></div>
 }
