@@ -33,40 +33,41 @@
   </div>
 </section>
 
-<section class="home-seo fx-page">
-  <div class="fx-page__container">
+<section class="home-seo fx-section">
+  <div class="fx-container">
     <div class="home-seo__content">
-      <h2 class="home-seo__title">{{ 'SEO.HOME_TITLE' | translate }}</h2>
+      <h2 class="home-seo__title fx-serif">{{ 'SEO.HOME_TITLE' | translate }}</h2>
       <p class="home-seo__text">{{ 'SEO.HOME_TEXT' | translate }}</p>
     </div>
   </div>
 </section>
 
-<section class="home-districts fx-page">
-  <div class="fx-page__container">
+<section class="home-districts fx-section">
+  <div class="fx-container">
     <div class="home-districts__header">
+      <span class="mono technical-label">OPERATIONAL_RADIUS</span>
       <h2 class="fx-serif">{{ 'SERVICES.DISTRICTS_TITLE' | translate }}</h2>
-      <p class="fx-text">{{ 'SERVICES.DISTRICTS_TEXT' | translate }}</p>
+      <p>{{ 'SERVICES.DISTRICTS_TEXT' | translate }}</p>
     </div>
     <div class="home-districts__grid">
-      <span class="district-tag">Vake</span>
-      <span class="district-tag">Saburtalo</span>
-      <span class="district-tag">Mtatsminda</span>
-      <span class="district-tag">Vera</span>
-      <span class="district-tag">Isani</span>
-      <span class="district-tag">Gldani</span>
-      <span class="district-tag">Didi Digomi</span>
-      <span class="district-tag">Ortachala</span>
+      <span class="district-tag mono">Vake</span>
+      <span class="district-tag mono">Saburtalo</span>
+      <span class="district-tag mono">Mtatsminda</span>
+      <span class="district-tag mono">Vera</span>
+      <span class="district-tag mono">Isani</span>
+      <span class="district-tag mono">Gldani</span>
+      <span class="district-tag mono">Didi Digomi</span>
+      <span class="district-tag mono">Ortachala</span>
     </div>
   </div>
 </section>
 
-<section class="home-engineering fx-page">
-  <div class="fx-page__container">
+<section class="home-engineering fx-section">
+  <div class="fx-container">
     <header class="section-header" data-reveal>
-      <span class="fx-kicker">TECHNICAL_TRANSPARENCY</span>
+      <span class="mono technical-label">TECHNICAL_TRANSPARENCY</span>
       <h2 class="fx-serif">Before & After Engineering</h2>
-      <p class="section-intro">See the skeletal precision behind our premium finishes.</p>
+      <p>See the skeletal precision behind our premium finishes.</p>
     </header>
 
     <div class="engineering-slider-wrap" data-reveal>
@@ -80,22 +81,27 @@
 </section>
 
 @defer (on viewport) {
-  <section class="home-showcase fx-page">
-    <div class="home-showcase__inner fx-page__container">
-      @for (project of showcaseProjects; track project.title) {
-        <article class="home-showcase__card">
-          <div class="home-showcase__image-wrap">
-            <img [src]="project.image" [alt]="project.title | translate" loading="eager" fetchpriority="low" />
-          </div>
-          <div class="home-showcase__meta">
-            <p>{{ project.title | translate }}</p>
-            <span>{{ project.area }}</span>
-          </div>
-          <p class="home-showcase__description">{{ project.description | translate }}</p>
-        </article>
-      }
+  <section class="home-showcase fx-section">
+    <div class="fx-container">
+      <header class="section-header">
+        <span class="mono technical-label">RECENT_TRANSFORMATIONS</span>
+        <h2 class="fx-serif">Fixentro Portfolio</h2>
+      </header>
+      
+      <div class="home-showcase__inner">
+        @for (project of featuredProjects; track project.id) {
+          <article class="home-showcase__card" [routerLink]="['/portfolio', project.id]">
+            <div class="home-showcase__image-wrap">
+              <img [src]="project.image" [alt]="project.titleKey | translate" />
+            </div>
+            <div class="home-showcase__meta">
+              <p class="fx-serif">{{ project.titleKey | translate }}</p>
+              <span class="mono">{{ project.area }} m²</span>
+            </div>
+            <p class="home-showcase__description">{{ project.description | translate }}</p>
+          </article>
+        }
+      </div>
     </div>
   </section>
-} @placeholder {
-  <div style="height: 400px; background: var(--fx-bg);"></div>
 }

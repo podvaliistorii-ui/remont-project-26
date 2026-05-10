@@ -2,10 +2,11 @@
   <div class="gallery-scroll-wrapper" #scrollWrapper>
     <div class="gallery-sticky-container">
       
-      <div class="fx-page__container portfolio-intro">
+      <div class="fx-container portfolio-intro">
         <header class="portfolio-header">
-          <span class="fx-kicker">8Y_PRECISION_ENGINEERING</span>
-          <h1 class="fx-title">{{ 'NAV.PORTFOLIO' | translate }}</h1>
+          <span class="mono technical-label">8Y_PRECISION_ENGINEERING</span>
+          <h1 class="fx-title fx-serif">{{ 'NAV.PORTFOLIO' | translate }}</h1>
+          <div class="fx-divider is-visible"></div>
         </header>
       </div>
 
@@ -28,17 +29,17 @@
                      [attr.loading]="i < 2 ? 'eager' : 'lazy'" />
               }
               <div class="project-entry__overlay">
-                <span class="view-btn">{{ 'CURSOR.VIEW' | translate }}</span>
+                <span class="view-btn mono">EXPLORE_NODE</span>
               </div>
             </div>
 
             <div class="project-entry__info">
               <div class="info-top">
-                <span class="project-area">{{ item.area }} m²</span>
-                <span class="project-year">{{ item.year }}</span>
+                <span class="mono">{{ item.area }} m²</span>
+                <span class="mono">{{ item.year }}</span>
               </div>
-              <h2 class="project-name">{{ item.titleKey | translate }}</h2>
-              <p class="project-location">{{ item.districtKey | translate }}</p>
+              <h2 class="project-name fx-serif">{{ item.titleKey | translate }}</h2>
+              <p class="project-location mono">{{ item.districtKey | translate }}</p>
             </div>
           </a>
         }

@@ -1,136 +1,50 @@
-:host {
-  display: block;
-}
+:host { display: block; background: var(--fx-bg); }
 
-.portfolio-page {
-  background: var(--fx-bg);
-}
+.portfolio-page { background: var(--fx-bg); }
 
-.portfolio-header {
+.portfolio-intro {
   text-align: center;
-  .fx-kicker { display: block; margin-bottom: 15px; }
+  .fx-divider { width: 100px; margin: 40px auto 0; }
 }
 
-/* ── SHARED PROJECT ENTRY STYLES ── */
 .project-entry {
   text-decoration: none;
   color: var(--fx-text);
-  display: flex !important; /* Ensure it's never hidden */
+  display: flex;
   flex-direction: column;
-  gap: 24px;
-  opacity: 1 !important; /* Force visibility */
-  visibility: visible !important;
-  transition: transform 0.6s var(--fx-transition);
-
-  &:hover {
-    transform: translateY(-10px);
-    .project-entry__overlay { opacity: 1; }
-    .project-entry__media { transform: scale(1.05); }
-  }
+  gap: 32px;
+  transition: transform 0.8s var(--fx-transition);
+  &:hover { transform: translateY(-20px); .project-entry__overlay { opacity: 1; } .project-entry__media { transform: scale(1.08); } }
 }
 
 .project-entry__visual {
-  position: relative;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  background: var(--fx-surface);
-  box-shadow: var(--fx-shadow);
+  position: relative; aspect-ratio: 3/4; overflow: hidden; background: var(--fx-surface);
+  border: 1px solid var(--fx-line); box-shadow: var(--fx-shadow);
 }
 
-.project-entry__media {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 1.2s var(--fx-transition);
-}
+.project-entry__media { width: 100%; height: 100%; object-fit: cover; transition: transform 1.5s var(--fx-transition); }
 
 .project-entry__overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  backdrop-filter: blur(4px);
+  position: absolute; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.5s ease; backdrop-filter: blur(8px);
 }
 
-.view-btn {
-  background: var(--fx-accent);
-  color: var(--fx-bg);
-  padding: 12px 24px;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
+.view-btn { background: var(--fx-accent); color: var(--fx-bg); padding: 16px 32px; font-size: 10px; font-weight: 800; letter-spacing: 0.2em; }
 
-.project-entry__info { display: flex; flex-direction: column; gap: 8px; }
-.info-top {
-  display: flex;
-  justify-content: space-between;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  opacity: 0.5;
-  text-transform: uppercase;
-}
+.project-entry__info { display: flex; flex-direction: column; gap: 12px; }
+.info-top { display: flex; justify-content: space-between; .mono { font-size: 9px; opacity: 0.4; } }
+.project-name { font-size: 32px; margin: 0; font-weight: 300; line-height: 1; }
+.project-location { font-size: 10px; color: var(--fx-accent); }
 
-.project-name {
-  font-family: var(--fx-font-serif);
-  font-size: 28px;
-  margin: 0;
-  font-weight: 300;
-}
-
-.project-location { font-size: 13px; opacity: 0.7; margin: 0; }
-
-/* ── MOBILE LAYOUT (< 900px): VERTICAL LIST ── */
 @media (max-width: 900px) {
-  .portfolio-page { padding: 100px 0; }
-  .portfolio-intro { margin-bottom: 60px; }
-  .projects-track {
-    display: flex;
-    flex-direction: column;
-    gap: 60px;
-    padding: 0 20px;
-  }
-  .project-entry { width: 100%; }
+  .portfolio-page { padding: 160px 0; }
+  .projects-track { display: flex; flex-direction: column; gap: 100px; padding: 0 40px; }
+  .project-entry__visual { aspect-ratio: 4/5; }
 }
 
-/* ── DESKTOP LAYOUT (> 900px): HORIZONTAL GSAP SCROLL ── */
 @media (min-width: 901px) {
-  .gallery-sticky-container {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-  }
-
-  .portfolio-intro {
-    position: absolute;
-    top: 15vh;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-    pointer-events: none;
-  }
-
-  .projects-track {
-    display: flex;
-    align-items: center;
-    gap: 15vw;
-    padding: 0 35vw; /* Padding to allow first/last items to reach center */
-    height: 100%;
-    will-change: transform;
-  }
-
-  .project-entry {
-    flex: 0 0 30vw;
-    aspect-ratio: 3 / 4;
-    .project-entry__visual { aspect-ratio: 3 / 4; }
-  }
+  .gallery-sticky-container { position: relative; width: 100%; height: 100vh; display: flex; align-items: center; overflow: hidden; }
+  .portfolio-intro { position: absolute; top: 15vh; left: 50%; transform: translateX(-50%); z-index: 10; pointer-events: none; }
+  .projects-track { display: flex; align-items: center; gap: 15vw; padding: 0 35vw; height: 100%; will-change: transform; }
+  .project-entry { flex: 0 0 28vw; }
 }
