@@ -9,7 +9,8 @@
     linear-gradient(rgba(196, 166, 122, 0.08) 1px, transparent 1px),
     linear-gradient(90deg, rgba(196, 166, 122, 0.08) 1px, transparent 1px);
   background-size: 60px 60px;
-  z-index: 1; pointer-events: none;
+  z-index: -1; /* Behind everything */
+  pointer-events: none;
 }
 
 .header-flex { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 80px; }

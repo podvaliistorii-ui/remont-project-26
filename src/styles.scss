@@ -250,6 +250,13 @@ html {
   cursor: auto;
 }
 
+/* ── GLOBAL INTERACTIVE FIX ── */
+a, button, input, select, textarea, .btn-one, .addon-chip, .segmented-control button {
+  pointer-events: auto !important;
+  z-index: 10;
+  position: relative;
+}
+
 .custom-cursor-active #fx-cursor { opacity: 1; }
 
 @media (hover: none), (pointer: coarse) {

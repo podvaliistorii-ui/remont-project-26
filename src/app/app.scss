@@ -67,20 +67,13 @@
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1050; /* Just below the logo */
+  z-index: 1050; 
   height: 80px;
   background: transparent;
   transition: all 0.3s;
   display: flex;
   align-items: center;
   pointer-events: none; /* Let clicks pass through empty space */
-}
-
-.header--scrolled {
-  background: rgba(var(--fx-bg-rgb), 0.9);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--fx-line);
 }
 
 .header__inner {
@@ -91,7 +84,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  pointer-events: none; /* Pass through */
+  pointer-events: none;
+}
+
+.nav-center, .header__controls, .header__logo--visible {
+  pointer-events: auto; /* Restore interaction for children */
 }
 
 .header-logo-placeholder {
