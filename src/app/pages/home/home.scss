@@ -12,6 +12,7 @@
 .home-hero__overlay {
   position: absolute;
   inset: 0;
+  pointer-events: none; /* Let clicks pass to the header */
 }
 
 .home-hero__video { object-fit: cover; }

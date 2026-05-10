@@ -275,6 +275,9 @@ export class App implements AfterViewInit {
     if (isPlatformBrowser(this.platformId)) {
       this.initScrollAnimations();
       this.initAccelerometerShadows();
+      
+      // Complete loading after a short delay to match preloader animation
+      setTimeout(() => this.isLoading.set(false), 3000);
     }
   }
 
