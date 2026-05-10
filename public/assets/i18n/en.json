@@ -325,5 +325,19 @@
     "N4_SPEC": "Engineering supervision and general construction works.",
     "EXP_YEARS": "years of exp",
     "VIEW_PREVIEW": "VIEW PROJECTS"
+  },
+  "MATERIALS": {
+    "MARBLE_CARRARA": "Carrara Venato Marble",
+    "OAK_PARQUET": "Bauwerk Oak Parquet",
+    "ECO_PAINT": "Caparol PremiumClean Paint",
+    "ADD_TO_ESTIMATE": "ADD TO ESTIMATE",
+    "SPECS_TITLE": "TECHNICAL_SPECIFICATIONS"
+  },
+  "REVIEWS": {
+    "VERIFIED": "VERIFIED PROJECT",
+    "REV1_TEXT": "Flawless execution of engineering nodes in Vake. FixEntro is about order and transparency.",
+    "REV2_TEXT": "Mtatsminda restoration exceeded expectations. Preserved the spirit of the old house with modern comfort.",
+    "TRUST_TITLE": "Trust Architecture",
+    "TRUST_KICKER": "VERIFIED_TESTIMONIALS_2026"
   }
 }

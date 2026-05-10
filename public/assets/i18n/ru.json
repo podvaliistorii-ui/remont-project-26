@@ -325,5 +325,19 @@
     "N4_SPEC": "Инженерный надзор и общестроительные работы.",
     "EXP_YEARS": "лет опыта",
     "VIEW_PREVIEW": "ПОСМОТРЕТЬ РАБОТЫ"
+  },
+  "MATERIALS": {
+    "MARBLE_CARRARA": "Мрамор Carrara Venato",
+    "OAK_PARQUET": "Дубовый паркет Bauwerk",
+    "ECO_PAINT": "Краска Caparol PremiumClean",
+    "ADD_TO_ESTIMATE": "ДОБАВИТЬ В СМЕТУ",
+    "SPECS_TITLE": "ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ"
+  },
+  "REVIEWS": {
+    "VERIFIED": "ПРОЕКТ ПОДТВЕРЖДЕН",
+    "REV1_TEXT": "Безупречное исполнение инженерных узлов в Ваке. FixEntro — это про порядок и прозрачность.",
+    "REV2_TEXT": "Реставрация на Мтацминде превзошла ожидания. Сохранили дух старого дома с современным комфортом.",
+    "TRUST_TITLE": "Архитектура доверия",
+    "TRUST_KICKER": "VERIFIED_TESTIMONIALS_2026"
   }
 }

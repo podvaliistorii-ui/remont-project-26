@@ -1,11 +1,12 @@
-import { Component, inject, signal, computed, HostListener, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, inject, signal, computed, HostListener, ElementRef, ViewChild, AfterViewInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UiStateService } from '../../ui-state.service';
 import { LanguageService } from '../../language.service';
 import { ArticlesService } from '../../articles.service';
-import { PortfolioService } from '../../portfolio.service';
+import { PortfolioService, Project } from '../../portfolio.service';
+import { Article } from '../../articles.service';
 import { gsap } from 'gsap';
 
 export interface CommandResult {
@@ -34,7 +35,7 @@ export interface CommandResult {
 
         <div class="results-container">
           <div class="results-group" *ngIf="filteredResults().length > 0">
-            <div class="result-item" *ngFor="let res of filteredResults(); let i = $index" 
+            <div class="result-item" *ngFor="let res of filteredResults(); let i = index" 
                  (click)="navigate(res.route)"
                  [class.active]="i === selectedIndex()">
               <span class="res-type mono">{{ res.type }}</span>
@@ -159,16 +160,20 @@ export class CommandPaletteComponent implements AfterViewInit {
     return [...this.staticResults.filter(r => r.title.toLowerCase().includes(q)), ...dynamic].slice(0, 8);
   });
 
-  ngAfterViewInit() {
+  constructor() {
     effect(() => {
       if (this.isOpen()) {
         setTimeout(() => this.inputEl.nativeElement.focus(), 100);
-        gsap.to(this.windowEl.nativeElement, { scale: 1, duration: 0.5, ease: 'elastic.out(1, 0.75)' });
+        gsap.to(this.windowEl.nativeElement, { scale: 1, opacity: 1, duration: 0.5, ease: 'elastic.out(1, 0.75)' });
       } else {
-        gsap.to(this.windowEl.nativeElement, { scale: 0.95, duration: 0.3 });
+        if (this.windowEl) {
+          gsap.to(this.windowEl.nativeElement, { scale: 0.95, opacity: 0, duration: 0.3 });
+        }
       }
     });
   }
+
+  ngAfterViewInit() {}
 
   @HostListener('window:keydown', ['$event'])
   handleKeyboard(e: KeyboardEvent) {

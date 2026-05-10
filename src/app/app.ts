@@ -21,7 +21,9 @@ import Lenis from 'lenis';
 
 import { Footer } from './footer/footer';
 import { PreloaderComponent } from './preloader/preloader';
+import { CommandPaletteComponent } from './shared/command-palette/command-palette';
 import { LanguageService, LanguageCode } from './language.service';
+import { UiStateService } from './ui-state.service';
 import { TranslateModule } from '@ngx-translate/core';
 
 if (typeof window !== 'undefined') {
@@ -31,7 +33,7 @@ if (typeof window !== 'undefined') {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, Footer, TranslateModule, CommonModule],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, Footer, PreloaderComponent, CommandPaletteComponent, TranslateModule, CommonModule],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   animations: [
@@ -128,12 +130,10 @@ export class App implements AfterViewInit {
         }
 
         if (isPlatformBrowser(this.platformId)) {
-          // Explicitly reset scroll state and position
           this.isScrolled.set(false);
           this.scrollThreshold.set(false);
           window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
           
-          // Re-sync Lenis if it exists
           const lenisInstance = (window as any).lenis;
           if (lenisInstance) {
             lenisInstance.scrollTo(0, { immediate: true });
@@ -192,6 +192,9 @@ export class App implements AfterViewInit {
     } else if (path.includes('services/residential')) {
       title = this.i18n.t('SEO.PAGE_TITLE_RESIDENTIAL');
       description = this.i18n.t('SEO.PAGE_DESC_RESIDENTIAL');
+    } else if (path.includes('services/materials')) {
+      title = 'Material Science | Premium Architectural Library | FixEntro';
+      description = 'Interactive library of premium materials including Carrara marble, Oak parquet and eco-friendly finishes for high-end renovation.';
     }
 
     this.titleService.setTitle(title);
@@ -201,7 +204,7 @@ export class App implements AfterViewInit {
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.runPreloader();
+      this.initScrollAnimations();
       this.initAccelerometerShadows();
     }
   }
@@ -209,67 +212,14 @@ export class App implements AfterViewInit {
   private initAccelerometerShadows(): void {
     if (typeof window !== 'undefined' && 'DeviceOrientationEvent' in window) {
       window.addEventListener('deviceorientation', (event) => {
-        const { beta, gamma } = event; // beta: front-to-back, gamma: left-to-right
+        const { beta, gamma } = event;
         if (beta !== null && gamma !== null) {
-          // Limit the shift to max 10px
           const x = Math.max(-10, Math.min(10, gamma / 4));
           const y = Math.max(-10, Math.min(10, beta / 4));
-          
           this.document.documentElement.style.setProperty('--fx-shadow-offset-x', `${x}px`);
           this.document.documentElement.style.setProperty('--fx-shadow-offset-y', `${y}px`);
         }
       });
-    }
-  }
-
-  private runPreloader(): void {
-    const preloaderEl = this.document.getElementById('preloader');
-    const progressEl = this.document.getElementById('progress');
-    
-    const timeout = setTimeout(() => {
-      this.finishLoading();
-    }, 3000);
-
-    if (!preloaderEl || !progressEl) {
-      this.finishLoading();
-      clearTimeout(timeout);
-      return;
-    }
-
-    const tl = gsap.timeline({
-      onComplete: () => {
-        clearTimeout(timeout);
-        this.finishLoading();
-      }
-    });
-
-    const counter = { val: 0 };
-    tl.to(counter, {
-      val: 100,
-      duration: 2.5,
-      ease: "power2.inOut",
-      onUpdate: () => {
-        const p = Math.floor(counter.val);
-        if (progressEl) progressEl.textContent = `${p}%`;
-      }
-    });
-  }
-
-  private finishLoading(): void {
-    const preloaderEl = this.document.getElementById('preloader');
-    if (preloaderEl) {
-      gsap.to(preloaderEl, {
-        opacity: 0,
-        duration: 0.6,
-        onComplete: () => {
-          preloaderEl.style.display = 'none';
-          this.isLoading.set(false);
-          this.initScrollAnimations();
-        }
-      });
-    } else {
-      this.isLoading.set(false);
-      this.initScrollAnimations();
     }
   }
 
@@ -278,7 +228,6 @@ export class App implements AfterViewInit {
       if (isPlatformBrowser(this.platformId)) {
         const cursorEl = this.document.getElementById('fx-cursor');
         if (cursorEl) {
-          // Force apply the active class immediately
           this.document.documentElement.classList.add('custom-cursor-active');
           if (!cursorEl.querySelector('.cursor-text')) {
             const label = this.document.createElement('span');
@@ -289,7 +238,6 @@ export class App implements AfterViewInit {
         }
       }
 
-      // @ts-ignore
       const lenis = new Lenis({
         duration: 1.5,
         lerp: 0.08,
@@ -299,11 +247,7 @@ export class App implements AfterViewInit {
       (window as any).lenis = lenis;
 
       lenis.on('scroll', ScrollTrigger.update);
-
-      gsap.ticker.add((time) => {
-        lenis.raf(time * 1000);
-      });
-
+      gsap.ticker.add((time) => lenis.raf(time * 1000));
       gsap.ticker.lagSmoothing(0);
 
       if (this.progressBar?.nativeElement) {
@@ -338,10 +282,8 @@ export class App implements AfterViewInit {
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(event: MouseEvent): void {
     if (!isPlatformBrowser(this.platformId)) return;
-    
     const cursorEl = this.document.getElementById('fx-cursor');
     if (cursorEl) {
-      // Use GSAP for buttery smooth cursor movement
       gsap.to(cursorEl, {
         x: event.clientX,
         y: event.clientY,
@@ -352,8 +294,6 @@ export class App implements AfterViewInit {
         overwrite: 'auto'
       });
     }
-    
-    // Magnetic pull logic for buttons/links
     this.handleMagneticEffect(event);
   }
 
@@ -369,27 +309,13 @@ export class App implements AfterViewInit {
 
       const triggerDistance = 100;
       if (distance < triggerDistance) {
-        // Magnetic pull: max 15px shift
         const power = (triggerDistance - distance) / triggerDistance;
         const maxShift = 15;
         const x = (distanceX / triggerDistance) * maxShift * power;
         const y = (distanceY / triggerDistance) * maxShift * power;
-        
-        gsap.to(target, {
-          x: x,
-          y: y,
-          duration: 0.4,
-          ease: 'power2.out',
-          overwrite: 'auto'
-        });
+        gsap.to(target, { x, y, duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
       } else {
-        gsap.to(target, {
-          x: 0,
-          y: 0,
-          duration: 0.6,
-          ease: 'power3.out',
-          overwrite: 'auto'
-        });
+        gsap.to(target, { x: 0, y: 0, duration: 0.6, ease: 'power3.out', overwrite: 'auto' });
       }
     });
   }
@@ -408,9 +334,7 @@ export class App implements AfterViewInit {
     if (projectCard) {
       cursorEl.classList.add('cursor-explore');
       cursorEl.classList.remove('cursor-hover');
-      if (cursorText) {
-        cursorText.textContent = this.i18n.t('CURSOR.VIEW');
-      }
+      if (cursorText) cursorText.textContent = this.i18n.t('CURSOR.VIEW');
     } else if (clickable) {
       cursorEl.classList.add('cursor-hover');
       cursorEl.classList.remove('cursor-explore');
@@ -425,8 +349,51 @@ export class App implements AfterViewInit {
     if (!isPlatformBrowser(this.platformId)) return;
     const cursorEl = this.document.getElementById('fx-cursor');
     if (!cursorEl) return;
-    
-    // Clear classes if the mouse leaves the viewport entirely
+    if (!event.relatedTarget) {
+      cursorEl.classList.remove('cursor-hover', 'cursor-explore');
+    }
+  }
+
+  toggleTheme(): void { this.isDark.update(v => !v); }
+  toggleMenu(): void { this.menuOpen.update((value) => !value); }
+  closeMenu(): void { this.menuOpen.set(false); }
+  switchLang(lang: string): void { this.i18n.setLang(lang as LanguageCode); }
+}
+     } else {
+        gsap.to(target, { x: 0, y: 0, duration: 0.6, ease: 'power3.out', overwrite: 'auto' });
+      }
+    });
+  }
+
+  @HostListener('document:mouseover', ['$event'])
+  onMouseOver(event: MouseEvent): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    const cursorEl = this.document.getElementById('fx-cursor');
+    if (!cursorEl) return;
+
+    const target = event.target as HTMLElement;
+    const clickable = target.closest('a, button, .nav-btn, .btn-one, .district-map-chip, .tier-card');
+    const projectCard = target.closest('.project-card');
+    const cursorText = cursorEl.querySelector('.cursor-text');
+
+    if (projectCard) {
+      cursorEl.classList.add('cursor-explore');
+      cursorEl.classList.remove('cursor-hover');
+      if (cursorText) cursorText.textContent = this.i18n.t('CURSOR.VIEW');
+    } else if (clickable) {
+      cursorEl.classList.add('cursor-hover');
+      cursorEl.classList.remove('cursor-explore');
+      if (cursorText) cursorText.textContent = this.i18n.t('CURSOR.OPEN');
+    } else {
+      cursorEl.classList.remove('cursor-hover', 'cursor-explore');
+    }
+  }
+
+  @HostListener('document:mouseout', ['$event'])
+  onMouseOut(event: MouseEvent): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    const cursorEl = this.document.getElementById('fx-cursor');
+    if (!cursorEl) return;
     if (!event.relatedTarget) {
       cursorEl.classList.remove('cursor-hover', 'cursor-explore');
     }

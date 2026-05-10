@@ -57,6 +57,11 @@ export const routes: Routes = [
       import('./pages/services/residential').then((m) => m.ResidentialComponent),
   },
   {
+    path: 'services/materials',
+    loadComponent: () =>
+      import('./pages/services/materials').then((m) => m.MaterialsComponent),
+  },
+  {
     path: '**',
     redirectTo: '',
   },
