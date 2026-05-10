@@ -14,8 +14,10 @@ export interface Project {
     poster?: string;
     altKey?: string;
   };
-  galleryImages: { url: string; altKey: string }[]; // Updated to include altKey
+  galleryImages: { url: string; altKey: string }[];
   finalVideoUrl: string;
+  materials: string[];
+  duration: string;
   technicalPassport: {
     typeKey: string;
     acousticRating: string;
@@ -50,6 +52,8 @@ export class PortfolioService {
         { url: 'https://images.unsplash.com/photo-1600570994443-d7a12f1f355b?auto=format&fit=crop&w=1200&q=80', altKey: 'PROJECTS.ALTS.VAKE_G4' }
       ],
       finalVideoUrl: 'assets/hero-bg.mp4',
+      materials: ['KNAUF Safeboard', 'CAPAROL Amphibolin', 'MAPEI Ultracolor'],
+      duration: '8 months',
       technicalPassport: {
         typeKey: 'PROJECTS.TYPE_NEW_BUILD',
         acousticRating: 'Rw 58 dB envelope',
@@ -79,6 +83,8 @@ export class PortfolioService {
         { url: 'https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=1200&q=80', altKey: 'PROJECTS.ALTS.MTATSMINDA_G4' }
       ],
       finalVideoUrl: 'assets/hero-bg.mp4',
+      materials: ['KNAUF Blue', 'CAPAROL Indeko-plus', 'KERAKOLL Fugabella'],
+      duration: '5 months',
       technicalPassport: {
         typeKey: 'PROJECTS.TYPE_HERITAGE',
         acousticRating: 'Rw 52 dB partition set',
@@ -107,6 +113,8 @@ export class PortfolioService {
         { url: 'https://images.unsplash.com/photo-1600566752231-01f654b00f72?auto=format&fit=crop&w=1200&q=80', altKey: 'PROJECTS.ALTS.SABURTALO_G4' }
       ],
       finalVideoUrl: 'assets/hero-bg.mp4',
+      materials: ['KNAUF Safeboard', 'CAPAROL PremiumClean', 'MAPEI Ultracoat'],
+      duration: '6 months',
       technicalPassport: {
         typeKey: 'PROJECTS.TYPE_NEW_BUILD',
         acousticRating: 'Rw 55 dB floor build-up',
@@ -135,6 +143,8 @@ export class PortfolioService {
         { url: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1200&q=80', altKey: 'PROJECTS.ALTS.VERA_G4' }
       ],
       finalVideoUrl: 'assets/hero-bg.mp4',
+      materials: ['KNAUF Diamant', 'CAPAROL Histolith', 'KEIM Silicate'],
+      duration: '10 months',
       technicalPassport: {
         typeKey: 'PROJECTS.TYPE_STALINKA',
         acousticRating: 'Rw 49 dB heritage shell',
