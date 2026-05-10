@@ -47,7 +47,29 @@
     "SABURTALO_TASK": "Transforming a Soviet-era apartment into a fluid creative studio.",
     "SABURTALO_SOLUTION": "Custom acoustic ceilings paired with polished terrazzo flooring.",
     "VERA_TASK": "Preserving a Stalinka apartment while introducing modern infrastructure.",
-    "VERA_SOLUTION": "Triple-glazed windows and concealed hydronic heating systems."
+    "VERA_SOLUTION": "Triple-glazed windows and concealed hydronic heating systems.",
+    "ALTS": {
+      "VAKE_MAIN": "Premium apartment renovation in Vake, Tbilisi",
+      "VAKE_G1": "Designer living room finishing in Vake Residence",
+      "VAKE_G2": "Modern kitchen with Italian materials in Vake",
+      "VAKE_G3": "Premium lighting in Vake interior",
+      "VAKE_G4": "Engineering systems and automation in Vake residence",
+      "MTATSMINDA_MAIN": "Heritage restoration and renovation in Mtatsminda",
+      "MTATSMINDA_G1": "Loft interior in Mtatsminda old fund",
+      "MTATSMINDA_G2": "Exposed masonry and steel structures",
+      "MTATSMINDA_G3": "Concealed engineering in loft space",
+      "MTATSMINDA_G4": "Architectural lighting in Mtatsminda",
+      "SABURTALO_MAIN": "Modern turnkey apartment renovation in Saburtalo",
+      "SABURTALO_G1": "Panoramic glazing in Saburtalo apartment",
+      "SABURTALO_G2": "Natural terrazzo floors in interior",
+      "SABURTALO_G3": "Minimalist bedroom design in Saburtalo",
+      "SABURTALO_G4": "Smart climate control systems",
+      "VERA_MAIN": "Stalinka apartment renovation in Vera, Tbilisi",
+      "VERA_G1": "Restoration of moldings and high ceilings",
+      "VERA_G2": "Classic parquet and modern heating",
+      "VERA_G3": "Kitchen interior in Vera Stalinka",
+      "VERA_G4": "Bathroom with premium fixtures"
+    }
   },
   "ABOUT": {
     "TITLE": "FixEntro Methodology",
@@ -248,5 +270,43 @@
       "SUBTITLE": "Calculate your project using our live terminal logic.",
       "BTN": "BACK TO CALCULATOR"
     }
+  },
+  "SEO": {
+    "HOME_TITLE": "Quality Apartment Renovation in Tbilisi",
+    "HOME_TEXT": "We offer premium renovation and budget finishing turnkey. Find out the renovation price per square meter in our calculator",
+    "PAGE_TITLE_HOME": "Fixentro | Apartment Renovation in Tbilisi - Price & Warranty",
+    "PAGE_TITLE_PORTFOLIO": "Our Works - Premium Renovation in Tbilisi | Fixentro",
+    "PAGE_TITLE_RENOVATION": "Renovation Types in Tbilisi | Capital & Cosmetic",
+    "PAGE_TITLE_SPECIALISTS": "Plumber and Electrician Services in Tbilisi | Emergency Call",
+    "PAGE_TITLE_COMMERCIAL": "Office and Commercial Renovation in Tbilisi",
+    "PAGE_TITLE_RESIDENTIAL": "Apartment and House Renovation in Tbilisi | Turnkey",
+    "PAGE_DESC_RENOVATION": "Professional capital, cosmetic, and designer apartment renovation in Tbilisi turnkey.",
+    "PAGE_DESC_SPECIALISTS": "Professional plumber, electrician, tiler, and finishing masters in Tbilisi. Quality guarantee.",
+    "PAGE_DESC_COMMERCIAL": "Quality renovation of offices, shops, and commercial spaces in Tbilisi. On time and on budget.",
+    "PAGE_DESC_RESIDENTIAL": "Renovation of apartments and private houses in Tbilisi. High-quality finishing for new builds and existing properties.",
+    "LSI_TEXT": "Apartment renovation and finishing works."
+  },
+  "SERVICES": {
+    "POPULAR": "Popular Services",
+    "TURNKEY": "Turnkey Apartment Renovation",
+    "LAMINATE": "Laminate and Tile Laying",
+    "WASTE": "Construction Waste Removal",
+    "TYPES_TITLE": "Renovation Types",
+    "SPECIALISTS_TITLE": "Our Specialists",
+    "COMMERCIAL_TITLE": "Commercial Renovation",
+    "RESIDENTIAL_TITLE": "Residential Renovation",
+    "DISTRICTS_TITLE": "Service Districts",
+    "DISTRICTS_TEXT": "We operate in all districts of Tbilisi, providing prompt site visits and quality control at every object.",
+    "PLUMBER": "Plumbing Services",
+    "ELECTRICIAN": "Electrical Services",
+    "TILER": "Tiling Specialist",
+    "MASTER": "Handyman Service",
+    "CAPITAL": "Capital Renovation",
+    "COSMETIC": "Cosmetic Renovation",
+    "DESIGNER": "Designer Renovation",
+    "OFFICE": "Office Renovation",
+    "SHOP": "Shop Renovation",
+    "HOUSE": "House Renovation",
+    "APARTMENT": "Apartment Renovation"
   }
 }

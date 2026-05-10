@@ -142,32 +142,39 @@ export class App implements AfterViewInit {
 
   private updateMetaTags(path: string): void {
     const lang = this.i18n.lang();
-    let title = '';
+    let title = this.i18n.t('SEO.PAGE_TITLE_HOME');
     let description = '';
     let keywords = '';
 
     if (lang === 'ru') {
-      title = 'Ремонт квартир в Тбилиси | Профессиональная отделка | FixEntro';
       description = 'Качественный ремонт квартир в Тбилиси (Ваке, Сабуртало, Дидубе). Профессиональная отделка, дизайн и архитектурный аудит. Калькулятор сметы онлайн.';
       keywords = 'Ремонт квартир Тбилиси, ремонт Ваке, Сабуртало, Дидубе, отделка под ключ Грузия, дизайн интерьера Тбилиси';
     } else if (lang === 'ka') {
-      title = 'ბინის რემონტი თბილისში | პროფესიონალური მომსახურება | FixEntro';
       description = 'ბინის ხარისხიანი რემონტი თბილისში (ვაკე, საბურთალო, დიდუბე). დიზაინი და არქიტექტურული აუდიტი. ხარჯთაღრიცხვის კალკულატორი ონლაინ.';
       keywords = 'ბინის რემონტი თბილისი, რემონტი ვაკეში, საბურთალოზე, დიდუბეში, რემონტი საქართველო, ინტერიერის დიზაინი';
     } else {
-      title = 'Apartment Renovation in Tbilisi | Professional Finish | FixEntro';
       description = 'High-quality apartment renovation in Tbilisi (Vake, Saburtalo, Didube). Professional design and architectural audit. Online cost calculator.';
       keywords = 'Apartment renovation Tbilisi, renovation Vake, Saburtalo, Didube, turnkey renovation Georgia, interior design Tbilisi';
     }
 
     if (path.includes('portfolio')) {
-      if (lang === 'ru') title = 'Наши работы | Ремонт в Ваке, Сабуртало, Тбилиси';
-      else if (lang === 'ka') title = 'ჩვენი ნამუშევრები | რემონტი ვაკეში, საბურთალოზე, თბილისში';
-      else title = 'Our Works | Renovation in Vake, Saburtalo, Tbilisi';
+      title = this.i18n.t('SEO.PAGE_TITLE_PORTFOLIO');
     } else if (path.includes('calculator')) {
       if (lang === 'ru') title = 'Калькулятор ремонта в Тбилиси | FixEntro';
       else if (lang === 'ka') title = 'რემონტის კალკულატორი თბილისი | FixEntro';
       else title = 'Renovation Calculator Tbilisi | FixEntro';
+    } else if (path.includes('services/renovation-types')) {
+      title = this.i18n.t('SEO.PAGE_TITLE_RENOVATION');
+      description = this.i18n.t('SEO.PAGE_DESC_RENOVATION');
+    } else if (path.includes('services/specialists')) {
+      title = this.i18n.t('SEO.PAGE_TITLE_SPECIALISTS');
+      description = this.i18n.t('SEO.PAGE_DESC_SPECIALISTS');
+    } else if (path.includes('services/commercial')) {
+      title = this.i18n.t('SEO.PAGE_TITLE_COMMERCIAL');
+      description = this.i18n.t('SEO.PAGE_DESC_COMMERCIAL');
+    } else if (path.includes('services/residential')) {
+      title = this.i18n.t('SEO.PAGE_TITLE_RESIDENTIAL');
+      description = this.i18n.t('SEO.PAGE_DESC_RESIDENTIAL');
     }
 
     this.titleService.setTitle(title);

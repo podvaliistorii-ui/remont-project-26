@@ -12,9 +12,10 @@ export interface Project {
     type: 'image' | 'video';
     url: string;
     poster?: string;
+    altKey?: string;
   };
-  galleryImages: string[]; // Exactly 4 photos
-  finalVideoUrl: string; // 1 final video at the bottom
+  galleryImages: { url: string; altKey: string }[]; // Updated to include altKey
+  finalVideoUrl: string;
   technicalPassport: {
     typeKey: string;
     acousticRating: string;
@@ -39,13 +40,14 @@ export class PortfolioService {
       year: '2024',
       mainMedia: {
         type: 'image',
-        url: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1600&q=80'
+        url: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1600&q=80',
+        altKey: 'PROJECTS.ALTS.VAKE_MAIN'
       },
       galleryImages: [
-        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
-        'https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1200&q=80',
-        'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80',
-        'https://images.unsplash.com/photo-1600570994443-d7a12f1f355b?auto=format&fit=crop&w=1200&q=80'
+        { url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80', altKey: 'PROJECTS.ALTS.VAKE_G1' },
+        { url: 'https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1200&q=80', altKey: 'PROJECTS.ALTS.VAKE_G2' },
+        { url: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80', altKey: 'PROJECTS.ALTS.VAKE_G3' },
+        { url: 'https://images.unsplash.com/photo-1600570994443-d7a12f1f355b?auto=format&fit=crop&w=1200&q=80', altKey: 'PROJECTS.ALTS.VAKE_G4' }
       ],
       finalVideoUrl: 'assets/hero-bg.mp4',
       technicalPassport: {
@@ -67,13 +69,14 @@ export class PortfolioService {
       mainMedia: {
         type: 'video',
         url: 'assets/hero-bg.mp4',
-        poster: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1600&q=80'
+        poster: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1600&q=80',
+        altKey: 'PROJECTS.ALTS.MTATSMINDA_MAIN'
       },
       galleryImages: [
-        'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80',
-        'https://images.unsplash.com/photo-1593696140826-c58b021acf8b?auto=format&fit=crop&w=1200&q=80',
-        'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200&q=80',
-        'https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=1200&q=80'
+        { url: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80', altKey: 'PROJECTS.ALTS.MTATSMINDA_G1' },
+        { url: 'https://images.unsplash.com/photo-1593696140826-c58b021acf8b?auto=format&fit=crop&w=1200&q=80', altKey: 'PROJECTS.ALTS.MTATSMINDA_G2' },
+        { url: 'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200&q=80', altKey: 'PROJECTS.ALTS.MTATSMINDA_G3' },
+        { url: 'https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=1200&q=80', altKey: 'PROJECTS.ALTS.MTATSMINDA_G4' }
       ],
       finalVideoUrl: 'assets/hero-bg.mp4',
       technicalPassport: {
@@ -94,13 +97,14 @@ export class PortfolioService {
       year: '2024',
       mainMedia: {
         type: 'image',
-        url: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1600&q=80'
+        url: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1600&q=80',
+        altKey: 'PROJECTS.ALTS.SABURTALO_MAIN'
       },
       galleryImages: [
-        'https://images.unsplash.com/photo-1600121848594-d8644e57abab?auto=format&fit=crop&w=1200&q=80',
-        'https://images.unsplash.com/photo-1600566753086-00f18fb6f3ea?auto=format&fit=crop&w=1200&q=80',
-        'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80',
-        'https://images.unsplash.com/photo-1600566752231-01f654b00f72?auto=format&fit=crop&w=1200&q=80'
+        { url: 'https://images.unsplash.com/photo-1600121848594-d8644e57abab?auto=format&fit=crop&w=1200&q=80', altKey: 'PROJECTS.ALTS.SABURTALO_G1' },
+        { url: 'https://images.unsplash.com/photo-1600566753086-00f18fb6f3ea?auto=format&fit=crop&w=1200&q=80', altKey: 'PROJECTS.ALTS.SABURTALO_G2' },
+        { url: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80', altKey: 'PROJECTS.ALTS.SABURTALO_G3' },
+        { url: 'https://images.unsplash.com/photo-1600566752231-01f654b00f72?auto=format&fit=crop&w=1200&q=80', altKey: 'PROJECTS.ALTS.SABURTALO_G4' }
       ],
       finalVideoUrl: 'assets/hero-bg.mp4',
       technicalPassport: {
@@ -121,13 +125,14 @@ export class PortfolioService {
       year: '2022',
       mainMedia: {
         type: 'image',
-        url: 'https://images.unsplash.com/photo-1600607687644-ac4f0afb611c?auto=format&fit=crop&w=1600&q=80'
+        url: 'https://images.unsplash.com/photo-1600607687644-ac4f0afb611c?auto=format&fit=crop&w=1600&q=80',
+        altKey: 'PROJECTS.ALTS.VERA_MAIN'
       },
       galleryImages: [
-        'https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&w=1200&q=80',
-        'https://images.unsplash.com/photo-1600607686527-0243e1e449c4?auto=format&fit=crop&w=1200&q=80',
-        'https://images.unsplash.com/photo-1600585154526-990dcea42e49?auto=format&fit=crop&w=1200&q=80',
-        'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1200&q=80'
+        { url: 'https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&w=1200&q=80', altKey: 'PROJECTS.ALTS.VERA_G1' },
+        { url: 'https://images.unsplash.com/photo-1600607686527-0243e1e449c4?auto=format&fit=crop&w=1200&q=80', altKey: 'PROJECTS.ALTS.VERA_G2' },
+        { url: 'https://images.unsplash.com/photo-1600585154526-990dcea42e49?auto=format&fit=crop&w=1200&q=80', altKey: 'PROJECTS.ALTS.VERA_G3' },
+        { url: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1200&q=80', altKey: 'PROJECTS.ALTS.VERA_G4' }
       ],
       finalVideoUrl: 'assets/hero-bg.mp4',
       technicalPassport: {

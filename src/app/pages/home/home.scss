@@ -133,6 +133,69 @@
 
 
 
+.home-seo {
+  padding: 80px 0;
+  background: var(--fx-bg);
+  border-bottom: 1px solid var(--fx-line);
+
+  &__content {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  &__title {
+    font-family: var(--fx-font-serif);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    margin-bottom: 30px;
+    color: var(--fx-text);
+  }
+
+  &__text {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    line-height: 1.6;
+    color: var(--fx-text);
+    opacity: 0.8;
+  }
+}
+
+.home-districts {
+  padding: 60px 0 100px;
+  background: var(--fx-bg);
+
+  &__header {
+    max-width: 800px;
+    margin-bottom: 50px;
+    
+    h2 { font-size: 42px; margin-bottom: 20px; }
+    p { opacity: 0.7; }
+  }
+
+  &__grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+}
+
+.district-tag {
+  padding: 12px 25px;
+  border: 1px solid var(--fx-line);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  cursor: default;
+
+  &:hover {
+    background: var(--fx-text);
+    color: var(--fx-bg);
+    border-color: var(--fx-text);
+  }
+}
+
 .home-showcase { padding: 100px 0; }
 .home-showcase__inner { display: grid; grid-template-columns: 1fr; gap: 60px; }
 

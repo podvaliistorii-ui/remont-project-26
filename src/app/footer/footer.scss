@@ -52,8 +52,8 @@
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 80px;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 40px;
   margin-bottom: 80px;
 }
 
@@ -200,6 +200,18 @@
 .footer-bottom {
   padding-top: 40px;
   border-top: 1px solid var(--fx-line);
+}
+
+.footer-lsi {
+  margin-bottom: 20px;
+  p {
+    font-size: 13px;
+    opacity: 0.5;
+    font-style: italic;
+    font-family: var(--fx-font-serif);
+    letter-spacing: 0.02em;
+    margin: 0;
+  }
 }
 
 .footer-credits {

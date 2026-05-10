@@ -35,7 +35,18 @@
         </nav>
       </div>
 
-      <!-- Col 3: Contact & Social -->
+      <!-- Col 3: Popular Services -->
+      <div class="footer-grid__item">
+        <h4 class="footer-heading">{{ 'SERVICES.POPULAR' | translate }}</h4>
+        <nav class="footer-nav">
+          <a routerLink="/services/renovation-types">{{ 'SERVICES.TURNKEY' | translate }}</a>
+          <a routerLink="/services/specialists">{{ 'SERVICES.LAMINATE' | translate }}</a>
+          <a routerLink="/services/commercial">{{ 'SERVICES.COMMERCIAL_TITLE' | translate }}</a>
+          <a routerLink="/contact">{{ 'SERVICES.WASTE' | translate }}</a>
+        </nav>
+      </div>
+
+      <!-- Col 4: Contact & Social -->
       <div class="footer-grid__item socials-col">
         <h4 class="footer-heading">{{ 'FOOTER.SOCIAL_TITLE' | translate }}</h4>
         <div class="footer-social">
@@ -66,6 +77,9 @@
     </div>
 
     <div class="footer-bottom">
+      <div class="footer-lsi">
+        <p>{{ 'SEO.LSI_TEXT' | translate }}</p>
+      </div>
       <p class="footer-credits">
         &copy; 2026 FIXENTRO &mdash; {{ 'FOOTER.RIGHTS' | translate }} &nbsp; | &nbsp; 
         <span class="studio-link">{{ 'FOOTER.COPY' | translate }}</span>

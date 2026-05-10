@@ -17,15 +17,15 @@
             
             <div class="project-entry__visual">
               @if (item.mainMedia.type === 'video') {
-                <video class="project-entry__media" autoplay muted loop playsinline preload="auto" [poster]="item.mainMedia.poster || ''">
+                <video class="project-entry__media" autoplay muted loop playsinline preload="metadata" [poster]="item.mainMedia.poster || ''">
                   <source [src]="item.mainMedia.url" type="video/mp4">
                 </video>
               } @else {
                 <img [src]="item.mainMedia.url" 
-                     [alt]="item.titleKey | translate" 
+                     [alt]="item.mainMedia.altKey ? (item.mainMedia.altKey | translate) : (item.titleKey | translate)" 
                      class="project-entry__media" 
-                     [attr.fetchpriority]="i < 2 ? 'high' : null" 
-                     loading="eager" />
+                     [attr.fetchpriority]="i < 2 ? 'high' : 'low'" 
+                     [attr.loading]="i < 2 ? 'eager' : 'lazy'" />
               }
               <div class="project-entry__overlay">
                 <span class="view-btn">{{ 'CURSOR.VIEW' | translate }}</span>

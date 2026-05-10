@@ -35,6 +35,7 @@
   <link rel="alternate" hreflang="en" href="https://fixentro.netlify.app/" />
   <link rel="alternate" hreflang="ru" href="https://fixentro.netlify.app/ru/" />
   <link rel="alternate" hreflang="ka" href="https://fixentro.netlify.app/ka/" />
+  <link rel="alternate" hreflang="x-default" href="https://fixentro.netlify.app/" />
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg?v=1">
   <link rel="alternate icon" type="image/x-icon" href="favicon.ico?v=1">
@@ -44,47 +45,84 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://images.unsplash.com">
 
-  <!-- Structured Data JSON-LD (LocalBusiness) -->
+  <!-- Structured Data JSON-LD (LocalBusiness & Services) -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "HomeAndConstructionBusiness",
-    "name": "FixEntro",
-    "image": "https://files.catbox.moe/ht4lcb.jpg",
-    "@id": "https://fixentro.netlify.app",
-    "url": "https://fixentro.netlify.app",
-    "telephone": "+995558105574",
-    "priceRange": "GEL",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "62 Chavchavadze Ave",
-      "addressLocality": "Tbilisi",
-      "addressRegion": "Tbilisi",
-      "postalCode": "0162",
-      "addressCountry": "GE"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 41.7100,
-      "longitude": 44.7600
-    },
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "HomeAndConstructionBusiness",
+      "name": "FixEntro",
+      "image": "https://files.catbox.moe/ht4lcb.jpg",
+      "@id": "https://fixentro.netlify.app",
+      "url": "https://fixentro.netlify.app",
+      "telephone": "+995558105574",
+      "priceRange": "GEL",
+      "description": "Premium apartment renovation and interior finishing in Tbilisi. Turnkey repair solutions for Vake, Saburtalo, and historical districts.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "62 Chavchavadze Ave",
+        "addressLocality": "Tbilisi",
+        "addressRegion": "Tbilisi",
+        "postalCode": "0162",
+        "addressCountry": "GE"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 41.7100,
+        "longitude": 44.7600
+      },
+      "areaServed": [
+        { "@type": "City", "name": "Tbilisi" },
+        { "@type": "AdministrativeArea", "name": "Vake" },
+        { "@type": "AdministrativeArea", "name": "Saburtalo" },
+        { "@type": "AdministrativeArea", "name": "Mtatsminda" },
+        { "@type": "AdministrativeArea", "name": "Vera" },
+        { "@type": "AdministrativeArea", "name": "Gldani" },
+        { "@type": "AdministrativeArea", "name": "Isani" },
+        { "@type": "AdministrativeArea", "name": "Varketili" }
       ],
-      "opens": "10:00",
-      "closes": "19:00"
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "opens": "10:00",
+        "closes": "19:00"
+      },
+      "sameAs": [
+        "https://wa.me/995558105574",
+        "https://www.instagram.com/fixentro",
+        "https://www.facebook.com/fixentro"
+      ]
     },
-    "sameAs": [
-      "https://wa.me/995558105574"
-    ]
-  }
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Apartment Renovation Tbilisi",
+      "serviceType": "Construction",
+      "provider": {
+        "@type": "HomeAndConstructionBusiness",
+        "name": "FixEntro"
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": "Tbilisi"
+      },
+      "description": "High-end renovation services including architectural audit, interior finishing, and project management in Georgia."
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Renovation Cost Calculator",
+      "url": "https://fixentro.netlify.app/calculator",
+      "description": "Interactive terminal for estimating renovation budgets based on real-time market data in Tbilisi."
+    }
+  ]
   </script>
 
   <!-- VideoObject Structured Data for Search Console -->

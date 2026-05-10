@@ -61,10 +61,10 @@
 
         <!-- PHOTO GRID: EXACTLY 4 IMAGES WITH MAGNIFICATION -->
         <section class="media-grid-asymmetric">
-          @for (img of p.galleryImages; track img; let i = $index) {
-            <div class="media-item" (click)="openLightbox(img)" [style.--index]="i">
+          @for (imgObj of p.galleryImages; track imgObj.url; let i = $index) {
+            <div class="media-item" (click)="openLightbox(imgObj.url)" [style.--index]="i">
               <div class="media-wrap">
-                <img [src]="img" alt="Project detail" class="gallery-media-img" 
+                <img [src]="imgObj.url" [alt]="imgObj.altKey | translate" class="gallery-media-img" 
                      [attr.fetchpriority]="i < 2 ? 'high' : null" 
                      loading="eager" />
               </div>

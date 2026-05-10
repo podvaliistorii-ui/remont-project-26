@@ -37,6 +37,26 @@ export const routes: Routes = [
       import('./pages/contact/contact').then((m) => m.ContactComponent),
   },
   {
+    path: 'services/renovation-types',
+    loadComponent: () =>
+      import('./pages/services/renovation-types').then((m) => m.RenovationTypesComponent),
+  },
+  {
+    path: 'services/specialists',
+    loadComponent: () =>
+      import('./pages/services/specialists').then((m) => m.SpecialistsComponent),
+  },
+  {
+    path: 'services/commercial',
+    loadComponent: () =>
+      import('./pages/services/commercial').then((m) => m.CommercialComponent),
+  },
+  {
+    path: 'services/residential',
+    loadComponent: () =>
+      import('./pages/services/residential').then((m) => m.ResidentialComponent),
+  },
+  {
     path: '**',
     redirectTo: '',
   },
