@@ -1,81 +1,93 @@
 <section class="calculator-page fx-page">
-  <!-- Interactive Background -->
   <div class="blueprint-grid"></div>
-  
+
   <div class="fx-page__container">
-    <header class="calc-header" data-reveal>
-      <span class="fx-kicker">ENGINEERING_TERMINAL_V2</span>
-      <h1 class="fx-title fx-serif">Estimate Engine</h1>
+    <header class="calc-header">
+      <div class="header-flex">
+        <div class="title-wrap">
+          <span class="fx-kicker mono">SYSTEM_CALIBRATION_2026</span>
+          <h1 class="fx-title fx-serif">Estimate Terminal</h1>
+        </div>
+        <app-live-indicator></app-live-indicator>
+      </div>
     </header>
 
-    <div class="calc-main-layout" [class.mobile-steps]="true">
-      
-      <!-- DESKTOP VIEW / MOBILE STEP 1 & 2 -->
-      <div class="calc-controls">
+    <div class="calc-grid">
+      <!-- INPUTS -->
+      <div class="calc-inputs" [class.step-active]="currentStep() < 3">
         
-        <!-- STEP 1: AREA -->
-        <div class="control-block" [class.active]="currentStep() === 1">
-          <label class="mono">01_PROJECT_VOLUME</label>
-          <div class="area-input-wrap">
-            <input type="range" [(ngModel)]="area" min="20" max="500" step="5" class="fx-slider" />
-            <div class="area-display">
-              <span class="area-num">{{ area() }}</span>
-              <span class="area-unit">m²</span>
-            </div>
+        <!-- PHASE 1: VOLUME -->
+        <div class="calc-section" [class.hidden]="currentStep() > 2 && isMobile()">
+          <div class="section-label mono">01_PROJECT_VOLUME</div>
+          <div class="area-slider-wrap">
+            <input type="range" [(ngModel)]="area" min="20" max="400" step="1" class="apple-slider" />
+            <div class="area-value fx-serif">{{ area() }}<span class="unit">m²</span></div>
           </div>
         </div>
 
-        <!-- STEP 2: ARCHETYPE -->
-        <div class="control-block" [class.active]="currentStep() === 2">
-          <label class="mono">02_RENOVATION_ARCHETYPE</label>
+        <!-- PHASE 2: SPECIFICATION -->
+        <div class="calc-section" [class.hidden]="currentStep() > 2 && isMobile()">
+          <div class="section-label mono">02_QUALITY_TIER</div>
           <div class="segmented-control">
             <div class="segmented-bg"></div>
-            <button (click)="setBuildingType('cosmetic', $event)" [class.active]="buildingType() === 'cosmetic'">COSMETIC</button>
-            <button (click)="setBuildingType('capital', $event)" [class.active]="buildingType() === 'capital'">CAPITAL</button>
-            <button (click)="setBuildingType('designer', $event)" [class.active]="buildingType() === 'designer'">DESIGNER</button>
+            <button (click)="selectTier('economy', $event)" [class.active]="tier() === 'economy'">ECONOMY</button>
+            <button (click)="selectTier('standard', $event)" [class.active]="tier() === 'standard'">STANDARD</button>
+            <button (click)="selectTier('premium', $event)" [class.active]="tier() === 'premium'">PREMIUM</button>
+          </div>
+
+          <div class="section-label mono sub-label">HOUSING_TYPE</div>
+          <div class="segmented-control">
+            <div class="segmented-bg"></div>
+            <button (click)="selectHousing('new', $event)" [class.active]="housingType() === 'new'">NEW_BUILD</button>
+            <button (click)="selectHousing('old', $event)" [class.active]="housingType() === 'old'">SECONDARY</button>
           </div>
         </div>
 
-        <div class="mobile-nav" *ngIf="currentStep() < 3">
-          <button class="btn-one" (click)="nextStep()" *ngIf="currentStep() < 2">NEXT PHASE</button>
-          <button class="btn-one" (click)="nextStep()" *ngIf="currentStep() === 2">CALCULATE</button>
-        </div>
-      </div>
-
-      <!-- RESULT PANEL (Step 3 on mobile) -->
-      <div class="calc-result-panel" [class.active]="currentStep() === 3">
-        <div class="result-card">
-          <div class="result-header">
-            <span class="mono">ESTIMATED_BUDGET</span>
-            <div class="status-dot"></div>
+        <!-- PHASE 3: TECHNICAL ADDONS -->
+        <div class="calc-section">
+          <div class="section-label mono">03_TECHNICAL_ADDONS</div>
+          <div class="addons-grid">
+            <label class="addon-chip" [class.active]="bathroomAddon()">
+              <input type="checkbox" [(ngModel)]="bathroomAddon" />
+              <span class="mono">BATHROOM_UNIT</span>
+            </label>
+            <label class="addon-chip" [class.active]="wiringAddon()">
+              <input type="checkbox" [(ngModel)]="wiringAddon" />
+              <span class="mono">NEW_WIRING</span>
+            </label>
+            <label class="addon-chip" [class.active]="ceilingAddon()">
+              <input type="checkbox" [(ngModel)]="ceilingAddon" />
+              <span class="mono">CEILING_SYSTEM</span>
+            </label>
           </div>
-          
-          <div class="result-main">
-            <span class="currency">₾</span>
-            <h2 class="total-amount">{{ displayValue() | number }}</h2>
-          </div>
-
-          <div class="result-details">
-            <div class="detail-row">
-              <span>MARKET_INDEX</span>
-              <span class="mono">{{ market.currentMarketIndex() }}</span>
-            </div>
-            <div class="detail-row">
-              <span>UNIT_PRICE</span>
-              <span class="mono">~₾ {{ basePrices[buildingType()] }}</span>
-            </div>
-          </div>
-
-          <button class="btn-one btn-primary" (click)="getEstimate()">
-            REQUEST FULL AUDIT
-          </button>
-
-          <button class="back-to-params" (click)="currentStep.set(1)" *ngIf="currentStep() === 3">
-            ADJUST PARAMETERS
-          </button>
         </div>
       </div>
 
+      <!-- RESULT PANEL -->
+      <aside class="calc-result">
+        <div class="result-sticky">
+          <div class="total-wrap">
+            <span class="label mono">TOTAL_ESTIMATE_₾</span>
+            <div class="total-value fx-serif">₾ {{ displayValue() | number }}</div>
+          </div>
+
+          <div class="breakdown-preview mono">
+            <div class="line"><span>BASE_RATE</span> <span>{{ breakdown().base | number }}₾</span></div>
+            <div class="line" *ngIf="breakdown().coeff > 0"><span>OLD_FUND_MOD</span> <span>+{{ breakdown().coeff | number }}₾</span></div>
+            <div class="line" *ngIf="breakdown().extras > 0"><span>ADDONS_VALUE</span> <span>+{{ breakdown().extras | number }}₾</span></div>
+            <div class="line index"><span>MARKET_INDEX</span> <span>x{{ market.currentMarketIndex() }}</span></div>
+          </div>
+
+          <div class="cta-wrap">
+            <button class="btn-one btn-primary" (click)="getEstimate()">
+              INITIALIZE_FORMAL_AUDIT
+            </button>
+            <div class="live-hint">
+              <app-live-indicator></app-live-indicator>
+            </div>
+          </div>
+        </div>
+      </aside>
     </div>
   </div>
 </section>

@@ -1,15 +1,16 @@
-import { Component, inject, signal, computed, AfterViewInit, ElementRef, HostListener, OnDestroy, PLATFORM_ID } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, inject, signal, computed, AfterViewInit, ElementRef, OnDestroy, isPlatformBrowser, PLATFORM_ID, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LanguageService } from '../../language.service';
 import { MarketIndexService } from '../../market-index.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { LiveIndicatorComponent } from '../../shared/live-indicator/live-indicator';
 import { gsap } from 'gsap';
 
 @Component({
   selector: 'app-calculator',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslateModule],
+  imports: [CommonModule, FormsModule, TranslateModule, LiveIndicatorComponent],
   templateUrl: './calculator.html',
   styleUrl: './calculator.scss',
 })
@@ -18,36 +19,60 @@ export class CalculatorComponent implements AfterViewInit, OnDestroy {
   protected readonly market = inject(MarketIndexService);
   private readonly el = inject(ElementRef);
   private readonly platformId = inject(PLATFORM_ID);
+
+  @ViewChild(LiveIndicatorComponent) liveIndicator!: LiveIndicatorComponent;
   
+  // New Signals for Data Logic
   readonly area = signal<number>(85);
-  readonly buildingType = signal<'cosmetic' | 'capital' | 'designer'>('capital');
-  readonly currentStep = signal<number>(1);
+  readonly tier = signal<'economy' | 'standard' | 'premium'>('standard');
+  readonly housingType = signal<'new' | 'old'>('new');
   
+  // Options
+  readonly bathroomAddon = signal(false);
+  readonly wiringAddon = signal(false);
+  readonly ceilingAddon = signal(false);
+
+  readonly currentStep = signal<number>(1);
   readonly displayValue = signal<number>(0);
 
-  readonly basePrices: Record<string, number> = {
-    'cosmetic': 350,
-    'capital': 650,
-    'designer': 950
-  };
+  private readonly tierRates = { economy: 300, standard: 550, premium: 900 };
+  private readonly oldFundCoeff = 1.25;
+  private readonly fixedBathroom = 2500;
+  private readonly wiringRate = 20; // per m2
+  private readonly ceilingRate = 40; // per m2
 
-  readonly totalCost = computed(() => {
-    const marketIdx = this.market.currentMarketIndex() || 1.0;
-    const base = this.basePrices[this.buildingType()] || 650;
-    return Math.floor(this.area() * base * marketIdx);
+  readonly breakdown = computed(() => {
+    const base = this.tierRates[this.tier()];
+    const area = this.area();
+    const subtotal = area * base;
+    const coeffImpact = this.housingType() === 'old' ? subtotal * (this.oldFundCoeff - 1) : 0;
+    
+    const extras = {
+      bathroom: this.bathroomAddon() ? this.fixedBathroom : 0,
+      wiring: this.wiringAddon() ? area * this.wiringRate : 0,
+      ceiling: this.ceilingAddon() ? area * this.ceilingRate : 0
+    };
+
+    return {
+      base: subtotal,
+      coeff: coeffImpact,
+      extras: extras.bathroom + extras.wiring + extras.ceiling,
+      total: (subtotal + coeffImpact + extras.bathroom + extras.wiring + extras.ceiling) * (this.market.currentMarketIndex() || 1.0)
+    };
   });
 
+  readonly totalEstimate = computed(() => Math.floor(this.breakdown().total));
+
   constructor() {
-    // Animate counter when totalCost changes
     let lastValue = 0;
     computed(() => {
-      const target = this.totalCost();
+      const target = this.totalEstimate();
       if (isPlatformBrowser(this.platformId)) {
         const obj = { val: lastValue };
         gsap.to(obj, {
           val: target,
-          duration: 1,
-          ease: 'power2.out',
+          duration: 1.5,
+          ease: 'expo.out',
           onUpdate: () => this.displayValue.set(Math.floor(obj.val))
         });
         lastValue = target;
@@ -66,48 +91,39 @@ export class CalculatorComponent implements AfterViewInit, OnDestroy {
   private initBlueprintEffect(): void {
     const grid = this.el.nativeElement.querySelector('.blueprint-grid');
     if (!grid) return;
-
     window.addEventListener('mousemove', (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 20;
-      const y = (e.clientY / window.innerHeight - 0.5) * 20;
-      gsap.to(grid, {
-        x: x,
-        y: y,
-        duration: 1,
-        ease: 'power1.out'
-      });
+      const x = (e.clientX / window.innerWidth - 0.5) * 30;
+      const y = (e.clientY / window.innerHeight - 0.5) * 30;
+      gsap.to(grid, { x, y, duration: 1.5, ease: 'power2.out' });
     });
   }
 
-  @HostListener('window:resize')
-  onResize() {
-    // Logic for mobile steps could be here if needed
+  selectTier(t: 'economy' | 'standard' | 'premium', ev: MouseEvent) {
+    this.tier.set(t);
+    this.animateSegment(ev);
   }
 
-  setBuildingType(type: 'cosmetic' | 'capital' | 'designer', event: Event): void {
-    this.buildingType.set(type);
-    
-    // GSAP Segmented Control Animation
-    const target = event.currentTarget as HTMLElement;
-    const parent = target.parentElement;
-    const activeBg = parent?.querySelector('.segmented-bg');
-    if (activeBg && target) {
-      gsap.to(activeBg, {
-        x: target.offsetLeft,
-        width: target.offsetWidth,
-        duration: 0.4,
-        ease: 'power2.inOut'
-      });
+  selectHousing(h: 'new' | 'old', ev: MouseEvent) {
+    this.housingType.set(h);
+    this.animateSegment(ev);
+  }
+
+  private animateSegment(ev: MouseEvent) {
+    const target = ev.currentTarget as HTMLElement;
+    const bg = target.parentElement?.querySelector('.segmented-bg');
+    if (bg) {
+      gsap.to(bg, { x: target.offsetLeft, width: target.offsetWidth, duration: 0.5, ease: 'expo.out' });
     }
   }
 
-  nextStep() { if (this.currentStep() < 3) this.currentStep.update(s => s + 1); }
-  prevStep() { if (this.currentStep() > 1) this.currentStep.update(s => s - 1); }
-
   getEstimate() {
-    const message = `Estimate: ${this.totalCost()} GEL for ${this.area()}m² (${this.buildingType()}).`;
+    if (this.liveIndicator) this.liveIndicator.flash();
+    const message = `Estimate: ${this.totalEstimate()} GEL. Plan: ${this.tier()} / ${this.area()}m2 / ${this.housingType()} fund.`;
     window.open(`https://wa.me/995558105574?text=${encodeURIComponent(message)}`, '_blank');
   }
 
+  nextStep() { this.currentStep.update(s => s + 1); }
+  prevStep() { this.currentStep.update(s => s - 1); }
+  
   ngOnDestroy(): void {}
 }
