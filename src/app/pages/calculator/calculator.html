@@ -5,19 +5,21 @@
     <header class="calc-header">
       <div class="header-flex">
         <div class="title-wrap">
-          <span class="fx-kicker mono">SYSTEM_CALIBRATION_2026</span>
+          <span class="fx-kicker mono">PRECISE_ENGINEERING_AUDIT_2026</span>
           <h1 class="fx-title fx-serif">Estimate Terminal</h1>
         </div>
-        <app-live-indicator></app-live-indicator>
+        <div class="header-indicator">
+          <app-live-indicator></app-live-indicator>
+        </div>
       </div>
     </header>
 
     <div class="calc-grid">
-      <!-- INPUTS -->
-      <div class="calc-inputs" [class.step-active]="currentStep() < 3">
+      <!-- ── INPUTS ── -->
+      <div class="calc-inputs">
         
-        <!-- PHASE 1: VOLUME -->
-        <div class="calc-section" [class.hidden]="currentStep() > 2 && isMobile()">
+        <!-- SECTION 1: VOLUME -->
+        <div class="calc-section">
           <div class="section-label mono">01_PROJECT_VOLUME</div>
           <div class="area-slider-wrap">
             <input type="range" [(ngModel)]="area" min="20" max="400" step="1" class="apple-slider" />
@@ -25,57 +27,78 @@
           </div>
         </div>
 
-        <!-- PHASE 2: SPECIFICATION -->
-        <div class="calc-section" [class.hidden]="currentStep() > 2 && isMobile()">
-          <div class="section-label mono">02_QUALITY_TIER</div>
-          <div class="segmented-control">
-            <div class="segmented-bg"></div>
-            <button (click)="selectTier('economy', $event)" [class.active]="tier() === 'economy'">ECONOMY</button>
-            <button (click)="selectTier('standard', $event)" [class.active]="tier() === 'standard'">STANDARD</button>
-            <button (click)="selectTier('premium', $event)" [class.active]="tier() === 'premium'">PREMIUM</button>
+        <!-- SECTION 2: SPECIFICATIONS -->
+        <div class="calc-section">
+          <div class="section-label mono">02_LOCATION_&_QUALITY</div>
+          
+          <div class="control-row">
+            <div class="control-group">
+              <span class="sub-label mono">DISTRICT_MODIFIER</span>
+              <div class="segmented-control">
+                <div class="segmented-bg"></div>
+                <button (click)="selectDistrict('prestige', $event)" [class.active]="district() === 'prestige'">PRESTIGE (Vake, Vera, Mt.)</button>
+                <button (click)="selectDistrict('standard', $event)" [class.active]="district() === 'standard'">STANDARD_ZONE</button>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <span class="sub-label mono">BUILDING_TYPE</span>
+              <div class="segmented-control">
+                <div class="segmented-bg"></div>
+                <button (click)="selectHousing('new', $event)" [class.active]="housingType() === 'new'">NEW_BUILD</button>
+                <button (click)="selectHousing('old', $event)" [class.active]="housingType() === 'old'">OLD_FUND (x1.25)</button>
+              </div>
+            </div>
           </div>
 
-          <div class="section-label mono sub-label">HOUSING_TYPE</div>
-          <div class="segmented-control">
-            <div class="segmented-bg"></div>
-            <button (click)="selectHousing('new', $event)" [class.active]="housingType() === 'new'">NEW_BUILD</button>
-            <button (click)="selectHousing('old', $event)" [class.active]="housingType() === 'old'">SECONDARY</button>
+          <div class="control-group" style="margin-top: 40px;">
+            <span class="sub-label mono">RENOVATION_TIER</span>
+            <div class="segmented-control tier-control">
+              <div class="segmented-bg"></div>
+              <button (click)="selectTier('economy', $event)" [class.active]="tier() === 'economy'">ECONOMY (300₾)</button>
+              <button (click)="selectTier('standard', $event)" [class.active]="tier() === 'standard'">STANDARD (550₾)</button>
+              <button (click)="selectTier('premium', $event)" [class.active]="tier() === 'premium'">PREMIUM (900₾)</button>
+            </div>
           </div>
         </div>
 
-        <!-- PHASE 3: TECHNICAL ADDONS -->
+        <!-- SECTION 3: TECHNICAL ADDONS -->
         <div class="calc-section">
           <div class="section-label mono">03_TECHNICAL_ADDONS</div>
           <div class="addons-grid">
             <label class="addon-chip" [class.active]="bathroomAddon()">
               <input type="checkbox" [(ngModel)]="bathroomAddon" />
-              <span class="mono">BATHROOM_UNIT</span>
+              <span class="mono">BATHROOM_UNIT (+2500₾)</span>
             </label>
             <label class="addon-chip" [class.active]="wiringAddon()">
               <input type="checkbox" [(ngModel)]="wiringAddon" />
-              <span class="mono">NEW_WIRING</span>
+              <span class="mono">NEW_WIRING (+20₾/m²)</span>
             </label>
             <label class="addon-chip" [class.active]="ceilingAddon()">
               <input type="checkbox" [(ngModel)]="ceilingAddon" />
-              <span class="mono">CEILING_SYSTEM</span>
+              <span class="mono">CEILING_SYSTEM (+40₾/m²)</span>
             </label>
           </div>
         </div>
       </div>
 
-      <!-- RESULT PANEL -->
+      <!-- ── RESULT PANEL ── -->
       <aside class="calc-result">
         <div class="result-sticky">
           <div class="total-wrap">
-            <span class="label mono">TOTAL_ESTIMATE_₾</span>
-            <div class="total-value fx-serif">₾ {{ displayValue() | number }}</div>
+            <span class="label mono">ENGINEERING_ESTIMATE_₾</span>
+            <div class="total-value fx-serif" [class.pulse-active]="isHighScale()">
+              ₾ {{ displayValue() | number }}
+            </div>
+            <p class="disclaimer mono">* ORIENTATIVE_VALUATION_ONLY</p>
           </div>
 
           <div class="breakdown-preview mono">
-            <div class="line"><span>BASE_RATE</span> <span>{{ breakdown().base | number }}₾</span></div>
-            <div class="line" *ngIf="breakdown().coeff > 0"><span>OLD_FUND_MOD</span> <span>+{{ breakdown().coeff | number }}₾</span></div>
-            <div class="line" *ngIf="breakdown().extras > 0"><span>ADDONS_VALUE</span> <span>+{{ breakdown().extras | number }}₾</span></div>
-            <div class="line index"><span>MARKET_INDEX</span> <span>x{{ market.currentMarketIndex() }}</span></div>
+            <div class="line"><span>BASE_VALUATION</span> <span>{{ breakdown().subtotalBase | number }}₾</span></div>
+            <div class="line" *ngIf="breakdown().districtMod > 1"><span>LOCATION_COEFF</span> <span>x{{ breakdown().districtMod }}</span></div>
+            <div class="line" *ngIf="breakdown().houseMod > 1"><span>STRUCTURAL_COEFF</span> <span>x{{ breakdown().houseMod }}</span></div>
+            <div class="line" *ngIf="breakdown().extras > 0"><span>TECHNICAL_ADDONS</span> <span>+{{ breakdown().extras | number }}₾</span></div>
+            <div class="line index"><span>MARKET_INDEX_SYNC</span> <span>x{{ market.currentMarketIndex() }}</span></div>
           </div>
 
           <div class="cta-wrap">
