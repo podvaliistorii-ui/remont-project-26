@@ -1,38 +1,81 @@
 <section class="calculator-page fx-page">
+  <!-- Interactive Background -->
+  <div class="blueprint-grid"></div>
+  
   <div class="fx-page__container">
-    <header class="calc-header">
-      <span class="fx-kicker">PRECISE_COST_ENGINEERING</span>
-      <h1 class="fx-title">Price Terminal</h1>
+    <header class="calc-header" data-reveal>
+      <span class="fx-kicker">ENGINEERING_TERMINAL_V2</span>
+      <h1 class="fx-title fx-serif">Estimate Engine</h1>
     </header>
 
-    <div class="calc-grid">
-      <div class="calc-inputs">
-        <div class="input-group">
-          <label>Total Area (m²)</label>
-          <input type="number" [(ngModel)]="area" name="area" min="20" max="1000" />
+    <div class="calc-main-layout" [class.mobile-steps]="true">
+      
+      <!-- DESKTOP VIEW / MOBILE STEP 1 & 2 -->
+      <div class="calc-controls">
+        
+        <!-- STEP 1: AREA -->
+        <div class="control-block" [class.active]="currentStep() === 1">
+          <label class="mono">01_PROJECT_VOLUME</label>
+          <div class="area-input-wrap">
+            <input type="range" [(ngModel)]="area" min="20" max="500" step="5" class="fx-slider" />
+            <div class="area-display">
+              <span class="area-num">{{ area() }}</span>
+              <span class="area-unit">m²</span>
+            </div>
+          </div>
         </div>
 
-        <div class="input-group">
-          <label>Renovation Type</label>
-          <select [(ngModel)]="buildingType" name="type">
-            <option value="cosmetic">Cosmetic</option>
-            <option value="capital">Capital (Full)</option>
-            <option value="designer">Designer Premium</option>
-          </select>
+        <!-- STEP 2: ARCHETYPE -->
+        <div class="control-block" [class.active]="currentStep() === 2">
+          <label class="mono">02_RENOVATION_ARCHETYPE</label>
+          <div class="segmented-control">
+            <div class="segmented-bg"></div>
+            <button (click)="setBuildingType('cosmetic', $event)" [class.active]="buildingType() === 'cosmetic'">COSMETIC</button>
+            <button (click)="setBuildingType('capital', $event)" [class.active]="buildingType() === 'capital'">CAPITAL</button>
+            <button (click)="setBuildingType('designer', $event)" [class.active]="buildingType() === 'designer'">DESIGNER</button>
+          </div>
+        </div>
+
+        <div class="mobile-nav" *ngIf="currentStep() < 3">
+          <button class="btn-one" (click)="nextStep()" *ngIf="currentStep() < 2">NEXT PHASE</button>
+          <button class="btn-one" (click)="nextStep()" *ngIf="currentStep() === 2">CALCULATE</button>
         </div>
       </div>
 
-      <div class="calc-result">
+      <!-- RESULT PANEL (Step 3 on mobile) -->
+      <div class="calc-result-panel" [class.active]="currentStep() === 3">
         <div class="result-card">
-          <span class="result-label">Estimated Budget</span>
-          <h2 class="result-value">₾ {{ formattedTotal() }}</h2>
-          <p class="result-note">* Market Index: {{ market.currentMarketIndex() }}</p>
+          <div class="result-header">
+            <span class="mono">ESTIMATED_BUDGET</span>
+            <div class="status-dot"></div>
+          </div>
           
-          <button class="btn-one" (click)="getEstimate()">
-            Get Formal Estimate
+          <div class="result-main">
+            <span class="currency">₾</span>
+            <h2 class="total-amount">{{ displayValue() | number }}</h2>
+          </div>
+
+          <div class="result-details">
+            <div class="detail-row">
+              <span>MARKET_INDEX</span>
+              <span class="mono">{{ market.currentMarketIndex() }}</span>
+            </div>
+            <div class="detail-row">
+              <span>UNIT_PRICE</span>
+              <span class="mono">~₾ {{ basePrices[buildingType()] }}</span>
+            </div>
+          </div>
+
+          <button class="btn-one btn-primary" (click)="getEstimate()">
+            REQUEST FULL AUDIT
+          </button>
+
+          <button class="back-to-params" (click)="currentStep.set(1)" *ngIf="currentStep() === 3">
+            ADJUST PARAMETERS
           </button>
         </div>
       </div>
+
     </div>
   </div>
 </section>
