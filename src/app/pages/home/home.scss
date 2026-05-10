@@ -196,6 +196,24 @@
   }
 }
 
+.home-engineering {
+  padding: 100px 0;
+  background: #000;
+  color: #fff;
+  
+  .section-header {
+    margin-bottom: 80px;
+    text-align: center;
+    h2 { font-size: 56px; margin: 20px 0; }
+    .section-intro { opacity: 0.6; font-size: 18px; }
+  }
+
+  .engineering-slider-wrap {
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 50px 100px rgba(0,0,0,0.5);
+  }
+}
+
 .home-showcase { padding: 100px 0; }
 .home-showcase__inner { display: grid; grid-template-columns: 1fr; gap: 60px; }
 

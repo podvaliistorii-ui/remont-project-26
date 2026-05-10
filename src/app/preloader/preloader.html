@@ -1,6 +1,58 @@
-<div id="preloader" class="preloader">
-  <svg width="100" height="100" viewBox="0 0 100 100">
-    <path d="M20 20 L80 20 L80 80 L20 80 Z" fill="none" stroke="var(--fx-accent)" stroke-width="2" class="draw-path"/>
-  </svg>
-  <div id="progress" class="preloader-progress">0%</div>
+<div class="preloader-overlay">
+  <!-- Grid Background -->
+  <div class="preloader-bg-grid"></div>
+
+  <div class="preloader-content">
+    
+    <!-- Stylized Typographic Logo SVG -->
+    <div class="logo-wrap">
+      <svg viewBox="0 0 400 60" class="logo-svg">
+        <!-- F -->
+        <path class="logo-path" d="M20 10 H50 M20 10 V50 M20 30 H40" />
+        <!-- I -->
+        <path class="logo-path" d="M70 10 H90 M80 10 V50 M70 50 H90" />
+        <!-- X -->
+        <path class="logo-path" d="M110 10 L140 50 M140 10 L110 50" />
+        <!-- E -->
+        <path class="logo-path" d="M160 10 H190 M160 10 V50 M160 30 H185 M160 50 H190" />
+        <!-- N -->
+        <path class="logo-path" d="M210 50 V10 L240 50 V10" />
+        <!-- T -->
+        <path class="logo-path" d="M260 10 H300 M280 10 V50" />
+        <!-- R -->
+        <path class="logo-path" d="M320 50 V10 H345 C355 10 355 30 345 30 H320 M335 30 L355 50" />
+        <!-- O -->
+        <path class="logo-path" d="M375 10 A20 20 0 1 0 375 50 A20 20 0 1 0 375 10 Z" />
+      </svg>
+    </div>
+
+    <!-- Initialization Terminal -->
+    <div class="terminal-logs">
+      <div class="log-entry mono" *ngFor="let log of logs()">
+        <span class="log-prefix">>>></span> {{ log }}
+      </div>
+    </div>
+
+    <!-- Status HUD -->
+    <div class="preloader-hud">
+      <div class="hud-item">
+        <span class="mono label">STATUS_BOOT</span>
+        <span class="mono value">RUNNING_STABLE</span>
+      </div>
+      <div class="hud-item">
+        <span class="mono label">ENGINE_PRECISION</span>
+        <span class="mono value">0.001MM</span>
+      </div>
+      <div class="hud-item counter-item">
+        <span class="preloader-num fx-serif">000</span>
+        <span class="preloader-unit">%</span>
+      </div>
+    </div>
+
+    <!-- Pulse Waveform -->
+    <div class="pulse-container">
+      <div class="pulse-bar" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]"></div>
+    </div>
+
+  </div>
 </div>

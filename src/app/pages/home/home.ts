@@ -6,6 +6,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import { BeforeAfterComponent, Hotspot } from '../../shared/before-after/before-after';
+
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
@@ -13,13 +15,19 @@ if (typeof window !== 'undefined') {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, CommonModule, TranslateModule],
+  imports: [RouterLink, CommonModule, TranslateModule, BeforeAfterComponent],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
 export class HomeComponent implements AfterViewInit {
   protected readonly i18n = inject(LanguageService);
   private readonly platformId = inject(PLATFORM_ID);
+
+  readonly engineHotspots: Hotspot[] = [
+    { x: 35, y: 45, labelKey: 'ENGINEERING.REINFORCEMENT' },
+    { x: 65, y: 30, labelKey: 'ENGINEERING.LASER_ALIGNED' },
+    { x: 50, y: 75, labelKey: 'ENGINEERING.CONCEALED_SYSTEMS' }
+  ];
 
   readonly revealX = signal(50);
   readonly revealY = signal(50);

@@ -308,8 +308,13 @@
     "TURNKEY_TAGLINE": "Your Comfort is Our Responsibility",
     "TURNKEY_DESC": "Full cycle of works from demolition to final furniture arrangement under the unified management of Fixentro.",
     "DISTRICTS_TITLE": "Service Districts"
-  },
-  "SPECIALISTS": {
+    },
+    "ENGINEERING": {
+    "REINFORCEMENT": "STRUCTURAL_REINFORCEMENT",
+    "LASER_ALIGNED": "LASER_PRECISION_GEOMETRY",
+    "CONCEALED_SYSTEMS": "CONCEALED_ENGINEERING_NETWORKS"
+    }
+    }
     "N1_NAME": "Alexander K.",
     "N1_SPEC": "Advanced hydraulics and water supply systems.",
     "N2_NAME": "George M.",

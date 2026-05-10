@@ -1,28 +1,124 @@
-.preloader {
-  position: fixed;
+:host { display: block; position: fixed; inset: 0; z-index: 99999; pointer-events: none; }
+
+.preloader-overlay {
+  position: absolute;
   inset: 0;
-  z-index: 9999;
-  background: var(--fx-bg);
+  background: #080807;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  pointer-events: all;
 }
 
-.draw-path {
-  stroke-dasharray: 300;
-  stroke-dashoffset: 300;
-  animation: draw 2s linear forwards;
+.preloader-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(196, 166, 122, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(196, 166, 122, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: 1;
 }
 
-@keyframes draw {
-  to { stroke-dashoffset: 0; }
+.preloader-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.preloader-progress {
-  font-family: var(--fx-font-sans);
-  font-size: 12px;
-  letter-spacing: 0.3em;
-  color: var(--fx-text);
+.logo-wrap {
+  margin-bottom: 60px;
+  width: 100%;
+}
+
+.logo-svg {
+  width: 100%;
+  height: auto;
+  max-width: 600px;
+}
+
+.logo-path {
+  fill: none;
+  stroke: var(--fx-accent);
+  stroke-width: 1;
+}
+
+.terminal-logs {
+  height: 120px;
+  overflow: hidden;
+  margin-bottom: 60px;
+  mask-image: linear-gradient(to top, black 80%, transparent 100%);
+}
+
+.log-entry {
+  font-size: 9px;
+  color: var(--fx-accent);
+  opacity: 0.6;
+  margin-bottom: 5px;
+  letter-spacing: 0.1em;
+  .log-prefix { opacity: 0.4; margin-right: 10px; }
+}
+
+.preloader-hud {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-top: 1px solid rgba(196, 166, 122, 0.1);
+  padding-top: 40px;
+}
+
+.hud-item {
+  display: flex;
+  flex-direction: column;
+  .label { font-size: 8px; opacity: 0.3; letter-spacing: 0.2em; margin-bottom: 5px; }
+  .value { font-size: 11px; color: var(--fx-text); letter-spacing: 0.1em; }
+}
+
+.counter-item {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 5px;
+  .preloader-num { font-size: 80px; line-height: 0.8; color: var(--fx-text); }
+  .preloader-unit { font-size: 20px; opacity: 0.4; }
+}
+
+/* ── PULSE WAVEFORM ── */
+.pulse-container {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 30px;
+}
+
+.pulse-bar {
+  width: 2px;
+  height: 100%;
+  background: var(--fx-accent);
+  opacity: 0.3;
+  animation: pulseHeight 1.5s infinite ease-in-out;
+  transform-origin: bottom;
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) { animation-delay: $i * 0.1s; }
+  }
+}
+
+@keyframes pulseHeight {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+
+@media (max-width: 900px) {
+  .logo-svg { max-width: 300px; }
+  .preloader-hud { flex-direction: column; align-items: flex-start; gap: 30px; }
+  .counter-item .preloader-num { font-size: 60px; }
 }

@@ -61,6 +61,24 @@
   </div>
 </section>
 
+<section class="home-engineering fx-page">
+  <div class="fx-page__container">
+    <header class="section-header" data-reveal>
+      <span class="fx-kicker">TECHNICAL_TRANSPARENCY</span>
+      <h2 class="fx-serif">Before & After Engineering</h2>
+      <p class="section-intro">See the skeletal precision behind our premium finishes.</p>
+    </header>
+
+    <div class="engineering-slider-wrap" data-reveal>
+      <app-before-after
+        beforeImage="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1600&q=80"
+        afterImage="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80"
+        [hotspots]="engineHotspots"
+      ></app-before-after>
+    </div>
+  </div>
+</section>
+
 @defer (on viewport) {
   <section class="home-showcase fx-page">
     <div class="home-showcase__inner fx-page__container">

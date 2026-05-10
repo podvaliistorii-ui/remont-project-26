@@ -1,6 +1,12 @@
 <!-- MODULE 2: SCROLL INDICATOR -->
 <div class="scroll-progress" #progressBar></div>
 
+<!-- GLOBAL COMMAND PALETTE -->
+<app-command-palette></app-command-palette>
+
+<!-- TECHNICAL PRELOADER -->
+<app-preloader *ngIf="isLoading()"></app-preloader>
+
 <!-- ═══════════════════════════════════════════
      HEADER — Fixed, transparent → solid on scroll
      ═══════════════════════════════════════════ -->

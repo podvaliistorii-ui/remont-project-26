@@ -62,6 +62,7 @@ if (typeof window !== 'undefined') {
 })
 export class App implements AfterViewInit {
   protected readonly i18n = inject(LanguageService);
+  protected readonly uiState = inject(UiStateService);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly router = inject(Router);
   private readonly document = inject(DOCUMENT);
@@ -71,6 +72,22 @@ export class App implements AfterViewInit {
   @ViewChild('progressBar') progressBar!: ElementRef;
 
   readonly isLoading = signal(true);
+  
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(e: KeyboardEvent) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      e.preventDefault();
+      this.uiState.toggleCommandPalette();
+    }
+    
+    // Quick Nav
+    if (!this.uiState.commandPaletteOpen()) {
+      if (e.key.toLowerCase() === 'c') this.router.navigate(['/calculator']);
+      if (e.key.toLowerCase() === 'p') this.router.navigate(['/portfolio']);
+      if (e.key.toLowerCase() === 'l') this.router.navigate(['/contact']);
+    }
+  }
+
   readonly loadProgress = signal(0);
   readonly menuOpen = signal(false);
   readonly isScrolled = signal(false);
