@@ -164,4 +164,11 @@ export class ServicesService {
   readonly specialists = computed(() => this.specialistsList());
   readonly materials = computed(() => this.materialsList());
   readonly reviews = computed(() => this.reviewsList());
+
+  readonly methodology = signal([
+    { id: '01', title: 'METHOD.STEP1_TITLE', desc: 'METHOD.STEP1_DESC' },
+    { id: '02', title: 'METHOD.STEP2_TITLE', desc: 'METHOD.STEP2_DESC' },
+    { id: '03', title: 'METHOD.STEP3_TITLE', desc: 'METHOD.STEP3_DESC' },
+    { id: '04', title: 'METHOD.STEP4_TITLE', desc: 'METHOD.STEP4_DESC' }
+  ]);
 }

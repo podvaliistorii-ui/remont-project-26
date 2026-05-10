@@ -125,6 +125,7 @@ export class PortfolioService {
     },
     {
       id: 'vera-stalinka',
+      auditId: 'FX-VR-2022-019',
       titleKey: 'PROJECTS.VERA_TITLE',
       taskKey: 'PROJECTS.VERA_TASK',
       solutionKey: 'PROJECTS.VERA_SOLUTION',
