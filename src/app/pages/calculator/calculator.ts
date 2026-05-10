@@ -1,5 +1,5 @@
-import { Component, inject, signal, computed, AfterViewInit, ElementRef, OnDestroy, isPlatformBrowser, PLATFORM_ID, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject, signal, computed, AfterViewInit, ElementRef, HostListener, OnDestroy, PLATFORM_ID, ViewChild } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LanguageService } from '../../language.service';
 import { MarketIndexService } from '../../market-index.service';
@@ -22,10 +22,12 @@ export class CalculatorComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild(LiveIndicatorComponent) liveIndicator!: LiveIndicatorComponent;
   
-  // New Signals for Data Logic
   readonly area = signal<number>(85);
   readonly tier = signal<'economy' | 'standard' | 'premium'>('standard');
   readonly housingType = signal<'new' | 'old'>('new');
+  readonly windowWidth = signal<number>(typeof window !== 'undefined' ? window.innerWidth : 1200);
+
+  readonly isMobile = computed(() => this.windowWidth() < 1100);
   
   // Options
   readonly bathroomAddon = signal(false);
@@ -82,20 +84,25 @@ export class CalculatorComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  ngAfterViewInit(): void {
+  private blueprintHandler = (e: MouseEvent) => {
+    const grid = this.el.nativeElement.querySelector('.blueprint-grid');
+    if (!grid) return;
+    const x = (e.clientX / window.innerWidth - 0.5) * 30;
+    const y = (e.clientY / window.innerHeight - 0.5) * 30;
+    gsap.to(grid, { x, y, duration: 1.5, ease: 'power2.out' });
+  };
+
+  @HostListener('window:resize')
+  onResize() {
     if (isPlatformBrowser(this.platformId)) {
-      this.initBlueprintEffect();
+      this.windowWidth.set(window.innerWidth);
     }
   }
 
-  private initBlueprintEffect(): void {
-    const grid = this.el.nativeElement.querySelector('.blueprint-grid');
-    if (!grid) return;
-    window.addEventListener('mousemove', (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 30;
-      const y = (e.clientY / window.innerHeight - 0.5) * 30;
-      gsap.to(grid, { x, y, duration: 1.5, ease: 'power2.out' });
-    });
+  ngAfterViewInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.addEventListener('mousemove', this.blueprintHandler);
+    }
   }
 
   selectTier(t: 'economy' | 'standard' | 'premium', ev: MouseEvent) {
@@ -125,5 +132,9 @@ export class CalculatorComponent implements AfterViewInit, OnDestroy {
   nextStep() { this.currentStep.update(s => s + 1); }
   prevStep() { this.currentStep.update(s => s - 1); }
   
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.removeEventListener('mousemove', this.blueprintHandler);
+    }
+  }
 }
